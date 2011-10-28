@@ -343,7 +343,7 @@ bool Group::AddMember(Player* player)
 
     // insert into the table if we're not a battleground group
     if (!isBGGroup())
-        CharacterDatabase.PExecute("INSERT INTO group_member (guid, memberGuid, memberFlags, subgroup, roles) VALUES(%u, %u, %u, %u, %u)",
+        CharacterDatabase.PExecute("INSERT IGNORE INTO group_member (guid, memberGuid, memberFlags, subgroup, roles) VALUES(%u, %u, %u, %u, %u)",
                                     m_dbStoreId, GUID_LOPART(member.guid), member.flags, member.group, member.roles);
 
     SendUpdate();
