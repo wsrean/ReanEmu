@@ -15,14 +15,13 @@
 @echo .
 @echo .
 @echo El proceso empezara AHORA!
-@echo (presiona cualquier tecla...)
 @echo off
 pause
 @echo off
 setlocal EnableDelayedExpansion
-set WorldUpdates=All_TC_World_Updates.sql
-set CharactersUpdates=All_TC_Characters_Updates.sql
-set AuthUpdates=All_TC_Auth_Updates.sql
+set WorldUpdates=All_World_Updates.sql
+set CharactersUpdates=All_Characters_Updates.sql
+set AuthUpdates=All_Auth_Updates.sql
 
 if exist %CharactersUpdates% del %CharactersUpdates%
 if exist %AuthUpdates% del %AuthUpdates%
