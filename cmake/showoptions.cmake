@@ -1,9 +1,9 @@
 # output generic information about the core and buildtype chosen
 message("")
-message("* TrinityCore rev. hash  : ${rev_hash}")
-message("* TrinityCore rev. date  : ${rev_date}")
+message("* ReanEmu rev. hash  : ${rev_hash}")
+message("* ReanEmu rev. date  : ${rev_date}")
 if( UNIX )
-  message("* TrinityCore buildtype  : ${CMAKE_BUILD_TYPE}")
+  message("* ReanEmu buildtype  : ${CMAKE_BUILD_TYPE}")
 endif()
 message("")
 

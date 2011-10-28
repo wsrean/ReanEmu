@@ -38,8 +38,8 @@
 #ifdef _WIN32
 #include "ServiceWin32.h"
 char serviceName[] = "worldserver";
-char serviceLongName[] = "TrinityCore world service";
-char serviceDescription[] = "TrinityCore World of Warcraft emulator world service";
+char serviceLongName[] = "ReanEmu world service";
+char serviceDescription[] = "ReanEmu World of Warcraft emulator world service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -135,10 +135,10 @@ extern int main(int argc, char **argv)
         sLog->outError("Verify that the file exists and has \'[worldserver]' written in the top of the file!");
         return 1;
     }
-    sLog->outString("Using configuration file %s.", cfg_file);
+    sLog->outString("Usando el archivo de configuracion %s.", cfg_file);
 
-    sLog->outDetail("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
-    sLog->outDetail("Using ACE: %s", ACE_VERSION);
+    sLog->outDetail("%s (Libreria: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    sLog->outDetail("Usando version de ACE: %s", ACE_VERSION);
 
     ///- and run the 'Master'
     /// \todo Why do we need this 'Master'? Can't all of this be in the Main as for Realmd?

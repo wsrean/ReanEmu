@@ -100,10 +100,23 @@ extern int main(int argc, char **argv)
     sLog->Initialize();
 
     sLog->outString("%s (authserver)", _FULLVERSION);
-    sLog->outString("<Ctrl-C> to stop.\n");
-    sLog->outString("Using configuration file %s.", cfg_file);
+    sLog->outString("Presione <Ctrl-C> para detenerlo.\n");
+    sLog->outString("El archivo de configuration usado es %s.", cfg_file);
 
-    sLog->outDetail("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    sLog->outString( "   _______       __ " );
+    sLog->outString( "  /\\  ____\\   __/\\ \\      ________" );
+    sLog->outString( "  \\ \\ \\___/  /\\_\\ \\ \\    /\\  ____ \\" );
+    sLog->outString( "   \\ \\ \\____ \\/_/_ \\ \\   \\ \\ \\__/\\ \\" );
+    sLog->outString( "    \\ \\  ___\\  /\\ \\ \\ \\   \\ \\ \\ \\ \\ \\" );
+    sLog->outString( "     \\ \\ \\__/  \\ \\ \\ \\ \\   \\ \\ \\___\\ \\" );
+    sLog->outString( "      \\ \\ \\_____\\ \\ \\ \\ \\___\\ \\_______\\" );
+    sLog->outString( "       \\ \\_______\\/_/\\ \\_____\\/_______/" );
+    sLog->outString( "        \\/_______/    \\/_____/       Auth" );
+    sLog->outString( "" );
+    sLog->outString( "   * Basado en TrinityCore *" );
+    sLog->outString( "      Por: Eilo-Jesus-Ws         " );
+
+    sLog->outDetail("%s (Libreria: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
     ACE_Reactor::instance(new ACE_Reactor(new ACE_Dev_Poll_Reactor(ACE::max_handles(), 1), 1), true);
@@ -184,7 +197,7 @@ extern int main(int argc, char **argv)
                 if (!curAff)
                     sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for authserver. Accessible processors bitmask (hex): %x", Aff, appAff);
                 else if (SetProcessAffinityMask(hProcess, curAff))
-                    sLog->outString("Using processors (bitmask, hex): %x", curAff);
+                    sLog->outString("Usando mascara de procesadores (bitmask, hex): %x", curAff);
                 else
                     sLog->outError("Can't set used processors (hex): %x", curAff);
             }
@@ -196,7 +209,7 @@ extern int main(int argc, char **argv)
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog->outString("The auth server process priority class has been set to HIGH");
+                sLog->outString("Servidor de autenticacion ha sido habilitado a prioridad ALTA");
             else
                 sLog->outError("Can't set auth server process priority class.");
             sLog->outString();
@@ -231,7 +244,7 @@ extern int main(int argc, char **argv)
         if ((++loopCounter) == numLoops)
         {
             loopCounter = 0;
-            sLog->outDetail("Ping MySQL to keep connection alive");
+            sLog->outDetail("Ping MySQL para mantener las conexiones activas");
             LoginDatabase.KeepAlive();
         }
     }
@@ -239,7 +252,7 @@ extern int main(int argc, char **argv)
     // Close the Database Pool and library
     StopDB();
 
-    sLog->outString("Halting process...");
+    sLog->outString("Deteniendo proceso...");
     return 0;
 }
 

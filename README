@@ -1,6 +1,37 @@
-= TrinityCore -- General information =
+== ReanEmu ==
+
+ReanEmu es un emulador creado con la union de varios repos reconocidos y 
+codigo nuestro con el afan de complementarlos y completarlos a todos en 
+un unico emulador que pueda brindar un poco mas. Mira nuestro archivo 
+WHAT_IS_INSIDE para mayor detalle de lo que el emulador contiene.
+
+Ademas hemos generado una metodologia y planeacion de manera que si alguna
+sugerencia y/o aporte que quieras darnos tienes la mejor bienvenida en el
+equipo de los programadores de este repositorio basado en trinitycore.
+
+Actualizaciones y novedades en twitter: http://twitter.com/ReanEmu
+
+Gracias a quienes hacen este proyeto posible y su respectivo credito a:
 
 Copyright (C) TrinityCore (http://www.trinitycore.org)
+Copyright (C) Eilo (http://twitter.com/eilo2518)
+Copyright (C) Hispano (http://twitter.com/nerothat)
+Copyright (C) Ws (http://twitter.com/make2222)
+Copyright (C) WoWReAn Emu (https://github.com/eilo/wowrean-emu)
+Copyright (C) ChaosCore (https://github.com/Locknes/ChaosCore)
+Copyright (C) HachasyDados (https://github.com/HachasyDados/HD-TCore)
+Copyright (C) AliveCore (https://github.com/DarkSoe/ALiveCoreRC2)
+Copyright (C) ZoneLimit (https://github.com/Jildor/ZoneLimit)
+Copyright (C) SerenityCore (https://github.com/SerenityTeam/SerenityCore)
+Copyright (C) Tobmaps (https://github.com/tobmaps/TrinityCore)
+Copyright (C) Independent (https://github.com/Independent/Core.git)
+Copyright (C) Mouse (https://github.com/Mouse/tc2-patches)
+Copyright (C) Bloodycore (https://github.com/A-Metaphysical-Drama/BloodyCore)
+Copyright (C) TcRc (https://github.com/TrinityCoreRu)
+Copyright (C) FaceCore (https://github.com/SignFinder/FaceCore)
+Copyright (C) MythCore (https://github.com/SeTM/MythCore)
+Copyright (C) BlackCore - WSCore - RoCore - Spgm - Warhead - Jildor - ChaosUA
+Copyright (C) LordPsyan - Stage6 - vas - zyt - darkman1983 - zwerg - Kapoeira
 
   Trinity Core is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,24 +57,22 @@ Copyright (C) TrinityCore (http://www.trinitycore.org)
   file, but you are not obligated to do so.  If you do not wish to do
   so, delete this exception statement from your version.
 
-TrinityCore is a MMORPG Framework based mostly on C++. It is completely 
-open source, and is community supported. It is derived
+TrinityCore is a World of Warcraft game server emulator. It is derived
 from MaNGOS, the Massive Network Game Object Server, and is based on the
-code of that project with extensive changes over time to optimize, improve
-and cleanup the codebase at the same time as improving the ingame mechanics
-and functionality. If you wish to contribute ideas or code please visit 
-our site linked below or make pull requests to our github repo at 
-https://github.com/TrinityCore/TrinityCore
+code of that project.
 
 For further information on the TrinityCore project, please visit our
-project website at http://www.TrinityCore.org
+project website at http://www.trinitycore.org 
+and https://github.com/eilo/PowerOfCommunities2
 
-To get nightly builds of the master branch of TrinityCore, please visit
-http://www.TrinityCore.net
-
-Documentation including installation instructions can be found inside
+API documentation can be obtained by running the "make doc" command inside
 the doc directory.
 
 SQL files to create the database can be found in the sql directory. Files
 to update your database from an older revision/version can be found in the
 sql/updates directory.
+
+The full sql file on /sql and more sql files and fixes will be found on 
+/sql/PoC, issues and all suggestions are welcome!
+
+See the docs/UnixInstall.txt file for installation instructions on Linux.

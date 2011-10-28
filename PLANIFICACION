@@ -1,0 +1,126 @@
+== ReanEmu ==
+#####################################################################
+##  Planificacion de repositorios y de Avances del nuevo emulador  ##
+#####################################################################
+La planificacion y organizacion adecuada de la informacion como del
+equipo y repositorios es uno de los aspectos mas importantes para
+lograr el objetivo con este proyecto de manera que:
+
+Cada commit se llevara a cabo con los avances individuales por 
+repositorios en commits personales y por cada una de las cosas 
+minimas que hagan referentes al mismo tema y se clasificaran tambien
+con una tag para que asemeje a un solo topico en concreto:
+
+core/general
+core/spells
+scripts/depende a la instance
+spell/script
+quest/script
+sql/dependendiendo
+
+En minuscula todo, para diferenciar con tc standars. Todos los commits
+seran en ESPAÑOl, excepto los nombres referentes a cosas del emulador 
+como tal, spells, nombres de las mismas, nombres de archivos,
+dependencias, etc. Los nombres de archivos que describan los cambios 
+en sql, serán en inglés y se ajustarán a la cronologia de tc en la 
+carpeta sql/update y world o auth de acuerdo a lo que corresponda asi:
+
+año-mes-dia-numero mayor a 100_Nombre_explicativo_instance_mapa_script
+2011-09-01-102_OutdoorPvPWG_world_bunners.sql
+
+Ojo, siempre mayor a cien, para no pisar cualquier commit de tc. Otra
+cosa que hay que tomarse en cuenta es el hecho de que si algo es de
+codigo de otra persona o equipo de personas en concreto hay que 
+mencionarlo por los copyrights, y si nosotros hacemos algo que no lo
+haya hecho nadie, añadir el copyright respectivamente de cada uno
+individualmente y de Power of Communities, sobre todo si en una script
+se le ha hecho mejoras notables y de peso.
+
+* Copyright (C) ReanEmu 2011 <https://github.com/eilo/ReanEmu>
+
+Esto tambien nos servira para añadirlo al What_Is_Inside del repo
+De ahora en adelante hay q tener una estructura ordenada y simple
+de manera que no nos pisemos las cosas y mucho peor, tratar de
+unirlas, porque tampoco es necesario unir todas las branches entre si.
+
+La modalidad de branches estara en 3 grupos asi:
+          1                              2                      3
+ --------------------	 ---------------------------------    ------
+(tc)&(warden)->(merge)  (eilo)&(jesus)&(ws)->(experimental)  (master)
+
+De manera general:
+----------------
+--Primer Grupo--
+----------------
+tc:    se actualiza solo con cosas de TC y no se mezcla aqui, nada 
+       de lo del resto de repos, es decir una tc limpia tal cual.
+	 
+warden:esta lleva solo lo de warden, nada mezclado aqui, es decir
+       una warden limpia.
+		
+merge: en esta se mezclaran warden y tc, y se retocaran aspectos que
+       se considere importante pero no custom ni nada fuera de tc, 
+	   sino al contrario, aspectos netamente de funcionalidad y de 
+	   estabilidad referentes a las dos versiones que entran aqui, 
+	   los fixes se haran aqui, no en las branches de arriba. Hay que
+	   añadir un TAG a esta branch. y tendrá un what is inside propio.
+-----------------
+--Segundo Grupo--
+-----------------
+eilo: esta sera mi branch personal, aqui hare y deshare lo que sea
+      necesario para mi o a mi criterio. Siempre comentare cada accion
+	  con un commit individual por mas chorra que sea. Dado que en 
+	  algun momento se necesita revertir, por que no funcione bien o 
+	  porque tc lo arreglase en algun momento. Se mantendra el 
+	  codestyling de espacios en blanco con espaciadora, nunca con 
+	  tabs en el codigo o el emulador se aloca. siempre se comunicara 
+	  al resto de devs que es lo que se esta haciendo y se tendra 
+	  claro siempre los repos que a cada uno se le ha asignado. Si 
+	  algun commit tiene referencia a alguno de los repos de otro dev, 
+	  es imprescindible comunicarlo. Cada uno tendra un What Is inside
+	  individual, y cada branch de cada developer saldra a partir del
+	  branch merge. Cada uno pondrá una TAG en el top de cada una de 
+	  sus branches para que aparezcan en el experimental.
+	  
+jesus:branch personal de jesus que tiene q ir con las mismas condiciones
+      citadas arriba, todas y cada una. Se depreca el cherry pick por 
+	  razones de conflictos anteriores, y se lo permitirá unicamente con 
+	  un commit contemporaneo, es decir que no supere 1 dia atras de la
+	  revision punta (head) que tengamos nosotros.
+	   
+ws:   Exactamente las mismas condiciones expuestas en los dos parrafos 
+      anteriores, y cada cosa que se quiera hacer se debe hablar con los
+	  otros dos en caso de que este hecho o no, y mantener al dia el what
+	  is inside de cada uno. Es importante tener una copia del repo 
+	  individual vuestro y otra copia del repo de PoC limpio para swichear
+	  branches y visualizar sin problema el panorama claramente.
+	  
+experimental: Aqui se unirá cada cierto tiempo todo el material que
+      consideremos como "funcional" de cada uno de nuestros branches
+	  de manera que aqui se haga las primeras pruebas y se pueda ver
+	  los errores en conjunto. Este branch no es para solucionar 
+	  errores de los branchs personales, es decir, si se equivocaron
+	  un typo, lo corrigen en vuestro branch personal y una vez
+	  corregido, lo traen al experimental. No al revés. Este branch irá
+	  directo a ser probado en reino de pruebas para ir sacando el
+	  changelog. Aqui en este branch se unificaran los What is inside
+	  de cada uno de los individuales y se expondra como un solo archivo.
+	  Cada vez q necesiteis revertir algo, se lo hara en el mismo 
+	  commit de cada uno y en su momento debera ser notificado al 
+	  respectivo developer y su causa.
+----------------			  
+--Tercer Grupo--
+----------------
+master: Aqui se comentará el trabajo final, por fechas, testeado en 
+		experimental y que contenga la característica de estabilidad y 
+		funcionalidad. En master vienen las versiones finales, si ocurre 
+		algun fix para la version final, tiene que pasar el respectivo 
+		proceso, por el repo de merge, luego al individual de todos, y 
+		despues al experimental y finalmente al master. De ninguna 
+		manera permitido al reves.
+
+El proceso en general se lograra hacer mas llevadero y sobre todo nos 
+ayudara para alcanzar esta meta inmensa como equipo de desarrollo de PoC.
+
+Saludos
+Eilo		
