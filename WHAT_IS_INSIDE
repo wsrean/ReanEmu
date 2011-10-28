@@ -17,8 +17,8 @@ codigo reestructurando modo de trabajo y organizando carpetas, branches, etc
 ################################
 #Trintitycore hasta esta fecha:#
 ################################
-17/10/2011: Commit:27e1a5d7b645c8b09ad9fc5b1b19ef066253b488
-* Core/Mechanic: Fix spell penetration from items.
+27/10/2011: Commit:864635b74b7ef9154058925237547bf149864412
+* Merge pull request #3729 from dracosvk/RadiusIndex
 
 Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 
@@ -27,9 +27,3 @@ Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 #####################################################
 17/10/2011: Commit:fcdfeb5e6c9b42cb6bfeee3ee6d2726637201057
 * Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
-
-##############################################
-#Shadez WoWArmory parche nucleo a esta fecha:#
-##############################################
-06/08/2011: Commit 384aae3f674ac2d39cbe1ed24e5cb91f0217133f
-* [503] 3D Viewer Models link updated.
