@@ -294,6 +294,10 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
     if (unit->GetVehicle() != this)
         return false;
 
+    // don't allow vehicles in arena
+    if (unit->GetTypeId() == TYPEID_PLAYER && unit->GetMap()->IsBattleArena())
+       return false;
+
     SeatMap::iterator seat;
     if (seatId < 0) // no specific seat requirement
     {
