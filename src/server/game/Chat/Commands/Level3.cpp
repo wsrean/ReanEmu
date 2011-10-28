@@ -3395,6 +3395,7 @@ bool ChatHandler::HandleBanHelper(BanMode mode, const char *args)
         return false;
 
     std::string nameOrIP = cnameOrIP;
+    std::string announce;
 
     char* duration = strtok (NULL, " ");
     if (!duration || !atoi(duration))
@@ -3453,6 +3454,32 @@ bool ChatHandler::HandleBanHelper(BanMode mode, const char *args)
             }
             SetSentErrorMessage(true);
             return false;
+    }
+
+    if (mode == BAN_CHARACTER)
+    {
+        announce = "El pj '";
+        announce += nameOrIP.c_str();
+        announce += "' ha sido baneado ";
+        announce += duration;
+        announce += " por '";
+        announce += m_session->GetPlayerName();
+        announce += "'. Razon: ";
+        announce += reason;
+        HandleAnnounceCommand(announce.c_str());
+    }
+
+    if (mode == BAN_ACCOUNT)
+    {    
+        announce = "La cuenta '";
+        announce += nameOrIP.c_str();
+        announce += "' ha sido baneada ";
+        announce += duration;
+        announce += " por '";
+        announce += m_session->GetPlayerName();
+        announce += "'. Razon: ";
+        announce += reason;
+        HandleAnnounceCommand(announce.c_str());
     }
 
     return true;
