@@ -1310,6 +1310,20 @@ MaxRecruitAFriendBonusDistance = 100
 MailDeliveryDelay = 3600
 
 #
+#    ExternalMail
+#        Description: Enable external mail delivery from mail_external table.
+#        Default:     1 (enabled)
+
+ExternalMail = 1
+
+#
+#ExternalMailInterval
+#        Description: Mail delivery delay time for item sending from mail_external table, in minutes.
+#        Default: 1 (minute)
+
+ExternalMailInterval = 1
+
+#
 #    SkillChance.Prospecting
 #        Description: Allow skill increase from prospecting.
 #        Default:     0 - (Disabled)
