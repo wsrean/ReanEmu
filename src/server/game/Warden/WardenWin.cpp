@@ -415,9 +415,12 @@ void WardenWin::HandleData(ByteBuffer &buff)
         rs = sWardenCheckMgr->GetWardenResultById(*itr);
 
         // Skip if checks aren't in the stores anymore (e.g. by database edit & reload during runtime)
-        if (!rd || !rs)
-            continue;
-
+        if (!rd)
+        {
+			buff.read_skip(1);
+			continue;
+		}
+		
         type = rd->Type;
         switch (type)
         {
