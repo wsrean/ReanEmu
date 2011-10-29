@@ -27,6 +27,8 @@ Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 #####################################################
 17/10/2011: Commit:fcdfeb5e6c9b42cb6bfeee3ee6d2726637201057
 * Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
+29/10/2011: Commit 31ac7717125858139d8b7ab6efb6501834b11594
+Algunas mejoras en documentación, checks y spam de consola
 
 ##############################################
 #Shadez WoWArmory parche nucleo a esta fecha:#
