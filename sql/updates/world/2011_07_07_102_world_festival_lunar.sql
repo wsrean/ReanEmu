@@ -1,4 +1,4 @@
-UPDATE creature_template SET AIName='', ScriptName='npc_omen' WHERE entry=15467;
+UPDATE creature_template SET AIName="", ScriptName='npc_omen' WHERE entry=15467;
 UPDATE creature_template SET ScriptName='npc_moonlight' WHERE entry=15902;
 DELETE FROM `creature` WHERE `id`=15467;
 INSERT INTO `creature` (`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
