@@ -119,6 +119,12 @@ void AddSC_boss_chromaggus();
 void AddSC_boss_nefarian();
 void AddSC_boss_victor_nefarius();
 void AddSC_boss_mr_smite();
+/*############################*/
+void AddSC_boss_asirius();
+void AddSC_boss_brutallus2();
+void AddSC_boss_sicarius();
+void AddSC_event_asirius();
+/*############################*/
 void AddSC_deadmines();                      //Deadmines
 void AddSC_instance_deadmines();
 void AddSC_gnomeregan();                     //Gnomeregan
@@ -485,11 +491,11 @@ void AddSC_boss_the_lich_king();
 void AddSC_icecrown_citadel_teleport();
 void AddSC_instance_icecrown_citadel();
 void AddSC_icecrown_citadel();
-void AddSC_instance_ruby_sanctum();      // Ruby Sanctum
-void AddSC_ruby_sanctum();
-void AddSC_boss_baltharus_the_warborn();
-void AddSC_boss_saviana_ragefire();
-void AddSC_boss_general_zarithrian();
+void AddSC_boss_baltharus();
+void AddSC_boss_halion();
+void AddSC_boss_ragefire();
+void AddSC_boss_zarithrian();
+void AddSC_instance_ruby_sanctum();
 
 void AddSC_dalaran();
 void AddSC_borean_tundra();
@@ -733,6 +739,12 @@ void AddEasternKingdomsScripts()
     AddSC_boss_nefarian();
     AddSC_boss_victor_nefarius();
     AddSC_boss_mr_smite();
+    /*############################*/
+    AddSC_boss_asirius();
+    AddSC_boss_brutallus2();
+	AddSC_boss_sicarius();
+    AddSC_event_asirius();
+    /*############################*/
     AddSC_deadmines();                      //Deadmines
     AddSC_instance_deadmines();
     AddSC_gnomeregan();                     //Gnomeregan
@@ -1193,11 +1205,11 @@ void AddNorthrendScripts()
     AddSC_icecrown_citadel_teleport();
     AddSC_instance_icecrown_citadel();
     AddSC_icecrown_citadel();
-    AddSC_instance_ruby_sanctum();      // Ruby Sanctum
-    AddSC_ruby_sanctum();
-    AddSC_boss_baltharus_the_warborn();
-    AddSC_boss_saviana_ragefire();
-    AddSC_boss_general_zarithrian();
+    AddSC_boss_baltharus();
+    AddSC_boss_halion();
+    AddSC_boss_ragefire();
+    AddSC_boss_zarithrian();
+    AddSC_instance_ruby_sanctum();
 
     AddSC_dalaran();
     AddSC_borean_tundra();

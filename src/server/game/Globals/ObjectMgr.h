@@ -789,6 +789,11 @@ class ObjectMgr
             return NULL;
         }
 
+        QuestRelations* GetCreatureQuestInvolvedRelation()
+        {
+            return &mCreatureQuestInvolvedRelations;
+        }
+
         void LoadQuests();
         void LoadQuestRelations()
         {
