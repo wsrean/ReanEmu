@@ -50,11 +50,6 @@ Adecuaciones cosmeticas por Eilo
 13/10/2011: Wintergrasp por Locknes
 Adecuaciones cosmeticas por Eilo
 
-####
-#BG#
-####
-30/10/2011: Garganta Grito de Guerra mejoras por SeT
-
 ###############
 #External Mail#
 ###############
@@ -97,6 +92,12 @@ Adaptaciones cosmeticas por Eilo
 17/10/2011: OutdoorPVP en grizzly hills por Locknes
 11/05/2011: Ojo Tormenta fix bandera AtracadorVil por Tobmaps
 17/08/2011: Buffo de suertudo en LFG aleatoria PuG por Souler
+30/10/2011: Garganta Grito de Guerra mejoras por SeT
+07/10/2011: DynamicLoS en GameObjects por Odyssey
+07/10/2011: DynamicLoS en DalaranSewers por Odyssey
+07/10/2011: DynamicLoS en Circulo de Valor por Souler
+10/10/2011: DynamicLoS mejoras en funcionamiento por Karlos
+09/10/2011: Desactivado aviso de Join/Leave en canales por Odyssey
 Adaptaciones, codestyle y union por Eilo
 
 ##########################
@@ -112,9 +113,9 @@ Adaptaciones, codestyle y union por Eilo
 ###############
 30/10/2011: Sagrario Rubí por WS
 
-################
-#Eventos Custom#
-################
+########
+#Custom#
+########
 30/10/2011: Evento Asirius por WS
 
 #####
