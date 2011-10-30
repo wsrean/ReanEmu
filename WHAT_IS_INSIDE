@@ -36,15 +36,6 @@ Algunas mejoras en documentación, checks y spam de consola por Elecyb
 06/08/2011: Commit 384aae3f674ac2d39cbe1ed24e5cb91f0217133f
 * [503] 3D Viewer Models link updated.
 
-#############
-#PVP Patches#
-#############
-26/09/2011: PVP Ranks original Spgm, adaptado por Snajl
-            Prohibicion de vehiculos en arenas por Snajl
-22/09/2011: Reset de CD de duelo por Mouse
-17/10/2011: OutdoorPVP en grizzly hills por Locknes
-Adaptaciones, codestyle y union por Eilo
-
 ################
 #AHBot Subastas#
 ################
@@ -92,7 +83,12 @@ Adaptaciones cosmeticas por Eilo
 18/10/2011: Apaño del Dodge por Faelon
 22/10/2011: Guardado de Spells, especialmente dk evitando bugs por Odyssey
 03/07/2011: Añadido inmunidad a vehiculos por Karlos
-Adecuaciones y mejoras por Eilo
+26/09/2011: PVP Ranks original Spgm, adaptado por Snajl
+26/09/2011: Prohibicion de vehiculos en arenas por Snajl
+22/09/2011: Reset de CD de duelo por Mouse
+17/10/2011: OutdoorPVP en grizzly hills por Locknes
+11/05/2011: Ojo Tormenta fix bandera AtracadorVil por Tobmaps
+Adaptaciones, codestyle y union por Eilo
 
 ##########################
 #Soporte Quests & Eventos#
