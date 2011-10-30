@@ -67,4 +67,4 @@ INSERT INTO script_texts (entry, content_default, emote) VALUES
 (@entry - 8, 'Retira a tus hombres. La estupidez del propio Lor\'themar causó sus heridas. Quel\'Delar no se elige, ella elige a su maestro.', 0),
 (@entry - 9, 'Guaridas, volved a vuestros puestos', 0),
 (@entry - 10,'Tendras lo que buscas, $N. Toma la espada y marchate. Y tu Auric, ten cuidado con lo que dices en este lugar sagrado.', 0),
-(@entry - 11,'Lleva la espada a Dalaran a traves del portal, $N. Has hecho lo que muchos quel\'dorei han soñado durante años. Por fin se ha restaurado Quel\'Delar.',0)
+(@entry - 11,'Lleva la espada a Dalaran a traves del portal, $N. Has hecho lo que muchos quel\'dorei han soñado durante años. Por fin se ha restaurado Quel\'Delar.',0);
