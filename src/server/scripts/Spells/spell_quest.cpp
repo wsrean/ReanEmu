@@ -166,7 +166,7 @@ public:
                         }
                         if (uiNewEntry)
                         {
-						    Caster->CastedCreatureOrGO(creatureTarget->GetEntry(), 0, GetSpellInfo()->Id);
+						    pCaster->CastedCreatureOrGO(creatureTarget->GetEntry(), 0, GetSpellInfo()->Id);
                             creatureTarget->UpdateEntry(uiNewEntry);
                             creatureTarget->DespawnOrUnsummon(DESPAWN_TIME);
                         }
