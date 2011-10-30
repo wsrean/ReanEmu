@@ -4824,7 +4824,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
 								target->PlayDistanceSound(7636);
 							else
 								target->PlayDistanceSound(7637);
-							break:
+							break;
 						case RACE_HUMAN:
 							if(target->getGender()==GENDER_MALE)
 								target->PlayDistanceSound(7634);
@@ -4833,9 +4833,9 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
 							break;
 						case RACE_ORC:
 							if(target->getGender()==GENDER_MALE)
-								target->PlayDistanceSound(7638):
+								target->PlayDistanceSound(7638);
 							else
-								target->PlayDistanceSound(7639):
+								target->PlayDistanceSound(7639);
 							break;
 						case RACE_GNOME:
 							if(target->getGender()==GENDER_MALE)
