@@ -1,15 +1,12 @@
-# Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+# Rean core script by ws
 #
-# This file is free software; as a special exception the author gives
-# unlimited permission to copy and/or distribute it, with or without
-# modifications, as long as this notice is preserved.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
+  Custom/WS/AsiriusEvent/boss_Asirius.cpp
+  Custom/WS/AsiriusEvent/boss_sicarius.cpp
+  Custom/WS/AsiriusEvent/boss_brutallus2.cpp
+  Custom/WS/AsiriusEvent/introx.cpp
+
 )
 
 message("  -> Prepared: Custom")
