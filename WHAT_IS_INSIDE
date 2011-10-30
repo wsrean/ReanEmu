@@ -29,6 +29,8 @@ Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 * Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
 29/10/2011: Commit 31ac7717125858139d8b7ab6efb6501834b11594
 Algunas mejoras en documentación, checks y spam de consola por Elecyb
+09/10/2011: Mejoras en mensajes en Anticheat por Souler
+Adecuaciones por Eilo
 
 ##############################################
 #Shadez WoWArmory parche nucleo a esta fecha:#
@@ -57,6 +59,7 @@ Adecuaciones cosmeticas por Eilo
 #Anticheat#
 ###########
 13/10/2011: Anticheat pasivo por Locknes
+09/10/2011: Mejoras en mensajes en Anticheat por Souler
 Adecuaciones por Eilo
 
 #############
