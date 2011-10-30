@@ -7,24 +7,25 @@ conocidos ademas de los nuestros propios, en un esfuerzo por unirlo en un solo
 repositorio y mantenerlo al dia con trinitycore es por eso que hemos hecho este 
 documento con la informacion de lo que contiene dentro este emulador:
 
-#########
-#ReanEmu#
-#########
-17/10/2011: Reiniciando el repo y readaptando cosas varias, inclusion de nuevo
-developer en git y la inclusion de texto de planeacion para union eficiente de 
-codigo reestructurando modo de trabajo y organizando carpetas, branches, etc
+###########
+# ReanEmu #
+###########
+30/10/2011: Milestone 0.2, con mejoras en general y una estructura que ya va dando 
+resultados, cambio de metodologia, aplicacion de planificacion y adicion de codigo
+utilitario en general para jugabilidad tanto en pve como en pvp, adiciones de quest
+para soporte de cadenas de misiones y varios, instaces sagrario rubi y custom
 
-################################
-#Trintitycore hasta esta fecha:#
-################################
+##################################
+# Trintitycore hasta esta fecha: #
+##################################
 27/10/2011: Commit:864635b74b7ef9154058925237547bf149864412
 * Merge pull request #3729 from dracosvk/RadiusIndex
 
 Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 
-#####################################################
-#Warden Anticheat branch de leak's hasta esta fecha:#
-#####################################################
+#######################################################
+# Warden Anticheat branch de leak's hasta esta fecha: #
+#######################################################
 17/10/2011: Commit:fcdfeb5e6c9b42cb6bfeee3ee6d2726637201057
 * Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
 29/10/2011: Commit 31ac7717125858139d8b7ab6efb6501834b11594
@@ -32,52 +33,52 @@ Algunas mejoras en documentación, checks y spam de consola por Elecyb
 09/10/2011: Mejoras en mensajes en Anticheat por Souler
 Adecuaciones por Eilo
 
-##############################################
-#Shadez WoWArmory parche nucleo a esta fecha:#
-##############################################
+################################################
+# Shadez WoWArmory parche nucleo a esta fecha: #
+################################################
 06/08/2011: Commit 384aae3f674ac2d39cbe1ed24e5cb91f0217133f
 * [503] 3D Viewer Models link updated.
 
-################
-#AHBot Subastas#
-################
+##################
+# AHBot Subastas #
+##################
 13/10/2011: Bot de subastas por Locknes
 Adecuaciones cosmeticas por Eilo
 
-#############
-#Wintergrasp#
-#############
+###############
+# Wintergrasp #
+###############
 13/10/2011: Wintergrasp por Locknes
 Adecuaciones cosmeticas por Eilo
 
-###############
-#External Mail#
-###############
+#################
+# External Mail #
+#################
 13/10/2011: Mail Externo por Locknes
 
-###########
-#Anticheat#
-###########
+#############
+# Anticheat #
+#############
 13/10/2011: Anticheat pasivo por Locknes
 09/10/2011: Mejoras en mensajes en Anticheat por Souler
 Adecuaciones por Eilo
 
-#############
-#Cuentas VIP#
-#############
+###############
+# Cuentas VIP #
+###############
 14/10/2011: Cuentas VIP por Locknes
 
-#############
-#Adicionales#
-#############
+###############
+# Adicionales #
+###############
 17/10/2011: Sql bat para querys de updateo por Eilo
 13/10/2011: Anuncios Kick/Mute/Ban por Locknes
 20/10/2011: Sql complemento cero errores en carga por Locknes
 Adaptaciones cosmeticas por Eilo
 
-#############
-#Jugabilidad#
-#############
+###############
+# Jugabilidad #
+###############
 18/10/2011: Reseteo de talentos duales por Faelon
 18/10/2011: Reconexion en BG por Faelon
 27/10/2011: Bindeo Instance loteo players por Greymane
@@ -100,30 +101,29 @@ Adaptaciones cosmeticas por Eilo
 09/10/2011: Desactivado aviso de Join/Leave en canales por Odyssey
 Adaptaciones, codestyle y union por Eilo
 
-##########################
-#Soporte Quests & Eventos#
-##########################
+############################
+# Soporte Quests & Eventos #
+############################
 07/07/2011: Añadido soporte para thalorien por Souler
 07/07/2011: Añadido script La purificacion de Quel'delar por Karlos
-07/07/2011: Festival lunar Quest 8868 y npc 15467 por Odyssey
 08/10/2011: Torneo argenta por Karlos
 
-###############
-#Sagrario Rubí#
-###############
+#################
+# Sagrario Rubí #
+#################
 30/10/2011: Sagrario Rubí por WS
 
-#####
-#ICC#
-#####
+#######
+# ICC #
+#######
 30/10/2011: Profesor Putricidio mejorado por WS
 
-######################
-#Dungeons e Instances#
-######################
+########################
+# Dungeons e Instances #
+########################
 11/02/2011: Drak'tharon, permitir reinicio boss Novos por Odyssey
 
-########
-#Custom#
-########
+##########
+# Custom #
+##########
 30/10/2011: Evento Asirius por WS
