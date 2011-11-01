@@ -7,5 +7,5 @@ INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entr
 (28308, 0, 0, 0, 0, 0, 25107, 0, 0, 0, 'Captive Crocolisk', '', '', 0, 80, 80, 2, 2, 2, 0, 1, 2, 1, 1, 2, 2, 0, 24, 1, 2000, 0, 1, 16777472, 8, 6, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 115, 0, 0, '', 0, 3, 5, 1, 1, 0, 0, 0, 0, 0, 0, 0, 180, 1, 0, 0, 0, 'npc_captive_croco_vehicle', 12340);
 
 -- QuestTaker Summoner (item)
-UPDATE `quest_template` SET `SrcItemId` = '38512*' WHERE `entry` = 12536;
+UPDATE `quest_template` SET `SrcItemId` = '38512' WHERE `entry` = 12536;
 UPDATE `creature_template` SET `ScriptName` = 'npc_harkek_gossip' WHERE `entry` = 28138;

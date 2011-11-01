@@ -251,7 +251,7 @@ public:
     }
 };
 
-v/*###################################
+/*###################################
 # item_emblazoned_battle_horn (36864)
 ####################################*/
 
@@ -268,7 +268,6 @@ class item_emblazoned_battle_horn : public ItemScript
                 return true;
         }
 };
-
 
 void AddSC_dragonblight()
 {
