@@ -1433,6 +1433,37 @@ public:
     }
 };
 
+/*#####################
+# go_not_a_bug (193939)
+######################*/
+
+class go_not_a_bug : public GameObjectScript
+{
+public:
+    go_not_a_bug() : GameObjectScript("go_not_a_bug") { }
+
+    enum SummoningStoneData
+    {
+        QUEST_NOT_A_BUG_A = 13342,
+        QUEST_NOT_A_BUG_H = 13358,
+        QUEST_NOT_A_BUG_A_D = 13344,
+        QUEST_NOT_A_BUG_H_D = 13365,
+        NPC_DARK_MESSENGER = 32316,
+        NPC_NOT_A_BUG_KC = 32314
+    };
+
+    bool OnGossipHello(Player* player, GameObject* go)
+    {
+        if (player->GetQuestStatus(QUEST_NOT_A_BUG_A) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(QUEST_NOT_A_BUG_H) == QUEST_STATUS_INCOMPLETE ||
+            player->GetQuestStatus(QUEST_NOT_A_BUG_A_D) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(QUEST_NOT_A_BUG_H_D) == QUEST_STATUS_INCOMPLETE)
+        {
+            go->SummonCreature(NPC_DARK_MESSENGER,8028.225098f,2077.155518f,499.729156f,3.947409f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,5000);
+            player->KilledMonsterCredit(NPC_NOT_A_BUG_KC,0);
+        }
+        return true;
+    }
+};
+
 void AddSC_icecrown()
 {
     new npc_arete;
@@ -1455,4 +1486,5 @@ void AddSC_icecrown()
     new npc_jeran_lockwood;
     new npc_squire_danny;
     new npc_argent_champion;
+    new go_not_a_bug;
 }
