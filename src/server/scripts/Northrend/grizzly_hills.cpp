@@ -30,6 +30,7 @@ EndContentData */
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
 #include "ScriptedFollowerAI.h"
+#include "Vehicle.h"
 
 #define GOSSIP_ITEM1 "You're free to go Orsonn, but first tell me what's wrong with the furbolg."
 #define GOSSIP_ITEM2 "What happened then?"
