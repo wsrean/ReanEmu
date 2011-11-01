@@ -466,7 +466,6 @@ bool Master::_StartDB()
     sWorld->LoadDBVersion();
 
     sLog->outString("DB usada para Mundo: %s", sWorld->GetDBVersion());
-    sLog->outString("DB usada para EventAI: %s", sWorld->GetCreatureEventAIVersion());
     return true;
 }
 
