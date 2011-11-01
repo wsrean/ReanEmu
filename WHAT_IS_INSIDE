@@ -18,18 +18,18 @@ para soporte de cadenas de misiones y varios, instaces sagrario rubi y custom
 ##################################
 # Trintitycore hasta esta fecha: #
 ##################################
-27/10/2011: Commit:864635b74b7ef9154058925237547bf149864412
-* Merge pull request #3729 from dracosvk/RadiusIndex
+01/11/2011: Commit:d3a7ac5d7dad8f3677de8b69d29ffbe36deb51dd
+* Merge pull request #3766 from Pesthuf/JumpFix
+Core/Units: Don't send StartTravel with MoveJump. Fixes client display of jumping eff
 
 Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
 #######################################################
-17/10/2011: Commit:fcdfeb5e6c9b42cb6bfeee3ee6d2726637201057
-* Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
-29/10/2011: Commit 31ac7717125858139d8b7ab6efb6501834b11594
-Algunas mejoras en documentación, checks y spam de consola por Elecyb
+31/10/2011: Commit:516b6f14514a1b49fbc50fb86af01966a404de12
+* Core/Warden: Disabled reloading ability for warden_checks table. 
+               Requires a more advanced approach.
 09/10/2011: Mejoras en mensajes en Anticheat por Souler
 Adecuaciones por Eilo
 
