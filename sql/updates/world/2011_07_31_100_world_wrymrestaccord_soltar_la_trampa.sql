@@ -19,7 +19,7 @@ UPDATE `creature_template` SET `flags_extra` = 128 WHERE `entry` = 33087;
 
 -- Spell required target
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId` = 13 AND `SourceEntry` = 44550;
-INSERT INTO `conditions` VALUES
+INSERT IGNORE INTO `conditions` VALUES
 (13, 0, 62272, 0, 18, 1, 33087, 0, 0, '', (NULL));
 
 -- Make Corpse of Saragosa look dead
@@ -28,8 +28,8 @@ INSERT INTO `creature_template_addon` (`entry`, `path_id`, `mount`, `bytes1`, `b
 
 -- Spawns
 DELETE FROM `creature` WHERE `id`=33087;
-INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
-(250050, 33087, 571, 1, 1, 0, 0, 4055.08, 7103.51, 169.522, 3.75432, 300, 0, 0, 42, 0, 0, 0, 0, 0, 0);
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
+(250050, 33087, 571, 1, 1, 0, 0, 4055.08, 7103.51, 169.522, 3.75432, 300, 0, 0, 42, 0, 0, 0, 0, 0);
 
 DELETE FROM `gameobject` WHERE `id`=194151;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES

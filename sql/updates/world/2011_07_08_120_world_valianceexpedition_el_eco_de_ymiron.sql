@@ -47,12 +47,12 @@ INSERT INTO `script_texts` (entry, content_default, TYPE, emote) VALUES
 SET @CreatureGUID := 202300;
 
 DELETE FROM creature WHERE id IN(24314, 24315, 24248, 24327);
-INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) values
-(@CreatureGUID+0, 24314, 571, 1, 2, 0, 0, 1070.78, -5029.16, 9.80087, 4.93592, 300, 0, 0, 5158, 0, 0, 0, 0, 0, 0),
-(@CreatureGUID+1, 24315, 571, 1, 2, 0, 0, 1073.62, -5032.9, 9.88443, 3.24653, 300, 0, 0, 5158, 0, 0, 0, 0, 0, 0),
-(@CreatureGUID+2, 24248, 571, 1, 2, 0, 0, 1061.16, -4915.53, 11.3146, 3.29914, 300, 0, 0, 27890000, 0, 0, 0, 0, 0, 0),
-(@CreatureGUID+3, 24327, 571, 1, 2, 0, 0, 1064.48, -4907.72, 17.2031, 3.56383, 300, 0, 0, 9610, 0, 0, 0, 0, 0, 0),
-(@CreatureGUID+4, 24327, 571, 1, 2, 0, 0, 1069, -4921.13, 17.2031, 3.41617, 300, 0, 0, 9610, 0, 0, 0, 0, 0, 0);
+INSERT IGNORE INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) values
+(@CreatureGUID+0, 24314, 571, 1, 2, 0, 0, 1070.78, -5029.16, 9.80087, 4.93592, 300, 0, 0, 5158, 0, 0, 0, 0, 0),
+(@CreatureGUID+1, 24315, 571, 1, 2, 0, 0, 1073.62, -5032.9, 9.88443, 3.24653, 300, 0, 0, 5158, 0, 0, 0, 0, 0),
+(@CreatureGUID+2, 24248, 571, 1, 2, 0, 0, 1061.16, -4915.53, 11.3146, 3.29914, 300, 0, 0, 27890000, 0, 0, 0, 0, 0),
+(@CreatureGUID+3, 24327, 571, 1, 2, 0, 0, 1064.48, -4907.72, 17.2031, 3.56383, 300, 0, 0, 9610, 0, 0, 0, 0, 0),
+(@CreatureGUID+4, 24327, 571, 1, 2, 0, 0, 1069, -4921.13, 17.2031, 3.41617, 300, 0, 0, 9610, 0, 0, 0, 0, 0);
 
 SET @GUID_GO := 153200;
 
