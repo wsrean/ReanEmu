@@ -172,8 +172,8 @@ public:
 ## npc_vekjik
 ######*/
 
-#define GOSSIP_VEKJIK_ITEM1 "Shaman Vekjik, I have spoken with the big-tongues and they desire peace. I have brought this offering on their behalf."
-#define GOSSIP_VEKJIK_ITEM2 "No no... I had no intentions of betraying your people. I was only defending myself. it was all a misunderstanding."
+#define GOSSIP_VEKJIK_ITEM1 "Chaman Vekjik, he hablado con los lenguas-grandes y desean la paz. He traido esta ofrenda en su nombre."    //"Shaman Vekjik, I have spoken with the big-tongues and they desire peace. I have brought this offering on their behalf."
+#define GOSSIP_VEKJIK_ITEM2 "No no... no tengo intención de traicionar a tu gente. Solo intentaba defenderme, fue todo un malentendido." //"No no... I had no intentions of betraying your people. I was only defending myself. it was all a misunderstanding."
 
 enum eVekjik
 {
@@ -220,6 +220,7 @@ public:
             case GOSSIP_ACTION_INFO_DEF+2:
                 player->CLOSE_GOSSIP_MENU();
                 DoScriptText(SAY_TEXTID_VEKJIK1, creature, player);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
                 player->AreaExploredOrEventHappens(QUEST_MAKING_PEACE);
                 creature->CastSpell(player, SPELL_FREANZYHEARTS_FURY, false);
                 break;
@@ -958,6 +959,41 @@ public:
     }
 };
 
+enum mistwhisperTreasure
+{
+    QUEST_LOST_MISTWHISPER_TREASURE = 12575,
+    NPC_WARLORD_TARTEK              = 28105,
+    ITEM_MISTWHISPER_TREASURE       = 38601,
+};
+
+class go_mistwhisper_treasure : public GameObjectScript
+{
+public:
+    go_mistwhisper_treasure() : GameObjectScript("go_mistwhisper_treasure") { }
+
+    bool OnGossipHello(Player* player, GameObject* go)
+    {
+        if (player->HasItemCount(ITEM_MISTWHISPER_TREASURE, 1) && player->GetQuestStatus(QUEST_LOST_MISTWHISPER_TREASURE) == QUEST_STATUS_INCOMPLETE)
+        {
+            if (tartekGUID)
+                if (Creature* tartek = player->GetCreature(*player, tartekGUID))
+                    if (tartek->isAlive())
+                        return false;
+                    else
+                        tartek->DespawnOrUnsummon();
+
+            if (Creature*  tartek = go->SummonCreature(NPC_WARLORD_TARTEK, 6708.30f, 5147.15f, 0.92712f, 4.9878f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
+            {
+                tartekGUID = tartek->GetGUID();
+                tartek->GetMotionMaster()->MovePoint(0, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
+            }
+        }
+        return true;
+    }
+private:
+    uint64 tartekGUID;
+};
+
 void AddSC_sholazar_basin()
 {
     new npc_injured_rainspeaker_oracle();
@@ -972,4 +1008,5 @@ void AddSC_sholazar_basin()
     new npc_harkek_gossip();
     new spell_song_of_cleansing();
     new npc_moodle();
+    new go_mistwhisper_treasure();
 }
