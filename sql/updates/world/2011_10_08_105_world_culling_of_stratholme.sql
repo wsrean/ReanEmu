@@ -1,4 +1,4 @@
-﻿UPDATE `creature_template` SET `gossip_menu_id` = 907 WHERE `entry` = 26499;
+UPDATE `creature_template` SET `gossip_menu_id` = 907 WHERE `entry` = 26499;
 
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_chromie' WHERE `entry` = 26527;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_cos_zombie' WHERE `entry` = 27737;
