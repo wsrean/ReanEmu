@@ -29,6 +29,7 @@ EndContentData */
 
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
+#include "Vehicle.h"
 
 /*######
 ## npc_apothecary_hanes
