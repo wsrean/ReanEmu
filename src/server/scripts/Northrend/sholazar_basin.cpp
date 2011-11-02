@@ -907,6 +907,39 @@ public:
     }
 };
 
+/*##########
+# npc_moodle
+###########*/
+
+enum MoodleData
+{
+    AREA_MOSSWALKER_VILLAGE = 4297,
+    QUEST_THE_ANGRY_GORLOC = 12578
+};
+
+class npc_moodle : public CreatureScript
+{
+public:
+    npc_moodle() : CreatureScript("npc_moodle") { }
+
+    struct npc_moodleAI : public ScriptedAI
+    {
+        npc_moodleAI(Creature* creature) : ScriptedAI(creature) {}
+
+        void Reset()
+        {
+            if (Unit* owner = me->GetOwner())
+                if (owner->GetTypeId() == TYPEID_PLAYER)
+                    if (owner->ToPlayer()->GetAreaId() == AREA_MOSSWALKER_VILLAGE && owner->ToPlayer()->GetQuestStatus(QUEST_THE_ANGRY_GORLOC) == QUEST_STATUS_INCOMPLETE)
+                        owner->ToPlayer()->GroupEventHappens(QUEST_THE_ANGRY_GORLOC, me);
+        }
+    };
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_moodleAI(creature);
+    }
+};
+
 void AddSC_sholazar_basin()
 {
     new npc_injured_rainspeaker_oracle();
@@ -920,4 +953,5 @@ void AddSC_sholazar_basin()
     new npc_captive_croco_vehicle();
     new npc_harkek_gossip();
     new spell_song_of_cleansing();
+    new npc_moodle();
 }
