@@ -11,22 +11,25 @@ repositorios en commits personales y por cada una de las cosas
 minimas que hagan referentes al mismo tema y se clasificaran tambien
 con una tag para que asemeje a un solo topico en concreto:
 
-core/general
-core/spells
-scripts/depende a la instance
-spell/script
-quest/script
-sql/dependendiendo
+Nombre: Descripcion
+------  -----------
+Spell: texto
+Script: texto
+Instance: texto
+Quest: texto script sql
+Reputacion: texto script sql
+SQL: dependiendo
 
-En minuscula todo, para diferenciar con tc standars. Todos los commits
-seran en ESPAÑOl, excepto los nombres referentes a cosas del emulador 
-como tal, spells, nombres de las mismas, nombres de archivos,
-dependencias, etc. Los nombres de archivos que describan los cambios 
-en sql, serán en inglés y se ajustarán a la cronologia de tc en la 
-carpeta sql/update y world o auth de acuerdo a lo que corresponda asi:
+Todos los commits seran en ESPAÑOl, excepto los nombres referentes 
+a cosas del emulador como tal, spells, nombres de las mismas, nombres 
+de archivos, dependencias, etc. Los nombres de archivos que describan 
+los cambios en sql, serán en inglés y se ajustarán a la cronologia de 
+tc en la carpeta sql/update, ya sea en world, characters o auth de 
+acuerdo a lo que corresponda cada query o grupo en concreto asi:
 
-año-mes-dia-numero mayor a 100_Nombre_explicativo_instance_mapa_script
-2011-09-01-102_OutdoorPvPWG_world_bunners.sql
+año-mes-dia-numero mayor a 100_carpeta_texto_explicativo.sql
+--- --- --- ------------------ ---------------------------------------
+2011_09_01_102_world_OutdoorPvPWG_bunners.sql
 
 Ojo, siempre mayor a cien, para no pisar cualquier commit de tc. Otra
 cosa que hay que tomarse en cuenta es el hecho de que si algo es de
@@ -54,19 +57,27 @@ De manera general:
 ----------------
 tc:    se actualiza solo con cosas de TC y no se mezcla aqui, nada 
        de lo del resto de repos, es decir una tc limpia tal cual.
-	 
+	   Tag -> (tc)
+
 warden:esta lleva solo lo de warden, nada mezclado aqui, es decir
        una warden limpia.
-		
+	   Tag -> (warden)
+
 merge: en esta se mezclaran warden y tc, y se retocaran aspectos que
        se considere importante pero no custom ni nada fuera de tc, 
 	   sino al contrario, aspectos netamente de funcionalidad y de 
 	   estabilidad referentes a las dos versiones que entran aqui, 
 	   los fixes se haran aqui, no en las branches de arriba. Hay que
 	   añadir un TAG a esta branch. y tendrá un what is inside propio.
+	   Tag -> (merge)
+
 -----------------
 --Segundo Grupo--
 -----------------
+Estas branches seran hechas a partir de experimental en las cuentas 
+personales de git de cada uno, sin embargo los commits se haran sobre 
+el branch experimental del repo.
+
 eilo: esta sera mi branch personal, aqui hare y deshare lo que sea
       necesario para mi o a mi criterio. Siempre comentare cada accion
 	  con un commit individual por mas chorra que sea. Dado que en 
@@ -79,8 +90,7 @@ eilo: esta sera mi branch personal, aqui hare y deshare lo que sea
 	  algun commit tiene referencia a alguno de los repos de otro dev, 
 	  es imprescindible comunicarlo. Cada uno tendra un What Is inside
 	  individual, y cada branch de cada developer saldra a partir del
-	  branch merge. Cada uno pondrá una TAG en el top de cada una de 
-	  sus branches para que aparezcan en el experimental.
+	  branch merge.
 	  
 jesus:branch personal de jesus que tiene q ir con las mismas condiciones
       citadas arriba, todas y cada una. Se depreca el cherry pick por 
@@ -92,14 +102,14 @@ ws:   Exactamente las mismas condiciones expuestas en los dos parrafos
       anteriores, y cada cosa que se quiera hacer se debe hablar con los
 	  otros dos en caso de que este hecho o no, y mantener al dia el what
 	  is inside de cada uno. Es importante tener una copia del repo 
-	  individual vuestro y otra copia del repo de PoC limpio para swichear
+	  individual vuestro y otra copia del repo de rean limpio para swichear
 	  branches y visualizar sin problema el panorama claramente.
 	  
 experimental: Aqui se unirá cada cierto tiempo todo el material que
-      consideremos como "funcional" de cada uno de nuestros branches
+      consideremos como "funcional" de cada uno de nuestros avances
 	  de manera que aqui se haga las primeras pruebas y se pueda ver
 	  los errores en conjunto. Este branch no es para solucionar 
-	  errores de los branchs personales, es decir, si se equivocaron
+	  errores de los commits personales, es decir, si se equivocaron
 	  un typo, lo corrigen en vuestro branch personal y una vez
 	  corregido, lo traen al experimental. No al revés. Este branch irá
 	  directo a ser probado en reino de pruebas para ir sacando el
@@ -108,19 +118,22 @@ experimental: Aqui se unirá cada cierto tiempo todo el material que
 	  Cada vez q necesiteis revertir algo, se lo hara en el mismo 
 	  commit de cada uno y en su momento debera ser notificado al 
 	  respectivo developer y su causa.
+	  Tag -> (experimental)
+	  
 ----------------			  
 --Tercer Grupo--
 ----------------
 master: Aqui se comentará el trabajo final, por fechas, testeado en 
 		experimental y que contenga la característica de estabilidad y 
-		funcionalidad. En master vienen las versiones finales, si ocurre 
-		algun fix para la version final, tiene que pasar el respectivo 
-		proceso, por el repo de merge, luego al individual de todos, y 
-		despues al experimental y finalmente al master. De ninguna 
-		manera permitido al reves.
+		funcionalidad con el tag de Milestone#.#. En master vienen las 
+		versiones finales, si ocurre algun fix para la version final, 
+		tiene que pasar el respectivo proceso, por el repo de merge, 
+		luego al individual de todos, y despues al experimental y 
+		finalmente al master. De ninguna manera permitido al reves.
+		Tag -> (master) & [automatico]Tag -> (head)
 
 El proceso en general se lograra hacer mas llevadero y sobre todo nos 
-ayudara para alcanzar esta meta inmensa como equipo de desarrollo de PoC.
+ayudara para alcanzar esta meta inmensa como equipo de desarrollo de rean.
 
 Saludos
 Eilo		
