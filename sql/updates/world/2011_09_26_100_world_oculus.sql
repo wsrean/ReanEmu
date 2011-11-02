@@ -127,8 +127,3 @@ INSERT INTO `spell_script_names` VALUES
 (49464, 'spell_oculus_rider_aura'),
 (49346, 'spell_oculus_rider_aura'),
 (53797, 'spell_oculus_drake_flag');
-
--- Reset del logro "Haz que cuente"
-UPDATE trinichars.worldstates SET value=256 WHERE entry=20004;
-INSERT INTO trinichars.stored_db_queries VALUES
-(2, 'Borrado del logro "Haz que cuente"', 0, 'DELETE FROM `character_achievement` WHERE achievement = 1868;');
