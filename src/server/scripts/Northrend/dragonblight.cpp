@@ -314,6 +314,26 @@ public:
     }
 };
 
+/*###########################
+# at_azure_dragons_sanctuary
+############################*/
+
+class at_azure_dragons_sanctuary : public AreaTriggerScript
+{
+    public:
+
+        at_azure_dragons_sanctuary() : AreaTriggerScript("at_azure_dragons_sanctuary") {}
+
+        bool OnTrigger(Player* player, AreaTriggerEntry const* /*trigger*/)
+        {
+            if (player->GetQuestStatus(12107) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(12110) == QUEST_STATUS_INCOMPLETE)
+            {
+                player->KilledMonsterCredit(26889,0);
+                return true;
+            }
+        }
+};
+
 void AddSC_dragonblight()
 {
     new npc_alexstrasza_wr_gate;
@@ -321,4 +341,5 @@ void AddSC_dragonblight()
     new npc_ws_battle_standard;
     new item_emblazoned_battle_horn;
     new npc_woodlands_walker();
+    new at_azure_dragons_sanctuary();
 }
