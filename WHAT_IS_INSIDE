@@ -98,6 +98,7 @@ Adaptaciones cosmeticas por Eilo
 07/10/2011: DynamicLoS en Circulo de Valor por Souler
 10/10/2011: DynamicLoS mejoras en funcionamiento por Karlos
 09/10/2011: Desactivado aviso de Join/Leave en canales por Odyssey
+03/10/2011: Fix un crash en handledummyauraproc con sentencia de luz por Odyssey
 Adaptaciones, codestyle y union por Eilo
 
 ############################
