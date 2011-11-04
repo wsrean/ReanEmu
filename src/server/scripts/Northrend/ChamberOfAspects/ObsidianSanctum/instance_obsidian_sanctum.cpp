@@ -18,7 +18,7 @@
 #include "ScriptPCH.h"
 #include "obsidian_sanctum.h"
 
-#define MAX_ENCOUNTER     1
+#define MAX_ENCOUNTER     4
 
 /* Obsidian Sanctum encounters:
 0 - Sartharion
@@ -29,14 +29,14 @@ class instance_obsidian_sanctum : public InstanceMapScript
 public:
     instance_obsidian_sanctum() : InstanceMapScript("instance_obsidian_sanctum", 615) { }
 
-    InstanceScript* GetInstanceScript(InstanceMap* map) const
+    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
     {
-        return new instance_obsidian_sanctum_InstanceMapScript(map);
+        return new instance_obsidian_sanctum_InstanceMapScript(pMap);
     }
 
     struct instance_obsidian_sanctum_InstanceMapScript : public InstanceScript
     {
-        instance_obsidian_sanctum_InstanceMapScript(Map* map) : InstanceScript(map) {}
+        instance_obsidian_sanctum_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         uint64 m_uiSartharionGUID;
@@ -73,7 +73,7 @@ public:
 
         void OnCreatureCreate(Creature* creature)
         {
-            switch (creature->GetEntry())
+            switch(creature->GetEntry())
             {
                 case NPC_SARTHARION:
                     m_uiSartharionGUID = creature->GetGUID();
@@ -97,33 +97,49 @@ public:
 
         void SetData(uint32 uiType, uint32 uiData)
         {
-            if (uiType == TYPE_SARTHARION_EVENT)
-                m_auiEncounter[0] = uiData;
-            else if (uiType == TYPE_TENEBRON_PREKILLED)
+            switch(uiType)
+            {
+            case TYPE_SARTHARION_EVENT:
+                if(m_auiEncounter[0] != DONE)
+                    m_auiEncounter[0] = uiData;
+                break;
+            case TYPE_TENEBRON_PREKILLED:
+                m_auiEncounter[1] = DONE;
                 m_bTenebronKilled = true;
-            else if (uiType == TYPE_SHADRON_PREKILLED)
+                break;
+            case TYPE_SHADRON_PREKILLED:
+                m_auiEncounter[2] = DONE;
                 m_bShadronKilled = true;
-            else if (uiType == TYPE_VESPERON_PREKILLED)
+                break;
+            case TYPE_VESPERON_PREKILLED:
+                m_auiEncounter[3] = DONE;
                 m_bVesperonKilled = true;
+                break;
+            }
+
+            if(uiData == DONE)
+                SaveToDB();
         }
 
         uint32 GetData(uint32 uiType)
         {
-            if (uiType == TYPE_SARTHARION_EVENT)
+            switch(uiType)
+            {
+            case TYPE_SARTHARION_EVENT:
                 return m_auiEncounter[0];
-            else if (uiType == TYPE_TENEBRON_PREKILLED)
-                return m_bTenebronKilled;
-            else if (uiType == TYPE_SHADRON_PREKILLED)
-                return m_bShadronKilled;
-            else if (uiType == TYPE_VESPERON_PREKILLED)
-                return m_bVesperonKilled;
-
+            case TYPE_TENEBRON_PREKILLED:
+                return m_bTenebronKilled && m_auiEncounter[1] == DONE;
+            case TYPE_SHADRON_PREKILLED:
+                return m_bShadronKilled && m_auiEncounter[2] == DONE;
+            case TYPE_VESPERON_PREKILLED:
+                return m_bVesperonKilled && m_auiEncounter[3] == DONE;
+            }
             return 0;
         }
 
         uint64 GetData64(uint32 uiData)
         {
-            switch (uiData)
+            switch(uiData)
             {
                 case DATA_SARTHARION:
                     return m_uiSartharionGUID;
@@ -135,6 +151,42 @@ public:
                     return m_uiVesperonGUID;
             }
             return 0;
+        }
+
+        std::string GetSaveData()
+        {
+            std::ostringstream saveStream;
+            saveStream << "O S ";
+            for(int i = 0; i < MAX_ENCOUNTER; ++i)
+                saveStream << m_auiEncounter[i] << " ";
+
+            return saveStream.str();
+        }
+
+        void Load(const char * data)
+        {
+            std::istringstream loadStream(data);
+            char dataHead1, dataHead2;
+            loadStream >> dataHead1 >> dataHead2;
+            std::string newdata = loadStream.str();
+
+            uint32 buff;
+            if(dataHead1 == 'O' && dataHead2 == 'S')
+            {
+                for(int i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    loadStream >> buff;
+                    m_auiEncounter[i]= buff;
+                }
+            }
+
+            m_bTenebronKilled = (m_auiEncounter[1] == DONE);
+            m_bShadronKilled = (m_auiEncounter[2] == DONE);
+            m_bVesperonKilled = (m_auiEncounter[3] == DONE);
+
+            for(int i = 0; i < MAX_ENCOUNTER; ++i)
+                if(m_auiEncounter[i] != DONE)
+                    m_auiEncounter[i] = NOT_STARTED;
         }
     };
 
