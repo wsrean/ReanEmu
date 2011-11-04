@@ -184,15 +184,16 @@ Adecuaciones por Eilo
 ########################
 # Dungeons e Instances #
 ########################
-11/02/2011: Drak'tharon, permitir reinicio boss Novos por Odyssey
-08/07/2011: DireMaul script de pusillin por Odyssey
-08/10/2011: Halls of Reflection reimplementacion completa por Odyssey
-08/10/2011: Culling of Stratholme alta reimplementacion por Souler
-08/10/2011: Utgarde Pinnacle alta reimplementacion por Souler
-26/09/2011: Oculus reimplementacion y recompensa lfg por Karlos
-01/10/2011: UtgardeKeep apaño a ingvar en sus fases por Souler
-29/09/2011: Halls of Stone apaño a krystallus pet exploit por Souler
-09/08/2011: Gundrak Remover Mojo Volley en DrakkariElemental por Odyssey
+11/02/2011: Drak'tharon: permitir reinicio boss Novos por Odyssey
+08/07/2011: DireMaul: script de pusillin por Odyssey
+08/10/2011: Halls of Reflection: reimplementacion completa por Odyssey
+08/10/2011: Culling of Stratholme: alta reimplementacion por Souler
+08/10/2011: Utgarde Pinnacle: alta reimplementacion por Souler
+26/09/2011: Oculus: reimplementacion y recompensa lfg por Karlos
+01/10/2011: UtgardeKeep: apaño a ingvar en sus fases por Souler
+29/09/2011: Halls of Stone: apaño a krystallus pet exploit por Souler
+09/08/2011: Gundrak: Remover Mojo Volley en DrakkariElemental por Odyssey
+20/08/2011: Halls of Reflection: Mejora en script de oleadas por Jildor
 01/11/2011: DoCompleteAchievement funcion reañadida al nucleo como funcion activa por Eilo
 Adecuaciones y actualizaciones de sql y scripts por Eilo
 
