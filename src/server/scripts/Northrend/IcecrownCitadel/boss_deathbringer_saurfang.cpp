@@ -656,8 +656,7 @@ class npc_high_overlord_saurfang_icc : public CreatureScript
                                 deathbringer->CastSpell(me, SPELL_RIDE_VEHICLE, true);  // for the packet logs.
                                 deathbringer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                                 deathbringer->setDeathState(ALIVE);
-								deathbringer->EnterVehicle(me, 0); // Fix WS ahora el padre carga al hijo
-
+                                deathbringer->EnterVehicle(me, 0); // Fix WS ahora el padre carga al hijo
                             }
                             _events.ScheduleEvent(EVENT_OUTRO_HORDE_5, 1000);    // move
                             _events.ScheduleEvent(EVENT_OUTRO_HORDE_6, 4000);    // say
