@@ -106,6 +106,7 @@ Adaptaciones cosmeticas por Eilo
 21/10/2011: Apaño de stacks de maldicion de los elementos(brujo) a 1 por Jildor
 29/10/2011: Evitando que puedan poner totems dentro de las paredes por Opcode187
 05/10/2011: Permitiendo unirse al canal LFG sin estar en ciudad principal por Opcode187
+05/10/2011: Previniendo ArPen negativo, atacante ni atacado por Opcode187
 Adaptaciones, codestyle y union por Eilo
 
 ############################
