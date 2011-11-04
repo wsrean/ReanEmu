@@ -18,6 +18,7 @@ UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_lich_king_hor' WH
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_raging_gnoul' WHERE `entry`=36940;
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_risen_witch_doctor' WHERE `entry`=36941;
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_abon' WHERE `entry`=37069;
+UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_queldelar' WHERE `entry`=37158;
 
 UPDATE `creature_template` SET `unit_flags` = 32784, `AIName` = '', `ScriptName` = 'npc_spiritual_reflection', `difficulty_entry_1` = 37721 WHERE `entry` = 37107;
 UPDATE `creature_template` SET `minlevel` = 80, `maxlevel` = 80, `unit_flags` = 32784, `mindmg` = '422', `maxdmg` = '586', `attackpower` = '642', `dmg_multiplier` = '13' WHERE `entry` = 37721;
@@ -279,5 +280,38 @@ INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `positi
 (@GUID_GO+20,500003,668,3,1,5245.17,1582.11,761.72,5.86166,0,0,0.209207,-0.977871,300,0,1),
 (@GUID_GO+21,202212,668,1,1,5253.03,1585.13,796.089,2.75698,0,0,0.981566,0.191121,300,0,1),
 (@GUID_GO+22,201710,668,1,1,5262.5,1582.41,794.342,2.75698,0,0,0.981566,0.191121,300,0,1);
+
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=27993);
+INSERT INTO `gameobject_loot_template` VALUES 
+(27993, 43102, 100, 1, 0, 1, 1),
+(27993, 47241, 100, 1, 0, 1, 1),
+(27993, 50302, 0, 1, 1, 1, 1),
+(27993, 50303, 0, 1, 1, 1, 1),
+(27993, 50304, 0, 1, 2, 1, 1),
+(27993, 50305, 0, 1, 2, 1, 1),
+(27993, 50306, 0, 1, 1, 1, 1),
+(27993, 50308, 0, 1, 2, 1, 1),
+(27993, 50309, 0, 1, 1, 1, 1),
+(27993, 50310, 0, 1, 2, 1, 1),
+(27993, 50311, 0, 1, 2, 1, 1),
+(27993, 50312, 0, 1, 2, 1, 1),
+(27993, 50313, 0, 1, 1, 1, 1),
+(27993, 50314, 0, 1, 1, 1, 1);
+
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=27985);
+INSERT INTO `gameobject_loot_template` VALUES 
+(27985, 47241, 100, 1, 0, 1, 1),
+(27985, 49839, 0, 1, 1, 1, 1),
+(27985, 49840, 0, 1, 1, 1, 1),
+(27985, 49841, 0, 1, 2, 1, 1),
+(27985, 49842, 0, 1, 2, 1, 1),
+(27985, 49843, 0, 1, 2, 1, 1),
+(27985, 49844, 0, 1, 1, 1, 1),
+(27985, 49845, 0, 1, 1, 1, 1),
+(27985, 49846, 0, 1, 1, 1, 1),
+(27985, 49847, 0, 1, 2, 1, 1),
+(27985, 49848, 0, 1, 2, 1, 1),
+(27985, 49849, 0, 1, 1, 1, 1),
+(27985, 49851, 0, 1, 2, 1, 1);
 
 COMMIT;
