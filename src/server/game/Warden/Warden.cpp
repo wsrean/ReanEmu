@@ -206,6 +206,13 @@ uint32 Warden::BuildChecksum(const uint8* data, uint32 length)
 std::string Warden::Penalty()
 {
     uint32 action = sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_FAIL_ACTION);
+    std::string str = "";
+
+    //Mensaje en el centro pantalla de los GM de aviso de warden anticheat
+    str = "|cFFFFFC00[WARDEN]|cFF00FFFF[|cFF60FF00" + std::string(_session->GetPlayerName()) + "|cFF00FFFF] Possible cheater!";
+    WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
+    data << str;
+    sWorld->SendGlobalGMMessage(&data);
 
     switch (action)
     {

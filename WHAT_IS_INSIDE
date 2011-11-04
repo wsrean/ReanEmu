@@ -30,6 +30,7 @@ Adaptaciones varias y mejora de querys y codigos varios por Eilo.
 31/10/2011: Commit:516b6f14514a1b49fbc50fb86af01966a404de12
 * Core/Warden: Disabled reloading ability for warden_checks table. 
                Requires a more advanced approach.
+03/11/2011: Añadido mensaje central cheaters warden por Eilo
 Adecuaciones por Eilo
 
 ################################################
