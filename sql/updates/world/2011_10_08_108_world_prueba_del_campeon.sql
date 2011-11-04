@@ -178,8 +178,8 @@ INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entr
 (35591, 0, 0, 0, 0, 0, 29894, 0, 0, 0, 'Jaeren Sunsworn', '', '', 0, 75, 75, 2, 14, 14, 0, 1, 1, 0, 0, 0, 0, 0, 1, 2000, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'npc_anstart'),
 (35592, 0, 0, 0, 0, 0, 29893, 0, 0, 0, 'Arelas Brightstar', '', '', 0, 75, 75, 2, 14, 14, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 512, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'npc_anstart');-- Spawn new announcer
 DELETE FROM `creature` WHERE `guid` = 230961;
-INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
-(230961, 35591, 650, 3, 1, 0, 0, 746.626, 618.54, 411.09, 4.63158, 86400, 0, 0, 10635, 0, 0, 0);
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`) VALUES
+(230961, 35591, 650, 3, 1, 0, 0, 746.626, 618.54, 411.09, 4.63158, 86400, 0, 10635, 0, 0, 0);
 
 REPLACE INTO `spell_script_names` VALUES
 ('62575', 'spell_gen_shieldbreaker'),
@@ -188,7 +188,7 @@ REPLACE INTO `spell_script_names` VALUES
 
 DELETE FROM `creature` WHERE `guid` = 230961; -- Despwan an_start
 DELETE FROM `creature` WHERE `guid` = 200038; -- despwan announcer
-INSERT INTO `creature` VALUES (200038, 35004, 650, 3, 1, 0, 0, 748.309, 619.488, 411.172, 4.71239, 120, 0, 0, 1, 0, 0, 0, 0, 0, 0); -- spawn announcer
+INSERT INTO `creature` VALUES (200038, 35004, 650, 3, 1, 0, 0, 748.309, 619.488, 411.172, 4.71239, 120, 0, 0, 1, 0, 0, 0, 0, 0); -- spawn announcer
 -- Modify faction for mounts of players
 UPDATE `creature_template` SET `faction_A`=84, `faction_H`=84 WHERE `entry`=35644;
 UPDATE `creature_template` SET `faction_A`=83, `faction_H`=83 WHERE `entry`=36558;
