@@ -1806,6 +1806,551 @@ public:
     }
 };
 
+/*########
+## npc_the_ocular
+#########*/
+
+enum TheOcularSpells
+{
+    SPELL_THE_OCULAR_TRANSFORM                              = 55162,
+    SPELL_DEATHLY_STARE                                     = 55269,
+    SPELL_ITS_ALL_FUN_AND_GAMES_THE_OCULAR_ON_DEATH         = 55288,
+    SPELL_ITS_ALL_FUN_AND_GAMES_THE_OCULAR_KILL_CREDIT      = 55289
+};
+
+enum ReqCreatures
+{
+   NPC_THE_OCULAR                                  = 29747,
+   NPC_THE_OCULAR_DESTROYED_KILL_CREDIT_BUNNY      = 29803
+};
+
+class npc_the_ocular : public CreatureScript
+{
+public:
+    npc_the_ocular() : CreatureScript("npc_the_ocular") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_the_ocularAI (pCreature);
+    }
+
+    struct npc_the_ocularAI : public Scripted_NoMovementAI
+    {
+        npc_the_ocularAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature){ }
+
+        uint32 uiDeathlyStareTimer;
+
+        void Reset()
+        {
+            uiDeathlyStareTimer = (urand (5000,7000));
+        }
+
+        void DamageTaken(Unit* attacker, uint32 &damage)
+        {
+            me->LowerPlayerDamageReq(damage);
+        }
+
+        void JustDied (Unit* killer)
+        {
+            if(killer && killer->ToPlayer())
+                killer->ToPlayer()->CastSpell(killer,SPELL_ITS_ALL_FUN_AND_GAMES_THE_OCULAR_KILL_CREDIT,true);
+        }
+
+        void UpdateAI(const uint32 uiDiff)
+        {
+            if(!me->HasAura(SPELL_THE_OCULAR_TRANSFORM))
+                DoCast(me,SPELL_THE_OCULAR_TRANSFORM,true);
+
+            if (!UpdateVictim())
+                return;
+
+            if (uiDeathlyStareTimer <= uiDiff)
+            {
+                DoCastVictim(SPELL_DEATHLY_STARE);
+                uiDeathlyStareTimer = (urand (7000,9000));
+            }
+            else uiDeathlyStareTimer -= uiDiff;
+        }
+    };
+};
+
+/*########
+## npc_general_lightsbane
+#########*/
+
+enum eGeneralLightsbaneSpells
+{
+    SPELL_CLEAVE                = 15284,
+    SPELL_DEATH_AND_DECAY       = 60160,
+    SPELL_PLAGUE_STRIKE         = 60186,
+};
+
+enum eNpcs
+{
+    ENTRY_VILE                  = 29860,
+    ENTRY_THE_LEAPER            = 29859,
+    ENTRY_LADY_NIGHTSWOOD       = 29858,
+};
+
+class npc_general_lightsbane : public CreatureScript
+{
+public:
+    npc_general_lightsbane() : CreatureScript("npc_general_lightsbane") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_general_lightsbaneAI (pCreature);
+    }
+
+    struct npc_general_lightsbaneAI : public ScriptedAI
+    {
+        npc_general_lightsbaneAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+        uint32 uiCleave_Timer;
+        uint32 uiDeathDecay_Timer;
+        uint32 uiPlagueStrike_Timer;
+        uint32 uiSummonSupport_Timer;
+        bool supportSummoned;
+
+        void Reset()
+        {
+            uiCleave_Timer = urand (2000,3000);
+            uiDeathDecay_Timer = urand (15000,20000);
+            uiPlagueStrike_Timer = urand (5000,10000);
+
+            std::list<Creature*> TargetList;
+            me->GetCreatureListWithEntryInGrid(TargetList,me->GetEntry(), 100.0f);
+            if(TargetList.size() > 1)
+            {
+                me->DespawnOrUnsummon(1000);
+            }
+
+            uiSummonSupport_Timer = 5000;
+            supportSummoned = false;
+        }
+
+        void UpdateAI(const uint32 uiDiff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            if(!supportSummoned)
+                if (uiSummonSupport_Timer <= uiDiff)
+                {
+                    Creature* temp = DoSummon(ENTRY_VILE,me,5,20000,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT);
+                    temp->AI()->AttackStart(me);
+
+                    temp = DoSummon(ENTRY_THE_LEAPER,me,5,20000,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT);
+                    temp->AI()->AttackStart(me);
+
+                    temp = DoSummon(ENTRY_LADY_NIGHTSWOOD,me,5,20000,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT);
+                    temp->AI()->AttackStart(me);
+
+                    uiSummonSupport_Timer = (urand (4000,5000));
+                    supportSummoned = true;
+                }
+                else uiSummonSupport_Timer -= uiDiff;
+
+            if (uiCleave_Timer <= uiDiff)
+            {
+                DoCastVictim(SPELL_CLEAVE);
+                uiCleave_Timer = (urand (4000,5000));
+            }
+            else uiCleave_Timer -= uiDiff;
+
+            if (uiDeathDecay_Timer <= uiDiff)
+            {
+                DoCastVictim(SPELL_DEATH_AND_DECAY);
+                uiDeathDecay_Timer = urand (15000,20000);
+            }
+            else uiDeathDecay_Timer -= uiDiff;
+
+            if (uiPlagueStrike_Timer <= uiDiff)
+            {
+                DoCastVictim(SPELL_PLAGUE_STRIKE);
+                uiPlagueStrike_Timer = urand (5000,10000);
+            }
+            else uiPlagueStrike_Timer -= uiDiff;
+
+            DoMeleeAttackIfReady();
+        }
+    };
+};
+
+/*########
+## npc_free_your_mind_vile
+#########*/
+
+enum eFreeYourMindNPCSpells
+{
+    SPELL_SOVEREIGN_ROD             = 29070,
+    SPELL_SOVEREIGN_ROD_TRIGGERED   = 29071,
+    // Vile Abilities
+    SPELL_VILE_ENRAGE               = 56646,    // <50% HP ?
+    SPELL_VILE_BACKHAND             =  6253,
+    // Lady Nightswood Abilities
+    SPELL_BANSHEE_CURSE             = 5884,
+    SPELL_BANSHEE_SHRIEK            = 16838,
+    // The Leaper Abilities
+    SPELL_LEAPER_SNISTER_STRIKE     = 60195,
+    SPELL_LEAPER_HUNGER_FOR_BLOOD   = 60177,
+};
+
+enum eFreeYourMindNPCEntrys
+{
+    ENTRY_FYM_VILE          = 29769,
+    ENTRY_FYM_LADY          = 29770,
+    ENTRY_FYM_LEAPER        = 29840
+};
+
+#define SAY_VILE_AGGRO              "Crush... maim... DESTROY!"
+#define SAY_VILE_FREED              "Vile free? Vile love %n"
+
+#define SAY_LADY_NIGHTSWOOD_AGGRO   "Who intrudes upon my ritual?"
+#define SAY_LADY_NIGHTSWOOD_FREED   " You dare? Where is Baron Sliver? I would have words with him!"
+
+#define SAY_THE_LEAPER_AGGRO        "Mrrfrmrfrmrrrrr!"
+#define SAY_THE_LEAPER_FREED        "Mrmrmmrmrmrmrm... mrmrmrmr?!"
+
+// UPDATE `creature_template` SET ScriptName = 'npc_free_your_mind' WHERE `entry` IN (29769,29770,29840);
+
+class npc_free_your_mind : public CreatureScript
+{
+public:
+    npc_free_your_mind() : CreatureScript("npc_free_your_mind") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_free_your_mindAI (pCreature);
+    }
+
+    struct npc_free_your_mindAI : public ScriptedAI
+    {
+        npc_free_your_mindAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+        bool Enraged;
+
+        uint32 uiSpell1Entry_Timer;
+        uint32 uiSpell2Entry_Timer;
+        uint32 uiSpell1Entry;
+        uint32 uiSpell2Entry;
+
+        void Reset()
+        {
+            switch(me->GetEntry())
+            {
+            case ENTRY_FYM_VILE:
+                uiSpell1Entry = SPELL_VILE_BACKHAND;
+                uiSpell1Entry_Timer = urand (4000,6000);
+                uiSpell2Entry = SPELL_VILE_ENRAGE;
+                break;
+            case ENTRY_FYM_LADY:
+                uiSpell1Entry = SPELL_BANSHEE_CURSE;
+                uiSpell1Entry_Timer = urand (5000,6000);
+                uiSpell2Entry = SPELL_BANSHEE_SHRIEK;
+                uiSpell2Entry_Timer = urand (10000,12000);
+                break;
+            case ENTRY_FYM_LEAPER:
+                uiSpell1Entry = SPELL_LEAPER_SNISTER_STRIKE;
+                uiSpell1Entry_Timer = urand (4000,6000);
+                uiSpell2Entry = SPELL_LEAPER_HUNGER_FOR_BLOOD;
+                break;
+            }
+
+            me->RestoreFaction();
+        }
+
+        void EnterCombat(Unit* who)
+        {
+            Enraged = false;
+            switch(me->GetEntry())
+            {
+            case ENTRY_FYM_VILE:
+                me->MonsterSay(SAY_VILE_AGGRO,LANG_UNIVERSAL,who->GetGUID());
+                break;
+            case ENTRY_FYM_LEAPER:
+                me->MonsterSay(SAY_THE_LEAPER_AGGRO,LANG_UNIVERSAL,who->GetGUID());
+                break;
+            case ENTRY_FYM_LADY:
+                me->MonsterSay(SAY_LADY_NIGHTSWOOD_AGGRO,LANG_UNIVERSAL,who->GetGUID());
+                break;
+            }
+        }
+
+        void SpellHit(Unit* caster, SpellInfo const* spell)
+        {
+            if (spell->Id == SPELL_SOVEREIGN_ROD_TRIGGERED)
+            {
+                if(caster && caster->ToPlayer())
+                {
+                    me->setDeathState(ALIVE);
+                    me->setFaction(35);
+                    me->DespawnOrUnsummon(4000);
+
+                    switch(me->GetEntry())
+                    {
+                    case ENTRY_FYM_VILE:
+                        me->MonsterSay(SAY_VILE_FREED,LANG_UNIVERSAL,caster->GetGUID());
+                        caster->ToPlayer()->KilledMonsterCredit(29845,0);
+                        break;
+                    case ENTRY_FYM_LEAPER:
+                        me->MonsterSay(SAY_THE_LEAPER_FREED,LANG_UNIVERSAL,caster->GetGUID());
+                        caster->ToPlayer()->KilledMonsterCredit(29847,0);
+                        break;
+                    case ENTRY_FYM_LADY:
+                        me->MonsterSay(SAY_LADY_NIGHTSWOOD_FREED,LANG_UNIVERSAL,caster->GetGUID());
+                        caster->ToPlayer()->KilledMonsterCredit(29846,0);
+                        break;
+                    }
+                }
+            }
+        }
+
+        void UpdateAI(const uint32 uiDiff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            if (uiSpell1Entry_Timer <= uiDiff)
+            {
+                DoCastVictim(uiSpell1Entry);
+                switch(me->GetEntry())
+                {
+                case ENTRY_FYM_VILE:
+                case ENTRY_FYM_LEAPER:
+                    uiSpell1Entry_Timer = (urand (7000,9000));
+                    break;
+                case ENTRY_FYM_LADY:
+                     uiSpell1Entry_Timer = (urand (10000,15000));
+                     break;
+                }
+            }
+            else uiSpell1Entry_Timer -= uiDiff;
+
+            if(me->GetEntry() == ENTRY_FYM_VILE)
+            {
+                if (!Enraged && HealthBelowPct(30))
+                {
+                    DoCast(me, uiSpell2Entry, true);
+                    Enraged = true;
+                }
+            }
+            else
+            {
+                if (uiSpell2Entry_Timer <= uiDiff)
+                {
+                    DoCastVictim(uiSpell2Entry);
+                    uiSpell2Entry_Timer = (urand (8000,10000));
+                }
+                else uiSpell2Entry_Timer -= uiDiff;
+            }
+
+            DoMeleeAttackIfReady();
+        }
+    };
+};
+
+/*########
+## Saronite Mine Slave
+#########*/
+
+enum eEntrysSlaveToSaronite
+{
+    QUEST_SLAVES_TO_SARONITE_ALLIANCE       = 13300,
+    QUEST_SLAVES_TO_SARONITE_HORDE          = 13302,
+
+    ENTRY_SLAVE_QUEST_CREDIT                = 31866,
+
+    SPELL_SLAVE_ENRAGE                      = 8599,
+    SPELL_HEAD_CRACK                        = 3148,
+
+    ACTION_ENRAGED                          = 0,
+    ACTION_INSANE                           = 1,
+    ACTION_FREED                            = 2,
+};
+
+const Position FreedPos[2] =
+{
+    { 7030.0f,  1862.0f, 533.2f, 0.0f },
+    { 6947.0f,  2027.0f, 519.7f, 0.0f }
+};
+
+#define GOSSIP_OPTION_FREE  "Go on, you're free. Get out of here!"
+
+#define SAY_SLAVE_AGGRO_1 "AHAHAHAHA... you'll join us soon enough!"
+#define SAY_SLAVE_AGGRO_2 "I don't want to leave! I want to stay here!"
+#define SAY_SLAVE_AGGRO_3 "I won't leave!"
+#define SAY_SLAVE_AGGRO_4 "NO! You're wrong! The voices in my head are beautiful!"
+
+#define SAY_SLAVE_INSANE_1 "I must get further underground to where he is. I must jump!"
+#define SAY_SLAVE_INSANE_2 "I'll never return. The whole reason for my existence awaits below!"
+#define SAY_SLAVE_INSANE_3 "I'm coming, master!"
+#define SAY_SLAVE_INSANE_4 "My life for you!"
+
+class npc_saronite_mine_slave : public CreatureScript
+{
+public:
+    npc_saronite_mine_slave() : CreatureScript("npc_saronite_mine_slave") { }
+
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        if ((player->GetQuestStatus(QUEST_SLAVES_TO_SARONITE_HORDE) == QUEST_STATUS_INCOMPLETE) || (player->GetQuestStatus(QUEST_SLAVES_TO_SARONITE_ALLIANCE) == QUEST_STATUS_INCOMPLETE) )
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_OPTION_FREE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+        player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
+        return true;
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
+    {
+        player->PlayerTalkClass->ClearMenus();
+        player->CLOSE_GOSSIP_MENU();
+
+        if (uiAction == (GOSSIP_ACTION_INFO_DEF + 1))
+        {
+            creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
+            if(urand(0,1) == 0)
+            {
+                creature->AI()->DoAction(ACTION_FREED);
+                player->KilledMonsterCredit(ENTRY_SLAVE_QUEST_CREDIT,0);
+            }else
+            {
+                if(urand(0,1) == 0)
+                {
+                    creature->AI()->DoAction(ACTION_ENRAGED);
+                    creature->setFaction(16);
+                    creature->CastSpell(creature,SPELL_SLAVE_ENRAGE);
+                    creature->AI()->AttackStart(player);
+                }else creature->AI()->DoAction(ACTION_INSANE);
+            }
+        }
+        return true;
+    }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_saronite_mine_slaveAI (pCreature);
+    }
+
+    struct npc_saronite_mine_slaveAI : public ScriptedAI
+    {
+        npc_saronite_mine_slaveAI(Creature* pCreature) : ScriptedAI(pCreature)
+        {
+            alreadyFreed = false;
+            enraged = false;
+        }
+
+        bool enraged;
+        bool alreadyFreed;
+
+        uint32 uiHeadCrack_Timer;
+
+        void DoAction(const int32 action)
+        {
+            switch(action)
+            {
+            case ACTION_ENRAGED:
+                enraged = true;
+                alreadyFreed = true;
+                switch(urand(0,3))
+                {
+                case 0:
+                    me->MonsterYell(SAY_SLAVE_AGGRO_1,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 1:
+                    me->MonsterYell(SAY_SLAVE_AGGRO_2,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 2:
+                    me->MonsterYell(SAY_SLAVE_AGGRO_3,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 3:
+                    me->MonsterYell(SAY_SLAVE_AGGRO_4,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                }
+                break;
+            case ACTION_FREED:
+                alreadyFreed = true;
+                me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
+                me->GetMotionMaster()->MovePoint(0,FreedPos[0]);
+                me->DespawnOrUnsummon(15000);
+                break;
+            case ACTION_INSANE:
+                alreadyFreed = true;
+                switch(urand(0,3))
+                {
+                case 0:
+                    me->MonsterYell(SAY_SLAVE_INSANE_1,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 1:
+                    me->MonsterYell(SAY_SLAVE_INSANE_2,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 2:
+                    me->MonsterYell(SAY_SLAVE_INSANE_3,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                case 3:
+                    me->MonsterYell(SAY_SLAVE_INSANE_4,LANG_UNIVERSAL,me->GetGUID());
+                    break;
+                }
+                me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
+                me->GetMotionMaster()->MovePoint(0,FreedPos[1]);
+                me->DespawnOrUnsummon(15000);
+                break;
+            }
+        }
+
+        void MoveInLineOfSight(Unit* mover)
+        {
+            if(!enraged)
+                return;
+
+            ScriptedAI::MoveInLineOfSight(mover);
+        }
+
+        void AttackStart(Unit* attacker)
+        {
+            if(!enraged)
+                return;
+
+            ScriptedAI::AttackStart(attacker);
+        }
+
+        void Reset()
+        {
+            me->RestoreFaction();
+            if(alreadyFreed)
+            {
+                alreadyFreed = false;
+                me->DespawnOrUnsummon(10000);
+            }else
+            {
+                me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                alreadyFreed = false;
+                enraged = false;
+            }
+        }
+
+        void EnterCombat(Unit* who)
+        {
+            uiHeadCrack_Timer = urand(5000,7000);
+        }
+
+        void UpdateAI(const uint32 uiDiff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            if (uiHeadCrack_Timer <= uiDiff)
+            {
+                DoCastVictim(SPELL_HEAD_CRACK);
+                uiHeadCrack_Timer = (urand (7000,9000));
+            }
+            else uiHeadCrack_Timer -= uiDiff;
+
+            DoMeleeAttackIfReady();
+        }
+    };
+};
+
 void AddSC_icecrown()
 {
     new npc_arete;
@@ -1834,4 +2379,8 @@ void AddSC_icecrown()
     new item_writhing_mass;
     new npc_father_kamaros;
     new spell_construct_barricade();
+    new npc_the_ocular();
+    new npc_general_lightsbane();
+    new npc_free_your_mind();
+    new npc_saronite_mine_slave();
 }
