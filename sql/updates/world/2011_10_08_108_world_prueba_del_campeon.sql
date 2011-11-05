@@ -49,7 +49,7 @@ UPDATE `creature_template` SET
 `mindmg`='420',
 `maxdmg`='630',
 `attackpower`='157',
-`Health_mod`='5,95238' WHERE `entry` IN (33324, 33321, 33322, 33320, 33323, 33319, 33318, 33317, 33316, 33324);
+`Health_mod`='5.95238' WHERE `entry` IN (33324, 33321, 33322, 33320, 33323, 33319, 33318, 33317, 33316, 33324);
 
 -- Hp, damage and level..
 UPDATE `creature_template` SET
