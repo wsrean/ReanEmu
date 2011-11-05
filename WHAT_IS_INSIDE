@@ -10,26 +10,21 @@ documento con la informacion de lo que contiene dentro este emulador:
 ###########
 # ReanEmu #
 ###########
-30/10/2011: Milestone 0.2, con mejoras en general y una estructura que ya va dando 
-resultados, cambio de metodologia, aplicacion de planificacion y adicion de codigo
-utilitario en general para jugabilidad tanto en pve como en pvp, adiciones de quest
-para soporte de cadenas de misiones y varios, instaces sagrario rubi y custom
+04/10/2011: Milestone 0.3, mejoras en jugabilidad, en pvp, pve, sobre todo instances
+y mejoras en scripts de algunas quests y de funcionamiento en general, aun nada de
+spells, unicamente jugabilidad pve pvp en temas citados
 
 ##################################
 # Trintitycore hasta esta fecha: #
 ##################################
-01/11/2011: Commit:d3a7ac5d7dad8f3677de8b69d29ffbe36deb51dd
-* Merge pull request #3766 from Pesthuf/JumpFix
-Core/Units: Don't send StartTravel with MoveJump. Fixes client display of jumping eff
-
-Adaptaciones varias y mejora de querys y codigos varios por Eilo.
+04/11/2011: Commit:935527eebe8874027bba3af93805f4dcbba35428
+* Core/Spells: Use dbc flag to check if channeled spell can be interrupted
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
 #######################################################
-31/10/2011: Commit:516b6f14514a1b49fbc50fb86af01966a404de12
-* Core/Warden: Disabled reloading ability for warden_checks table. 
-               Requires a more advanced approach.
+31/10/2011: Commit:2819b30b70cb6c9c2fb3df4b5e47c20b197fca88
+* Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
 03/11/2011: Añadido mensaje central cheaters warden por Eilo
 Adecuaciones por Eilo
 
