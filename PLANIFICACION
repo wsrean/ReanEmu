@@ -47,9 +47,9 @@ de manera que no nos pisemos las cosas y mucho peor, tratar de
 unirlas, porque tampoco es necesario unir todas las branches entre si.
 
 La modalidad de branches estara en 3 grupos asi:
-          1                              2                      3
- --------------------	 ---------------------------------    ------
-(tc)&(warden)->(merge)  (eilo)&(jesus)&(ws)->(experimental)  (master)
+      1                         2                      3
+ -----------    ---------------------------------    ------
+(tc)&(warden)  (eilo)&(jesus)&(ws)->(experimental)  (master)
 
 De manera general:
 ----------------
@@ -62,14 +62,6 @@ tc:    se actualiza solo con cosas de TC y no se mezcla aqui, nada
 warden:esta lleva solo lo de warden, nada mezclado aqui, es decir
        una warden limpia.
 	   Tag -> (warden)
-
-merge: en esta se mezclaran warden y tc, y se retocaran aspectos que
-       se considere importante pero no custom ni nada fuera de tc, 
-	   sino al contrario, aspectos netamente de funcionalidad y de 
-	   estabilidad referentes a las dos versiones que entran aqui, 
-	   los fixes se haran aqui, no en las branches de arriba. Hay que
-	   añadir un TAG a esta branch. y tendrá un what is inside propio.
-	   Tag -> (merge)
 
 -----------------
 --Segundo Grupo--
@@ -117,7 +109,10 @@ experimental: Aqui se unirá cada cierto tiempo todo el material que
 	  de cada uno de los individuales y se expondra como un solo archivo.
 	  Cada vez q necesiteis revertir algo, se lo hara en el mismo 
 	  commit de cada uno y en su momento debera ser notificado al 
-	  respectivo developer y su causa.
+	  respectivo developer y su causa. En este branch cada cierto tiempo
+	  se va a ir pusheando tag->(tc) y tag->(warden) de manera que nos
+	  mantengamos al dia con las branchs principales del emulador, ademas
+	  de tener la tag visible en el log en experimental.
 	  Tag -> (experimental)
 	  
 ----------------			  
