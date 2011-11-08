@@ -26,6 +26,7 @@ spells, unicamente jugabilidad pve pvp en temas citados
 31/10/2011: Commit:2819b30b70cb6c9c2fb3df4b5e47c20b197fca88
 * Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
 03/11/2011: Añadido mensaje central cheaters warden por Eilo
+07/11/2011: Eliminado avisos en consola spam por Eilo
 Adecuaciones por Eilo
 
 ################################################
@@ -55,6 +56,7 @@ Adecuaciones cosmeticas por Eilo
 # Anticheat #
 #############
 13/10/2011: Anticheat pasivo por Locknes
+07/11/2011: Eliminado avisos en consola spam por Eilo
 Adecuaciones por Eilo
 
 ###############
