@@ -1563,6 +1563,8 @@ uint32 Unit::CalcArmorReducedDamage(Unit* victim, const uint32 damage, SpellInfo
         armor -= std::min(armorPen, maxArmorPen);
     }
 
+	armor *= 1.0f - GetTotalAuraModifier(SPELL_AURA_MOD_ARMOR_PENETRATION_PCT) / 100.0f;
+
     if (armor < 0.0f)
         armor = 0.0f;
 
