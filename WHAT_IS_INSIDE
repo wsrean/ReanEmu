@@ -1,6 +1,6 @@
 ﻿== ReanEmu ==
 
-What is inside: (qué hay dentro)
+What is inside: (que hay dentro)
 
 ReanEmu contiene muchos fixes y mejoras a base de algunos repos y autores muy 
 conocidos ademas de los nuestros propios, en un esfuerzo por unirlo en un solo 
@@ -10,9 +10,9 @@ documento con la informacion de lo que contiene dentro este emulador:
 ###########
 # ReanEmu #
 ###########
-04/10/2011: Milestone 0.3, mejoras en jugabilidad, en pvp, pve, sobre todo instances
-y mejoras en scripts de algunas quests y de funcionamiento en general, aun nada de
-spells, unicamente jugabilidad pve pvp en temas citados
+05/10/2011: Milestone 0.4, jugabilidad en dungeons y pulir detalles respecto
+a db y a parches que se han metido, actualizaciones con tc al dia ademas de icc 
+y ulduar blizzlike.
 
 ##################################
 # Trintitycore hasta esta fecha: #
@@ -77,7 +77,6 @@ Adaptaciones cosmeticas por Eilo
 18/10/2011: Reseteo de talentos duales por Faelon
 18/10/2011: Reconexion en BG por Faelon
 27/10/2011: Bindeo Instance loteo players por Greymane
-11/10/2011: Sql de spawns de menas en northrend por Ruben Mussi
 18/10/2011: Apaño de Formula de calculo de Parry por Faelon
 18/10/2011: Apaño del Dodge por Faelon
 22/10/2011: Guardado de Spells, especialmente dk evitando bugs por Odyssey
