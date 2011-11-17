@@ -2018,9 +2018,6 @@ class at_hor_waves_restarter : public AreaTriggerScript
             if(instance->GetData(DATA_WAVE_COUNT) == SPECIAL)
                 return true;
 
-            if(instance->GetData(DATA_WAVE_COUNT) != 0)
-                return true;
-
             if (instance->GetData(DATA_INTRO_EVENT) == DONE && instance->GetData(DATA_MARWYN_EVENT) != DONE)
             {
                 instance->SetData(DATA_WAVE_COUNT, SPECIAL);
