@@ -52,7 +52,7 @@ enum Yells
 };
 enum Creatures
 {
-    CREATURE_ARTHAS                               = 24266, // Image of Arthas
+    CREATURE_ARTHAS                               = 29280, // Image of Arthas
     CREATURE_SVALA_SORROWGRAVE                    = 26668, // Svala after transformation
     CREATURE_SVALA                                = 29281, // Svala before transformation
     CREATURE_RITUAL_CHANNELER                     = 27281,
@@ -158,7 +158,6 @@ public:
                 if (Creature* pArthas = me->SummonCreature(CREATURE_ARTHAS, ArthasPos, TEMPSUMMON_MANUAL_DESPAWN))
                 {
                     pArthas->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
-                    pArthas->SetFloatValue(OBJECT_FIELD_SCALE_X, 5);
                     uiArthasGUID = pArthas->GetGUID();
                 }
             }

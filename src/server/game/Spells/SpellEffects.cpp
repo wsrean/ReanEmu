@@ -4343,7 +4343,7 @@ void Spell::EffectInterruptCast(SpellEffIndex effIndex)
             SpellInfo const* curSpellInfo = spell->m_spellInfo;
             // check if we can interrupt spell
             if ((spell->getState() == SPELL_STATE_CASTING
-                || (spell->getState() == SPELL_STATE_PREPARING && spell->CalcCastTime() > 0.0f))
+                || (spell->getState() == SPELL_STATE_PREPARING && spell->GetCastTime() > 0.0f))
                 && curSpellInfo->PreventionType == SPELL_PREVENTION_TYPE_SILENCE
                 && ((i == CURRENT_GENERIC_SPELL && curSpellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_INTERRUPT)
                 || (i == CURRENT_CHANNELED_SPELL && curSpellInfo->ChannelInterruptFlags & CHANNEL_INTERRUPT_FLAG_INTERRUPT)))
@@ -4400,8 +4400,8 @@ void Spell::EffectSummonObjectWild(SpellEffIndex effIndex)
 
     if (pGameObj->GetGoType() == GAMEOBJECT_TYPE_FLAGDROP && m_caster->GetTypeId() == TYPEID_PLAYER)
     {
-        Player* pl = m_caster->ToPlayer();
-        Battleground* bg = pl->GetBattleground();
+        Player* player = m_caster->ToPlayer();
+        Battleground* bg = player->GetBattleground();
 
         switch (pGameObj->GetMapId())
         {
@@ -4411,7 +4411,7 @@ void Spell::EffectSummonObjectWild(SpellEffIndex effIndex)
                 {
                     uint32 team = ALLIANCE;
 
-                    if (pl->GetTeam() == team)
+                    if (player->GetTeam() == team)
                         team = HORDE;
 
                     ((BattlegroundWS*)bg)->SetDroppedFlagGUID(pGameObj->GetGUID(), team);
@@ -5002,6 +5002,25 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                     }
                     return;
                 }
+                case 57347: // Retrieving (Wintergrasp RP-GG pickup spell)
+                {
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT || m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    unitTarget->ToCreature()->DespawnOrUnsummon();
+
+                    return;
+                }
+                case 57349: // Drop RP-GG (Wintergrasp RP-GG at death drop spell)
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    // Delete item from inventory at death
+                    m_caster->ToPlayer()->DestroyItemCount(damage, 5, true);
+
+                    return;
+                }
                 case 58418:                                 // Portal to Orgrimmar
                 case 58420:                                 // Portal to Stormwind
                 {
@@ -5399,11 +5418,11 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                 case 64142:                                 // Upper Deck - Create Foam Sword
                     if (unitTarget->GetTypeId() != TYPEID_PLAYER)
                         return;
-                    Player* plr = unitTarget->ToPlayer();
+                    Player* player = unitTarget->ToPlayer();
                     static uint32 const itemId[] = {45061, 45176, 45177, 45178, 45179, 0};
                     // player can only have one of these items
                     for (uint32 const* itr = &itemId[0]; *itr; ++itr)
-                        if (plr->HasItemCount(*itr, 1, true))
+                        if (player->HasItemCount(*itr, 1, true))
                             return;
                     DoCreateItem(effIndex, itemId[urand(0, 4)]);
                     return;
@@ -6210,15 +6229,15 @@ void Spell::EffectSelfResurrect(SpellEffIndex effIndex)
             mana = CalculatePctN(m_caster->GetMaxPower(POWER_MANA), damage);
     }
 
-    Player* plr = m_caster->ToPlayer();
-    plr->ResurrectPlayer(0.0f);
+    Player* player = m_caster->ToPlayer();
+    player->ResurrectPlayer(0.0f);
 
-    plr->SetHealth(health);
-    plr->SetPower(POWER_MANA, mana);
-    plr->SetPower(POWER_RAGE, 0);
-    plr->SetPower(POWER_ENERGY, plr->GetMaxPower(POWER_ENERGY));
+    player->SetHealth(health);
+    player->SetPower(POWER_MANA, mana);
+    player->SetPower(POWER_RAGE, 0);
+    player->SetPower(POWER_ENERGY, player->GetMaxPower(POWER_ENERGY));
 
-    plr->SpawnCorpseBones();
+    player->SpawnCorpseBones();
 }
 
 void Spell::EffectSkinning(SpellEffIndex /*effIndex*/)
@@ -6995,9 +7014,9 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    Player* plr = m_caster->ToPlayer();
+    Player* player = m_caster->ToPlayer();
 
-    if (plr->getClass() != CLASS_DEATH_KNIGHT)
+    if (player->getClass() != CLASS_DEATH_KNIGHT)
         return;
 
     // needed later
@@ -7007,9 +7026,9 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
     if (count == 0) count = 1;
     for (uint32 j = 0; j < MAX_RUNES && count > 0; ++j)
     {
-        if (plr->GetRuneCooldown(j) && plr->GetCurrentRune(j) == RuneType(m_spellInfo->Effects[effIndex].MiscValue))
+        if (player->GetRuneCooldown(j) && player->GetCurrentRune(j) == RuneType(m_spellInfo->Effects[effIndex].MiscValue))
         {
-            plr->SetRuneCooldown(j, 0);
+            player->SetRuneCooldown(j, 0);
             --count;
         }
     }
@@ -7022,8 +7041,8 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
 
         for (uint32 i = 0; i < MAX_RUNES; ++i)
         {
-            if (plr->GetRuneCooldown(i) && (plr->GetCurrentRune(i) == RUNE_FROST ||  plr->GetCurrentRune(i) == RUNE_DEATH))
-                plr->SetRuneCooldown(i, 0);
+            if (player->GetRuneCooldown(i) && (player->GetCurrentRune(i) == RUNE_FROST ||  player->GetCurrentRune(i) == RUNE_DEATH))
+                player->SetRuneCooldown(i, 0);
         }
     }
 }

@@ -23,8 +23,8 @@ y ulduar blizzlike.
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
 #######################################################
-31/10/2011: Commit:2819b30b70cb6c9c2fb3df4b5e47c20b197fca88
-* Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
+15/11/2011: Commit:daa5557d6eab3956fd4e7dbbc5ce20b89fa25875
+* Core/Warden: Typo
 03/11/2011: Añadido mensaje central cheaters warden por Eilo
 07/11/2011: Eliminado avisos en consola spam por Eilo
 Adecuaciones por Eilo

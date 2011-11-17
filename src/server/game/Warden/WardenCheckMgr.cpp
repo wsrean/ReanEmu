@@ -42,7 +42,7 @@ WardenCheckMgr::~WardenCheckMgr()
 void WardenCheckMgr::LoadWardenChecks()
 {
     // Check if Warden is enabled by config before loading anything
-    if (!sWorld->getBoolConfig(CONFIG_BOOL_WARDEN_ENABLED))
+    if (!sWorld->getBoolConfig(CONFIG_WARDEN_ENABLED))
     {
         sLog->outString(">> Warden disabled, loading checks skipped.");
         sLog->outString();
@@ -52,6 +52,7 @@ void WardenCheckMgr::LoadWardenChecks()
     // For reload case
     for (int i = 0; i < CheckStore.size(); ++i)
         delete CheckStore[i];
+
     CheckStore.clear();
 
     for (CheckResultContainer::iterator itr = CheckResultStore.begin(); itr != CheckResultStore.end(); ++itr)
@@ -59,7 +60,7 @@ void WardenCheckMgr::LoadWardenChecks()
     CheckResultStore.clear();
 
 
-    QueryResult result = WorldDatabase.Query("SELECT COUNT(*) FROM warden_checks");
+    QueryResult result = WorldDatabase.Query("SELECT MAX(id) FROM warden_checks");
 
     if (!result)
     {
