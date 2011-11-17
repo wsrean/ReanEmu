@@ -221,6 +221,9 @@ Adecuaciones por Eilo
 09/08/2011: Drak'Tharon: correccion en db para que complete la dungeon con lfg por Retriman
 05/11/2011: Gundrak: Añadido trigger en sql apropiado por Eilo
 13/11/2011: Eye of Eternity: Reescrita instance, original por Darkman, final por Eilo
+17/11/2011: DoAttackerGroupInCombat funcion reañadida al nucleo para soporte por Eilo
+17/11/2011: _DoAggroPulse funcion reañadida para soporte por Eilo
+17/11/2011: inFightAggroCheck_Timer valores de soporte para funciones anteriores por Eilo
 Adecuaciones y actualizaciones de sql y scripts por Eilo
 
 ##########
