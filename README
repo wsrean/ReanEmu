@@ -1,17 +1,17 @@
-== ReanEmu ==
+﻿== ReanEmu ==
 
-ReanEmu es un emulador creado con la union de varios repos reconocidos y 
-codigo nuestro con el afan de complementarlos y completarlos a todos en 
-un unico emulador que pueda brindar un poco mas. Mira nuestro archivo 
+ReanEmu es un emulador creado con la unión de varios repositorios reconocidos y 
+código nuestro con el afán de complementarlos y completarlos a todos en 
+un único emulador que pueda brindar un poco más. Mira nuestro archivo 
 WHAT_IS_INSIDE para mayor detalle de lo que el emulador contiene.
 
-Ademas hemos generado una metodologia y planeacion de manera que si alguna
+Además hemos generado una metodología y planificación de manera que si alguna
 sugerencia y/o aporte que quieras darnos tienes la mejor bienvenida en el
 equipo de los programadores de este repositorio basado en trinitycore.
 
 Actualizaciones y novedades en twitter: http://twitter.com/ReanEmu
 
-Gracias a quienes hacen este proyeto posible y su respectivo credito a:
+Gracias a quienes hacen este proyecto posible y su respectivo crédito a:
 
 Copyright (C) TrinityCore (http://www.trinitycore.org)
 Copyright (C) Eilo (http://twitter.com/eilo2518)
@@ -64,8 +64,7 @@ from MaNGOS, the Massive Network Game Object Server, and is based on the
 code of that project.
 
 For further information on the TrinityCore project, please visit our
-project website at http://www.trinitycore.org 
-and https://github.com/eilo/PowerOfCommunities2
+project website at http://www.trinitycore.org
 
 API documentation can be obtained by running the "make doc" command inside
 the doc directory.
@@ -74,7 +73,7 @@ SQL files to create the database can be found in the sql directory. Files
 to update your database from an older revision/version can be found in the
 sql/updates directory.
 
-The full sql file on /sql and more sql files and fixes will be found on 
-/sql/PoC, issues and all suggestions are welcome!
+To create the database you can use "sqlcombinado.bat" which will create the 
+.sql needed to update the database, issues and suggestions are welcomed!
 
 See the docs/UnixInstall.txt file for installation instructions on Linux.
