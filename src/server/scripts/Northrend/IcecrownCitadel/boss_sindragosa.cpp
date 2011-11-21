@@ -342,7 +342,10 @@ class boss_sindragosa : public CreatureScript
                         me->SetReactState(REACT_AGGRESSIVE);
                         if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
                             me->GetMotionMaster()->MovementExpired();
-                        DoStartMovement(me->getVictim());
+                        if (Unit* target = me->getVictim())
+                            DoStartMovement(target);
+                        else if(Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0,300.0f,true))
+                            DoStartMovement(target);
                         _isInAirPhase = false;
                         DoCast(me, SPELL_FROST_AURA);
                         me->ApplySpellImmune(0, IMMUNITY_ID, SPELL_FROST_AURA, false);
