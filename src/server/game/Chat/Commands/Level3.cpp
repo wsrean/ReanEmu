@@ -3456,30 +3456,32 @@ bool ChatHandler::HandleBanHelper(BanMode mode, const char *args)
             return false;
     }
 
-    if (mode == BAN_CHARACTER)
+	switch (mode)
     {
-        announce = "El pj '";
-        announce += nameOrIP.c_str();
-        announce += "' ha sido baneado ";
-        announce += duration;
-        announce += " por '";
-        announce += m_session->GetPlayerName();
-        announce += "'. Razon: ";
-        announce += reason;
-        HandleAnnounceCommand(announce.c_str());
-    }
-
-    if (mode == BAN_ACCOUNT)
-    {    
-        announce = "La cuenta '";
-        announce += nameOrIP.c_str();
-        announce += "' ha sido baneada ";
-        announce += duration;
-        announce += " por '";
-        announce += m_session->GetPlayerName();
-        announce += "'. Razon: ";
-        announce += reason;
-        HandleAnnounceCommand(announce.c_str());
+        case BAN_ACCOUNT:
+            announce = "La cuenta '";
+            announce += nameOrIP.c_str();
+            announce += "' ha sido baneada ";
+            announce += duration;
+            announce += " por '";
+            announce += m_session->GetPlayerName();
+            announce += "'. Razon: ";
+            announce += reason;
+            HandleAnnounceCommand(announce.c_str());
+            break;
+        case BAN_CHARACTER:
+            announce = "El pj '";
+            announce += nameOrIP.c_str();
+            announce += "' ha sido baneado ";
+            announce += duration;
+            announce += " por '";
+            announce += m_session->GetPlayerName();
+            announce += "'. Razon: ";
+            announce += reason;
+            HandleAnnounceCommand(announce.c_str());
+            break;
+        case BAN_IP:
+            break;
     }
 
     return true;
