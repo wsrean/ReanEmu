@@ -17,13 +17,8 @@ y ulduar blizzlike.
 ##################################
 # Trintitycore hasta esta fecha: #
 ##################################
-16/11/2011: Commit:8ea8dd4f3d0f73599aad6441925b8ab555939877
-* Core/Units: Replace wrong usage of UNIT_FLAG_PVP_ATTACKABLE with 
-UNIT_FLAG_PLAYER_CONTROLLED in Unit::IsValidAttackTarget, 
-Unit::IsValidAssistTarget and Unit::GetReactionTo. Using 4.1 flags in 3.3.5 
-doesn't always work out like it should... Also remove now unneeded change from 
-70b558d
-Fixes SPELL_AURA_FORCE_REACTION amongst other things
+20/11/2011: Commit:eb190eb0bc99cf3011ed4d7a30df5898b29aa441
+* DB/Quest: adding SAI for quests: Cleansing of the Orb of Orahil, Mana Surges
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
