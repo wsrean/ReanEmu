@@ -541,3 +541,7 @@ INSERT INTO `creature_loot_template` VALUES
 (32273, 47241, 100, 1, 0, 1, 1);
 
 UPDATE `creature_template` SET `lootid` = 32273 WHERE `entry` IN (32273, 32313);
+
+-- Fix CoS reward dungeon finder
+UPDATE `instance_encounters` SET `creditType`=0, `creditEntry`=26533 WHERE `entry` IN (296, 300);
+
