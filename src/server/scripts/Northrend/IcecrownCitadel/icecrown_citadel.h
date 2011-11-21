@@ -493,6 +493,8 @@ class spell_trigger_spell_from_caster : public SpellScriptLoader
         uint32 _triggerId;
 };
 
+void UnsummonSpecificCreaturesNearby(Creature* ref, uint32 entry, float radius);
+
 template<class AI>
 CreatureAI* GetIcecrownCitadelAI(Creature* creature)
 {

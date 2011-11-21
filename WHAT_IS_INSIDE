@@ -204,6 +204,7 @@ Adecuaciones por Eilo
 02/11/2011: Putricidio no atacable mientras esta en los balcones por Retriman
 28/10/2011: Putricidio añadido despawn de ooze y cloud original Retriman, corregido por Eilo
 16/10/2011: Sindragosa añadido check para evitar crash en spell fury por Retriman
+21/11/2011: UnsummonSpecificCreaturesNearby funcion de soporte añadida por Eilo
 
 ########################
 # Dungeons e Instances #
