@@ -17,8 +17,8 @@ y ulduar blizzlike.
 ##################################
 # Trintitycore hasta esta fecha: #
 ##################################
-20/11/2011: Commit:eb190eb0bc99cf3011ed4d7a30df5898b29aa441
-* DB/Quest: adding SAI for quests: Cleansing of the Orb of Orahil, Mana Surges
+23/11/2011: Commit:1b3017472be902ddfb900230ea8efc07132927a1
+* Scripts/Naxxramas: Patchwerk's Hateful Strike's timer should be 1s.
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
