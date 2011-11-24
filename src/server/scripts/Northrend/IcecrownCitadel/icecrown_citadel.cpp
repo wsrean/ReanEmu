@@ -728,13 +728,12 @@ class boss_sister_svalna : public CreatureScript
                 if (!me->isDead())
                     Reset();
 
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(REACT_AGGRESSIVE);
             }
 
             void Reset()
             {
                 _Reset();
-                me->SetReactState(REACT_DEFENSIVE);
                 _isEventInProgress = false;
             }
 
@@ -1743,7 +1742,7 @@ class spell_icc_sprit_alarm : public SpellScriptLoader
                     trap->SetRespawnTime(trap->GetGOInfo()->trap.autoCloseTime);
 
                 std::list<Creature*> wards;
-                GetCaster()->GetCreatureListWithEntryInGrid(wards, NPC_DEATHBOUND_WARD, 150.0f);
+                GetCaster()->GetCreatureListWithEntryInGrid(wards, NPC_DEATHBOUND_WARD, 80.0f);
                 wards.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
                 for (std::list<Creature*>::iterator itr = wards.begin(); itr != wards.end(); ++itr)
                 {
