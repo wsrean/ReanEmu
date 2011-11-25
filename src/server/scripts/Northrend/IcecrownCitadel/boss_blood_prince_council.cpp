@@ -377,19 +377,17 @@ class boss_prince_keleseth_icc : public CreatureScript
                 if (!me->isDead())
                     JustRespawned();
 
-                me->SetReactState(REACT_DEFENSIVE);
+                me->SetReactState(REACT_AGGRESSIVE);
             }
 
             void Reset()
             {
                 events.Reset();
                 summons.DespawnAll();
-
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                 _isEmpowered = false;
                 me->SetHealth(_spawnHealth);
                 instance->SetData(DATA_ORB_WHISPERER_ACHIEVEMENT, uint32(true));
-                me->SetReactState(REACT_DEFENSIVE);
             }
 
             void EnterCombat(Unit* /*who*/)
@@ -603,7 +601,7 @@ class boss_prince_taldaram_icc : public CreatureScript
                 if (!me->isDead())
                     JustRespawned();
 
-                me->SetReactState(REACT_DEFENSIVE);
+                me->SetReactState(REACT_AGGRESSIVE);
             }
 
             void Reset()
@@ -615,7 +613,6 @@ class boss_prince_taldaram_icc : public CreatureScript
                 _isEmpowered = false;
                 me->SetHealth(_spawnHealth);
                 instance->SetData(DATA_ORB_WHISPERER_ACHIEVEMENT, uint32(true));
-                me->SetReactState(REACT_DEFENSIVE);
             }
 
             void MoveInLineOfSight(Unit* /*who*/)
@@ -828,7 +825,7 @@ class boss_prince_valanar_icc : public CreatureScript
                 if (!me->isDead())
                     JustRespawned();
 
-                me->SetReactState(REACT_DEFENSIVE);
+                me->SetReactState(REACT_AGGRESSIVE);
             }
 
             void Reset()
@@ -840,7 +837,6 @@ class boss_prince_valanar_icc : public CreatureScript
                 _isEmpowered = false;
                 me->SetHealth(me->GetMaxHealth());
                 instance->SetData(DATA_ORB_WHISPERER_ACHIEVEMENT, uint32(true));
-                me->SetReactState(REACT_DEFENSIVE);
             }
 
             void MoveInLineOfSight(Unit* /*who*/)
