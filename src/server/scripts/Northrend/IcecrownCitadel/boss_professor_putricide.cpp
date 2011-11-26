@@ -266,7 +266,7 @@ class boss_professor_putricide : public CreatureScript
                         summon->ModifyAuraState(AURA_STATE_UNKNOWN22, true);
                         summon->CastSpell(summon, SPELL_GASEOUS_BLOAT_PROC, true);
                         summon->CastCustomSpell(SPELL_GASEOUS_BLOAT, SPELLVALUE_AURA_STACK, 10, summon, false);
-                        summon->SetReactState(REACT_AGGRESSIVE);
+                        summon->SetReactState(REACT_PASSIVE);
                         return;
                     case NPC_VOLATILE_OOZE:
                         // no possible aura seen in sniff adding the aurastate
@@ -274,7 +274,7 @@ class boss_professor_putricide : public CreatureScript
                         summon->ModifyAuraState(AURA_STATE_UNKNOWN19, true);
                         summon->CastSpell(summon, SPELL_OOZE_ERUPTION_SEARCH_PERIODIC, true);
                         summon->CastSpell(summon, SPELL_VOLATILE_OOZE_ADHESIVE, false);
-                        summon->SetReactState(REACT_AGGRESSIVE);
+                        summon->SetReactState(REACT_PASSIVE);
                         return;
                     case NPC_CHOKING_GAS_BOMB:
                         summon->CastSpell(summon, SPELL_CHOKING_GAS_BOMB_PERIODIC, true);
@@ -299,17 +299,21 @@ class boss_professor_putricide : public CreatureScript
                         if (HealthAbovePct(80))
                             return;
                         me->SetReactState(REACT_PASSIVE);
+                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         DoAction(ACTION_CHANGE_PHASE);
                         UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
                         UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         break;
                     case PHASE_COMBAT_2:
                         if (HealthAbovePct(35))
                             return;
                         me->SetReactState(REACT_PASSIVE);
+                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         DoAction(ACTION_CHANGE_PHASE);
                         UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
                         UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         break;
                     default:
                         break;
@@ -375,7 +379,7 @@ class boss_professor_putricide : public CreatureScript
                         SetPhase(PHASE_FESTERGUT);
                         me->SetSpeed(MOVE_RUN, _baseSpeed*2.0f, true);
                         me->GetMotionMaster()->MovePoint(POINT_FESTERGUT, festergutWatchPos);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(REACT_AGGRESSIVE);
                         DoZoneInCombat(me);
                         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         if (IsHeroic())
@@ -581,7 +585,7 @@ class boss_professor_putricide : public CreatureScript
                             me->GetMotionMaster()->MovePoint(POINT_TABLE, tablePos);
                             break;
                         case EVENT_RESUME_ATTACK:
-                            me->SetReactState(REACT_DEFENSIVE);
+                            me->SetReactState(REACT_AGGRESSIVE);
                             AttackStart(me->getVictim());
                             // remove Tear Gas
                             instance->DoRemoveAurasDueToSpellOnPlayers(71615);
