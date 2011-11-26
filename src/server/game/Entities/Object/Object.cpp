@@ -2389,6 +2389,14 @@ GameObject* WorldObject::FindNearestGameObject(uint32 entry, float range) const
     VisitNearbyGridObject(range, searcher);
     return go;
 }
+std::list<Player*> WorldObject::GetNearestPlayersList(float range, bool alive) const
+{
+    std::list<Player*> players;
+    Trinity::AnyPlayerInObjectRangeCheck checker(this, range, alive);
+    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, players, checker);
+    VisitNearbyWorldObject(range, searcher);
+    return players;
+}
 
 void WorldObject::GetGameObjectListWithEntryInGrid(std::list<GameObject*>& gameobjectList, uint32 entry, float maxSearchRange) const
 {
