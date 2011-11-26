@@ -14,12 +14,12 @@ UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200934;
 
 -- Icc adds putricidio
 -- Ajuste de velocidades para babosas de putricidio, amenorada la velocidad
-UPDATE `creature_template` SET `speed_walk`=0.73, `speed_run`=0.72857 WHERE `entry` IN (37562,38602,38760,38761);
-UPDATE `creature_template` SET `speed_walk`=1.06, `speed_run`=0.72857 WHERE `entry` IN (37697,38604,38758,38759);
+-- volatile ooze 37697
+UPDATE `creature_template` SET `speed_walk`=1 WHERE `entry` IN (37697,38604,38758,38759);
 
 -- Icc adds Lich King
 -- Ajuste de velocidades para las valkyr de lich king, amenorada la velocidad
-UPDATE `creature_template` SET `speed_walk`=1.06, `speed_run`=0.87143 WHERE `entry` IN (36609,39120,39121,39122);
+UPDATE `creature_template` SET `speed_walk`=0.96, `speed_run`=0.87143 WHERE `entry` IN (36609,39120,39121,39122);
 
 -- Icc triggers de Rotface
 -- Eliminado algunos Puddle Stalker(37013) que hacen que salga en el aire los charcos
@@ -31,3 +31,7 @@ DELETE FROM `creature` WHERE `guid`=201600;
 DELETE FROM `creature` WHERE `guid`=201648;
 DELETE FROM `creature` WHERE `guid`=201441;
 DELETE FROM `creature` WHERE `guid`=200922;
+
+-- Icc visual triggers Principes
+-- Visual de Blood Orb controller que no se vea en la pelea
+UPDATE `creature` SET `phaseMask`=2 WHERE id=38008;
