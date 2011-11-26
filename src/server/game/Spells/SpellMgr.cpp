@@ -3142,6 +3142,10 @@ void SpellMgr::LoadDbcDataCorrections()
             case 44401: // Missile Barrage
                 spellInfo->procCharges = 1;
                 break;
+            case 53257: // Cobra Strikes
+                spellInfo->procCharges = 2;
+                spellInfo->StackAmount = 0;
+                break;
             case 44544: // Fingers of Frost
                 spellInfo->EffectSpellClassMask[0] = flag96(685904631, 1151048, 0);
                 break;
