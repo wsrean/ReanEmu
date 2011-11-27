@@ -23,9 +23,9 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_servant_of_the_throne_icc' WH
 UPDATE `creature_template` SET `dmg_multiplier` = '10.5' WHERE `entry` =36724;
 UPDATE `creature_template` SET `ScriptName` = 'npc_servant_of_the_throne_icc' WHERE `entry` =38057;
 UPDATE `creature_template` SET `dmg_multiplier` = '19' WHERE `entry` =38057;
-UPDATE `creature_template` SET `ScriptName` = 'npc_the_damned_icc' WHERE `entry` =37011;
+-- UPDATE `creature_template` SET `ScriptName` = 'npc_the_damned_icc' WHERE `entry` =37011;
 UPDATE `creature_template` SET `dmg_multiplier` = '10' WHERE `entry` =37011;
-UPDATE `creature_template` SET `ScriptName` = 'npc_the_damned_icc' WHERE `entry` =38061;
+-- UPDATE `creature_template` SET `ScriptName` = 'npc_the_damned_icc' WHERE `entry` =38061;
 UPDATE `creature_template` SET `dmg_multiplier` = '16' WHERE `entry` =38061;
 UPDATE `creature_template` SET `ScriptName` = 'npc_nerubar_broodkeeper_icc' WHERE `entry` =36725;
 UPDATE `creature_template` SET `dmg_multiplier` = '11.2' WHERE `entry` =36725;
@@ -82,8 +82,11 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_deathbringer_10man_ic
 UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_deathbringer_25man_icc' WHERE `entry`=38130;
 UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_frostbinder_icc' WHERE `entry`=37127;
 UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_frostbinder_icc' WHERE `entry`=38126;
+UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_battlemaiden_icc' WHERE `entry`=37132;
 UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_battlemaiden_icc' WHERE `entry`=38132;
-UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_huntress_icc' WHERE `entry`=38134;	
+UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_huntress_icc' WHERE `entry`=37134;
+UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_huntress_icc' WHERE `entry`=38134;
+UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_warlord_icc' WHERE `entry`=37133;
 UPDATE `creature_template` SET `ScriptName` = 'npc_ymirjar_warlord_icc' WHERE `entry`=38133;
 
 

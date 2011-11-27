@@ -39,12 +39,12 @@ enum Spells
 
     //## Servant of the Throne ##
     SPELL_GLACIAL_BLAST           = 71029,
-
+/*
     //## The Damned ##
     SPELL_BONE_FLURRY             = 70960,
     SPELL_SHATTERED_BONES         = 70961,
     SPELL_SHATTERED_BONES_VISUAL  = 70963,
-
+*/
 /*--Trash de Oratorio de los Malditos--*/
     // ## Deathspeaker Servant ##
     SPELL_CHAOS_BOLT_10M          = 69576,    
@@ -438,7 +438,7 @@ class npc_servant_of_the_throne_icc : public CreatureScript
             return new npc_servant_of_the_throne_iccAI(creature);
         }
 };
-
+/*
 //#########  The Damned ##############
 class npc_the_damned_icc : public CreatureScript
 {
@@ -489,7 +489,7 @@ class npc_the_damned_icc : public CreatureScript
             return new npc_the_damned_iccAI(creature);
         }
 };
-
+*/
 //#########  Deathspeaker Servant 10 man ##############
 class npc_deathspeaker_servant_10man_icc : public CreatureScript
 {
@@ -2719,7 +2719,7 @@ void AddSC_icecrown_citadel_trashmobs()
         new npc_ancient_skeletal_soldier_icc();
         new npc_deathbound_ward_icc();
         new npc_servant_of_the_throne_icc();
-        new npc_the_damned_icc();
+        // new npc_the_damned_icc();
         new npc_deathspeaker_servant_10man_icc();
         new npc_deathspeaker_servant_25man_icc();
         new npc_deathspeaker_disciple_10man_icc();
