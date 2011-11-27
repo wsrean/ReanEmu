@@ -7,8 +7,8 @@ DELETE FROM `creature` WHERE `id` IN (30090, 22517);
 DELETE FROM `gameobject` WHERE `id` IN (193958, 193960) AND `map` = 616;
 INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`)
 VALUES 
-(193958, 616, 1, 1, 754.35, 1300.87, 266.172, 5.34356, 0, 0, 0, 1, 180, 0, 1),
-(193960, 616, 2, 1, 754.35, 1300.87, 266.172, 5.34356, 0, 0, 0, 1, 180, 0, 1);
+(193958, 616, 1, 1, 354.35, 1300.87, 266.172, 5.34356, 0, 0, 0, 1, 180, 0, 1),
+(193960, 616, 2, 1, 354.35, 1300.87, 266.172, 5.34356, 0, 0, 0, 1, 180, 0, 1);
 -- Update Position Npcs.
 UPDATE `creature` SET `position_x` = `position_x` + 400  WHERE `map` = 616;
 UPDATE `gameobject` SET `position_x` = `position_x` + 400 WHERE `map` = 616;
