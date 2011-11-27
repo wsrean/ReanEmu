@@ -3293,6 +3293,10 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
     if (dispel_list.empty())
         return;
 
+	// don't allow dispeling more times than buff count
+	if (damage > totalspells)
+		damage = totalspells;
+
     // Ok if exist some buffs for dispel try dispel it
     uint32 failCount = 0;
     DispelChargesList success_list;
