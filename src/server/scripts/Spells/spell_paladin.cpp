@@ -286,6 +286,9 @@ public:
             {
                 Unit* caster = GetCaster();
 
+                if (caster->GetGUID() != unitTarget->GetGUID() && caster->IsFriendlyTo(unitTarget) && (unitTarget->ToPlayer() != NULL && unitTarget->ToPlayer()->duel != NULL))
+                    return;
+
                 uint8 rank = sSpellMgr->GetSpellRank(GetSpellInfo()->Id);
 
                 if (caster->IsFriendlyTo(unitTarget))
