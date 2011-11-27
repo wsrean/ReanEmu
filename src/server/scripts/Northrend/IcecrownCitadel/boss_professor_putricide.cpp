@@ -299,21 +299,17 @@ class boss_professor_putricide : public CreatureScript
                         if (HealthAbovePct(80))
                             return;
                         me->SetReactState(REACT_PASSIVE);
-                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         DoAction(ACTION_CHANGE_PHASE);
                         UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
                         UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
-                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         break;
                     case PHASE_COMBAT_2:
                         if (HealthAbovePct(35))
                             return;
                         me->SetReactState(REACT_PASSIVE);
-                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         DoAction(ACTION_CHANGE_PHASE);
                         UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
                         UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
-                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         break;
                     default:
                         break;
@@ -446,8 +442,9 @@ class boss_professor_putricide : public CreatureScript
                         me->AttackStop();
                         if (!IsHeroic())
                         {
+                            SpellInfo const* spell = sSpellMgr->GetSpellInfo(SPELL_TEAR_GAS);
                             DoCast(me, SPELL_TEAR_GAS);
-                            events.ScheduleEvent(EVENT_TEAR_GAS, 2500);
+                            events.ScheduleEvent(EVENT_TEAR_GAS, sSpellMgr->GetSpellForDifficultyFromSpell(spell, me)->CalcCastTime() + 2500);
                         }
                         else
                         {
@@ -582,6 +579,8 @@ class boss_professor_putricide : public CreatureScript
                             events.ScheduleEvent(EVENT_UNSTABLE_EXPERIMENT, urand(35000, 40000));
                             break;
                         case EVENT_TEAR_GAS:
+                            me->RemoveAurasDueToSpell(71615);
+                            me->RemoveAurasDueToSpell(71618);
                             me->GetMotionMaster()->MovePoint(POINT_TABLE, tablePos);
                             break;
                         case EVENT_RESUME_ATTACK:
