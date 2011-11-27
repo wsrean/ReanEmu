@@ -273,9 +273,12 @@ Adecuaciones y actualizaciones de sql y scripts por Eilo
 ##########
 30/10/2011: Evento Asirius por WS
 30/10/2011: Correccion textos asirius por WS
+
 ##########
 # Ulduar #
 ##########
 26/11/2011: Actualización de Script (ScriptedCreature.h, Object.h, Player.h, creature.h,Object.cpp, Group.h)por WS
 26/11/2011: Actualización de Script (Carpeta Ulduar)por WS
 26/11/2011: Actualización de DB para soporte de Ulduar.por WS
+27/11/2011: Renombrado sql de ulduar script por Eilo
+27/11/2011: Actualizacion de sql para que este a la version del emulador por Eilo
