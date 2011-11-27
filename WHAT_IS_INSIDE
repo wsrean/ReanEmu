@@ -204,7 +204,6 @@ Adecuaciones por Eilo
 21/11/2011: UnsummonSpecificCreaturesNearby funcion de soporte añadida por Eilo
 28/10/2011: Putricidio añadido efecto a las ooze para que exploten por Greymane
 30/10/2011: Putricidio añadido spell plague stench a Stinky por Greymane, actualizado por Eilo
-13/11/2011: ICC bosses aumento de daño melee por Retriman, ajustes adicionales por Eilo
 21/11/2011: ICC archivo de inmunidades en db por Eilo
 21/11/2011: ICC añadidas inmunidades en db para todos los bosses y mini bosses de icc por Eilo
 30/10/2011: Sindragosa añadido LoS para tumbas original Retriman, cambios por Eilo
@@ -237,6 +236,7 @@ Adecuaciones por Eilo
 26/11/2011: Sindragosa apaño para que no meta en tumba al tank por Eilo
 26/11/2011: Valithria añadido despawn de los molestos gusanos por Eilo
 26/11/2011: Putricidio apañado evento del gas naranja ya no se stunea a si mismo por Eilo
+27/11/2011: ICC ajuste de daño fisico de todos los bosses por Eilo
 
 ########################
 # Dungeons e Instances #
