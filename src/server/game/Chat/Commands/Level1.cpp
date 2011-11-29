@@ -630,7 +630,7 @@ bool ChatHandler::HandleSaveAllCommand(const char* /*args*/)
     return true;
 }
 
-// Jail by WarHead edited by spgm
+// Jail by WarHead edited by spgm ajustado a minutos por Eilo
 bool ChatHandler::HandleJailCommand(const char *args)
 {
     std::string cname, announce, ban_reason, ban_by;
@@ -679,8 +679,8 @@ bool ChatHandler::HandleJailCommand(const char *args)
 		uint32 jail_guid = GUID_LOPART(GUID);
 		std::string jail_char = cname;
 		bool jail_isjailed = true;
-		uint32 jail_release = localtime + (jailtime * 60 * 60);
-		uint32 jail_amnestietime = localtime +(60* 60 * 24 * sObjectMgr->m_jailconf_amnestie);
+		uint32 jail_release = localtime + (jailtime * 60);
+		uint32 jail_amnestietime = localtime +(60 * 24 * sObjectMgr->m_jailconf_amnestie);
 		std::string jail_reason = jailreason;
 		uint32 jail_times = 0;
 
@@ -792,8 +792,8 @@ bool ChatHandler::HandleJailCommand(const char *args)
 		chr->m_jail_guid = fields[0].GetUInt32();
 		chr->m_jail_char = fields[3].GetString();
 		chr->m_jail_isjailed = true;
-		chr->m_jail_release = localtime + (jailtime * 60 * 60);
-		chr->m_jail_amnestietime = localtime +(60* 60 * 24 * sObjectMgr->m_jailconf_amnestie);
+		chr->m_jail_release = localtime + (jailtime * 60);
+		chr->m_jail_amnestietime = localtime +(60 * 24 * sObjectMgr->m_jailconf_amnestie);
 		chr->m_jail_reason = jailreason;
 		chr->m_jail_times = chr->m_jail_times+1;
 		chr->m_jail_gmacc = m_session->GetAccountId();

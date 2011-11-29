@@ -168,7 +168,7 @@ bool ChatHandler::HandleServerMotdCommand(const char* /*args*/)
     PSendSysMessage(LANG_MOTD_CURRENT, sWorld->GetMotd());
     return true;
 }
-	//Trinity Jail Edited by spgm
+//Trinity Jail Edited by spgm ajustado por Eilo
 bool ChatHandler::HandleJailInfoCommand(const char* args)
 {
     time_t localtime;
