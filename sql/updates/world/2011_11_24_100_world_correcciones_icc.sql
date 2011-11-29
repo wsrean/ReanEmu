@@ -32,7 +32,3 @@ DELETE FROM `creature` WHERE `guid`=201600;
 DELETE FROM `creature` WHERE `guid`=201648;
 DELETE FROM `creature` WHERE `guid`=201441;
 DELETE FROM `creature` WHERE `guid`=200922;
-
--- Icc visual triggers Principes
--- Visual de Blood Orb controller que no se vea en la pelea
-UPDATE `creature` SET `phaseMask`=2 WHERE id=38008;
