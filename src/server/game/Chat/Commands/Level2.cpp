@@ -233,7 +233,6 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
 {
     Player* target = NULL;
     std::string playerName;
-    std::string announce;
     if (!extractPlayerTarget((char*)args, &target, NULL, &playerName))
         return false;
 
@@ -252,13 +251,6 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
         sWorld->SendWorldText(LANG_COMMAND_KICKMESSAGE, playerName.c_str());
     else
         PSendSysMessage(LANG_COMMAND_KICKMESSAGE, playerName.c_str());
-
-    announce = "El pj '";
-    announce += target->GetName();
-    announce += "' ha sido kickeado por '";
-    announce += m_session->GetPlayerName();
-    announce += "'.";
-    HandleAnnounceCommand(announce.c_str());
 
     target->GetSession()->KickPlayer();
     return true;
