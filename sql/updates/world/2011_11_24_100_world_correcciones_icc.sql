@@ -14,8 +14,8 @@ UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200934;
 
 -- Icc adds putricidio
 -- Ajuste de velocidades para babosas de putricidio, amenorada la velocidad
--- volatile ooze 37697
-UPDATE `creature_template` SET `speed_walk`=1 WHERE `entry` IN (37697,38604,38758,38759);
+-- Originalmente speed_walk=2
+UPDATE `creature_template` SET `speed_walk`=0.68 WHERE `entry` IN (37697,38604,38758,38759);
 
 -- Icc adds Lich King
 -- Ajuste de velocidades para las valkyr de lich king, amenorada la velocidad
