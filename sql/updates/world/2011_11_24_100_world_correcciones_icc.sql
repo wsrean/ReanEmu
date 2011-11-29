@@ -19,7 +19,8 @@ UPDATE `creature_template` SET `speed_walk`=1 WHERE `entry` IN (37697,38604,3875
 
 -- Icc adds Lich King
 -- Ajuste de velocidades para las valkyr de lich king, amenorada la velocidad
-UPDATE `creature_template` SET `speed_walk`=0.96, `speed_run`=0.87143 WHERE `entry` IN (36609,39120,39121,39122);
+-- Orginalmente speed_walk=2
+UPDATE `creature_template` SET `speed_walk`=0.642857 WHERE `entry` IN (36609,39120,39121,39122);
 
 -- Icc triggers de Rotface
 -- Eliminado algunos Puddle Stalker(37013) que hacen que salga en el aire los charcos
