@@ -1,7 +1,7 @@
 -- ICC weapons procs
 -- (71845) Item - Icecrown 25 Normal Caster Weapon Proc
-+DELETE FROM `spell_proc_event` WHERE `entry` IN (71845);
-+INSERT INTO `spell_proc_event` VALUES (71845, 0x01, 0x00, 0x00000000, 0x00000000, 0x00000000, 0x00010000, 0x00000000, 0, 2, 40);
+DELETE FROM `spell_proc_event` WHERE `entry` IN (71845);
+INSERT INTO `spell_proc_event` VALUES (71845, 0x01, 0x00, 0x00000000, 0x00000000, 0x00000000, 0x00010000, 0x00000000, 0, 2, 40);
 -- (71846) Item - Icecrown 25 Normal Caster Weapon Proc
 DELETE FROM `spell_proc_event` WHERE `entry` IN (71845);
 INSERT INTO `spell_proc_event` VALUES (71845, 0x01, 0x00, 0x00000000, 0x00000000, 0x00000000, 0x00010000, 0x00000000, 0, 2, 45);
