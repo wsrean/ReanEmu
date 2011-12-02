@@ -112,6 +112,10 @@ Adaptaciones cosmeticas por Eilo
 05/10/2011: Previniendo ArPen negativo, atacante ni atacado por Opcode187
 08/11/2011: Correccion ArPen comportamiento, ahora blizzlike por Ws
 16/11/2011: Ruinas de Lordaeron, apaño para evitar daño de charcos por Retriman
+21/08/2011: Penitencia no se puede usar en duelos de otros pj por Retriman
+21/08/2011: Choque Sagrado no se puede usar en duelos de otros pj por Retriman
+05/11/2011: Prevenir error en el cálculo de buffs con stacks por Kerhong
+05/11/2011: Mejoras en dispel por Kerhong
 Adaptaciones, actualizaciones, codestyle y union por Eilo
 
 ############################
@@ -248,6 +252,7 @@ Adecuaciones por Eilo
 26/09/2011: Oculus: reimplementacion y recompensa lfg por Karlos
 08/08/2011: Gundrak: Reescrita instance por Retriman
 08/10/2011: Trial Of The Champion: reimplementacion y mejora por Odyssey
+05/09/2011: Trail of The Champion: Arreglado spell Cargar de las monturas por Maxdestroyer
 08/10/2011: Trial Of Crusader: Añadida inmunidad a grip y knockback por Karlos
 08/10/2011: Trial Of Crusader: Añadida portal de retorno a Dalaran por Karlos
 03/11/2011: Oculus: Correcciones en auras y varios por Souler
@@ -267,6 +272,46 @@ Adecuaciones por Eilo
 17/11/2011: inFightAggroCheck_Timer valores de soporte para funciones anteriores por Eilo
 Adecuaciones y actualizaciones de sql y scripts por Eilo
 27/11/2011: Eye of Eternity: Actualizacion de sql
+
+#######################
+# Hechizos y Talentos #
+#######################
+-Brujo:
+ 05/11/2011: Mejoras en pet felhunter por Locknes
+ 22/10/2011: Glifo de Seducción por Odyssey
+-Cazador:
+ 11/08/2011: Golpes de cobra por Jildor
+ 08/08/2011: Disparo de Quimera y picaduras mejorado por Retriman
+ 08/08/2011: Separación: no puede ser usado cuando se está en root por Retriman
+ 05/11/2011: Distraer: ahora se interrumpen efectos de comer/beber por Kerhong
+-Chamán:
+ 01/11/2011: Tótem Corriente de Sanación Bonus y Fix de su glifo por Elecyb
+ 11/08/2011: Escudos de Agua por Jildor
+-DK:
+ 08/07/2011: Gusanos de Sangre por KarlosHyD
+-Guerrero:
+ 02/09/2011: Reflejar: efecto de Multi-Reflect por Retriman
+-Paladín:
+ 20/08/2011: Escudo Sacro: añadir cooldown (cd) después de efecto de remover por Odyssey
+ 28/10/2011: Fix Defensa recta por Chaplain
+-Pícaro:
+ 14/03/2011: Secretos del oficio por Odyssey
+ 30/07/2011: Envenenar y eviscerar por Odyssey
+Adecuaciones por Hispano
+
+##################
+# Items y Bonus #
+#################
+07/07/2011: ICC 25 Normal - Nibelungo - Proc Arma de Caster (71845) por Signfinder
+07/07/2011: ICC 25 Heroico- Nibelungo - Proc Arma de Caster (71846) por Signfinder
+07/07/2011: ICC 25 Normal - Trauma - Proc Arma de Healer (71865) por Signfinder
+07/07/2011: ICC 25 Heroico - Trauma - Proc Arma de Healer (71868) por Signfinder
+07/07/2011: ICC 25 Normal - Últimas Palabras - Proc Arma de Tanque (71871) por Signfinder
+07/07/2011: ICC 25 Heroico - Últimas Palabras - Proc Arma de Tanque (71873) por Signfinder
+07/07/2011: ICC 25 Normal - Proc Daga (71883) por Signfinder
+07/07/2011: ICC 25 Heroico - Proc Daga (71888) por Signfinder
+30/07/2011: T10 Pícaro - 4p Bonus por Odyssey
+Adecuaciones por Hispano
 
 ##########
 # Custom #

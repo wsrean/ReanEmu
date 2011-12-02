@@ -1213,6 +1213,8 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
         if (target->reflectResult == SPELL_MISS_NONE)       // If reflected spell hit caster -> do all effect on him
         {
             spellHitTarget = m_caster;
+			// Start triggers for remove charges if need (trigger only for victim, and mark as active spell)
+			m_caster->ProcDamageAndSpell(unit, PROC_FLAG_NONE, PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_NEG, PROC_EX_REFLECT, 1, BASE_ATTACK, m_spellInfo);
             if (m_caster->GetTypeId() == TYPEID_UNIT)
                 m_caster->ToCreature()->LowerPlayerDamageReq(target->damage);
         }
@@ -1344,6 +1346,11 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
             aurEff->SetAmount(CalculatePctU(aurEff->GetAmount(), damageInfo.damage));
         }
         m_damage = damageInfo.damage;
+		// Cobra Strikes (can't find any other way that may work)
+		if (m_spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && m_spellInfo->SpellFamilyFlags[1] & 0x10000000)
+			if (Unit * owner = caster->GetOwner())
+				if (Aura* pAura = owner->GetAura(53257))
+					pAura->DropCharge();
     }
     // Passive spell hits/misses or active spells only misses (only triggers)
     else
@@ -3209,7 +3216,7 @@ void Spell::cast(bool skipCheck)
     SendSpellGo();
 
     // Okay, everything is prepared. Now we need to distinguish between immediate and evented delayed spells
-    if ((m_spellInfo->Speed > 0.0f && !m_spellInfo->IsChanneled()) || m_spellInfo->Id == 14157)
+    if ((m_spellInfo->Speed > 0.0f && !m_spellInfo->IsChanneled()) || m_spellInfo->Id == 14157 || m_spellInfo->Id == 70802)
     {
         // Remove used for cast item if need (it can be already NULL after TakeReagents call
         // in case delayed spell remove item at cast delay start
@@ -5222,8 +5229,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 if (m_caster->GetTypeId() == TYPEID_PLAYER && m_spellInfo->Id == 781 && !m_caster->isInCombat())
                     return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
 
-                Unit* target = m_targets.GetUnitTarget();
-                if (m_caster == target && m_caster->HasUnitState(UNIT_STAT_ROOT))
+				if (m_caster->HasUnitState(UNIT_STAT_ROOT))
                 {
                     if (m_caster->GetTypeId() == TYPEID_PLAYER)
                         return SPELL_FAILED_ROOTED;

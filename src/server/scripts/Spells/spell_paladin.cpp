@@ -33,10 +33,15 @@ enum PaladinSpells
     PALADIN_SPELL_HOLY_SHOCK_R1_DAMAGE           = 25912,
     PALADIN_SPELL_HOLY_SHOCK_R1_HEALING          = 25914,
 
+	PALADIN_SPELL_SACRED_SHIELD_EFFECT           = 58597,
+
     SPELL_BLESSING_OF_LOWER_CITY_DRUID           = 37878,
     SPELL_BLESSING_OF_LOWER_CITY_PALADIN         = 37879,
     SPELL_BLESSING_OF_LOWER_CITY_PRIEST          = 37880,
     SPELL_BLESSING_OF_LOWER_CITY_SHAMAN          = 37881,
+
+	PALADIN_SPELL_RIGHTEOUS_DEFENCE              = 31789,
+	PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1     = 31790,
 };
 
 // 31850 - Ardent Defender
@@ -277,6 +282,9 @@ public:
             {
                 Unit* caster = GetCaster();
 
+				if (caster->GetGUID() != unitTarget->GetGUID() && caster->IsFriendlyTo(unitTarget) && (unitTarget->ToPlayer() != NULL && unitTarget->ToPlayer()->duel != NULL))
+					return;
+
                 uint8 rank = sSpellMgr->GetSpellRank(GetSpellInfo()->Id);
 
                 if (caster->IsFriendlyTo(unitTarget))
@@ -327,6 +335,76 @@ public:
     }
 };
 
+// 58597 Sacred shield add cooldown
+class spell_pal_sacred_shield : public SpellScriptLoader
+{
+public:
+	spell_pal_sacred_shield() : SpellScriptLoader("spell_pal_sacred_shield") { }
+	
+	class spell_pal_sacred_shield_AuraScript : public AuraScript
+	{
+		PrepareAuraScript(spell_pal_sacred_shield_AuraScript)
+		bool Validate(SpellInfo const* /*entry*/)
+		{
+			if (!sSpellMgr->GetSpellInfo(PALADIN_SPELL_SACRED_SHIELD_EFFECT))
+				return false;
+			return true;
+		}
+		
+		void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+		{
+			if (Unit* caster = GetCaster())
+				if (caster->ToPlayer())
+					caster->ToPlayer()->AddSpellCooldown(PALADIN_SPELL_SACRED_SHIELD_EFFECT, 0, time(NULL) + 6);
+		}
+		
+		void Register()
+		{
+			AfterEffectRemove += AuraEffectRemoveFn(spell_pal_sacred_shield_AuraScript::HandleEffectRemove, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+		}
+	};
+	
+	AuraScript *GetAuraScript() const
+	{
+		return new spell_pal_sacred_shield_AuraScript();
+	}
+};
+
+class spell_pal_righteous_defense : public SpellScriptLoader
+{
+    public:
+        spell_pal_righteous_defense() : SpellScriptLoader("spell_pal_righteous_defense") { }
+
+        class spell_pal_righteous_defense_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_pal_righteous_defense_SpellScript);
+
+            bool Validate(SpellInfo const* /*spellEntry*/)
+            {
+                if (!sSpellMgr->GetSpellInfo(PALADIN_SPELL_RIGHTEOUS_DEFENCE))
+                    return false;
+                return true;
+            }
+
+            void HandleSpellEffectTriggerSpell(SpellEffIndex /*effIndex*/)
+            {
+                if (Unit* caster = GetCaster())
+                    if (Unit* targetUnit = GetHitUnit())
+                        caster->CastSpell(targetUnit, PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1, true);
+            }
+
+            void Register()
+            {
+                OnEffectHitTarget += SpellEffectFn(spell_pal_righteous_defense_SpellScript::HandleSpellEffectTriggerSpell, EFFECT_1, SPELL_EFFECT_TRIGGER_SPELL);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_pal_righteous_defense_SpellScript();
+        }
+};
+
 void AddSC_paladin_spell_scripts()
 {
     new spell_pal_ardent_defender();
@@ -335,4 +413,6 @@ void AddSC_paladin_spell_scripts()
     new spell_pal_guarded_by_the_light();
     new spell_pal_holy_shock();
     new spell_pal_judgement_of_command();
+	new spell_pal_sacred_shield();
+	new spell_pal_righteous_defense();
 }

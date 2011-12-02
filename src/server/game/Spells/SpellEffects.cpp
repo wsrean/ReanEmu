@@ -608,59 +608,63 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
             case SPELLFAMILY_ROGUE:
             {
                 // Envenom
-                if (m_caster->GetTypeId() == TYPEID_PLAYER && (m_spellInfo->SpellFamilyFlags[1] & 0x8))
+               if (m_spellInfo->SpellFamilyFlags[EFFECT_1] & 0x8)
                 {
-                    // consume from stack dozes not more that have combo-points
-                    if (uint32 combo = m_caster->ToPlayer()->GetComboPoints())
-                    {
-                        // Lookup for Deadly poison (only attacker applied)
-                        if (AuraEffect const* aurEff = unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_ROGUE, 0x10000, 0, 0, m_caster->GetGUID()))
-                        {
-                            // count consumed deadly poison doses at target
-                            bool needConsume = true;
-                            uint32 spellId = aurEff->GetId();
-                            uint32 doses = aurEff->GetBase()->GetStackAmount();
-                            if (doses > combo)
-                                doses = combo;
-                            // Master Poisoner
-                            Unit::AuraEffectList const& auraList = m_caster->ToPlayer()->GetAuraEffectsByType(SPELL_AURA_MOD_AURA_DURATION_BY_DISPEL_NOT_STACK);
-                            for (Unit::AuraEffectList::const_iterator iter = auraList.begin(); iter != auraList.end(); ++iter)
-                            {
-                                if ((*iter)->GetSpellInfo()->SpellFamilyName == SPELLFAMILY_ROGUE && (*iter)->GetSpellInfo()->SpellIconID == 1960)
-                                {
-                                    uint32 chance = (*iter)->GetSpellInfo()->Effects[EFFECT_2].CalcValue(m_caster);
-
-                                    if (chance && roll_chance_i(chance))
-                                        needConsume = false;
-
-                                    break;
-                                }
-                            }
-
-                            if (needConsume)
-                                for (uint32 i = 0; i < doses; ++i)
-                                    unitTarget->RemoveAuraFromStack(spellId);
-                            damage *= doses;
-                            damage += int32(((Player*)m_caster)->GetTotalAttackPowerValue(BASE_ATTACK) * 0.09f * doses);
+					if (!m_caster->ToPlayer())
+						return;
+					uint32 combo = m_caster->ToPlayer()->GetComboPoints();
+					if (!combo)
+						return;
+							
+					AuraEffect const * aurEffA = unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_ROGUE, 0x10000, 0, 0, m_caster->GetGUID());
+					if (!aurEffA)
+						return;
+					
+					uint32 doses = aurEffA->GetBase()->GetStackAmount();
+					if (doses > combo)
+						doses = combo;
+					
+					// Master Poisoner
+					bool needConsume = true;
+					Unit::AuraEffectList const & auras = m_caster->ToPlayer()->GetAuraEffectsByType(SPELL_AURA_MOD_AURA_DURATION_BY_DISPEL_NOT_STACK);
+					for (Unit::AuraEffectList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+						if (((*itr)->GetSpellInfo()->SpellFamilyName == SPELLFAMILY_ROGUE) &&
+							((*itr)->GetSpellInfo()->SpellIconID == 1960))
+						{
+							uint32 chance = (*itr)->GetSpellInfo()->Effects[EFFECT_2].CalcValue();
+							if ((chance >= 100) || roll_chance_i(chance))
+								needConsume = false;
+							break;
                         }
-                        // Eviscerate and Envenom Bonus Damage (item set effect)
-                        if (m_caster->HasAura(37169))
-                            damage += ((Player*)m_caster)->GetComboPoints()*40;
-                    }
-                }
+					if (needConsume)
+						for (uint32 i = 0; i < doses; ++i)
+							unitTarget->RemoveAuraFromStack(aurEffA->GetId());
+													
+					damage *= doses;
+					damage += int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.09f * combo);
+						
+					// Eviscerate and Envenom Bonus Damage
+					if (AuraEffect const * aurEffB = m_caster->GetAuraEffect(37169, EFFECT_0, m_caster->GetGUID()))
+						damage += combo * aurEffB->GetAmount();
+					break;
+				}
                 // Eviscerate
-                else if ((m_spellInfo->SpellFamilyFlags[0] & 0x00020000) && m_caster->GetTypeId() == TYPEID_PLAYER)
+                if (m_spellInfo->SpellFamilyFlags[EFFECT_0] & 0x20000)
                 {
-                    if (uint32 combo = ((Player*)m_caster)->GetComboPoints())
-                    {
-                        float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
-                        damage += irand(int32(ap * combo * 0.03f), int32(ap * combo * 0.07f));
-
-                        // Eviscerate and Envenom Bonus Damage (item set effect)
-                        if (m_caster->HasAura(37169))
-                            damage += combo*40;
-                    }
-                }
+					if (!m_caster->ToPlayer())
+						return;
+					uint32 combo = m_caster->ToPlayer()->GetComboPoints();
+					if (!combo)
+						return;
+									
+					float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
+					damage += irand(int32(ap * combo * 0.03f), int32(ap * combo * 0.07f));
+									
+					// Eviscerate and Envenom Bonus Damage
+					if (AuraEffect const * aurEffB = m_caster->GetAuraEffect(37169, EFFECT_0, m_caster->GetGUID()))
+						damage += combo * aurEffB->GetAmount();
+					break;
+					}
                 break;
             }
             case SPELLFAMILY_HUNTER:
@@ -727,6 +731,17 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                     damage += CalculatePctN(block_value, m_spellInfo->Effects[EFFECT_1].CalcValue());
                     break;
                 }
+				//Item - Icecrown 25 Normal Dagger Proc
+				if (m_spellInfo->Id == 71887 || m_spellInfo->Id == 71881)
+					if (Aura * aur = m_caster->GetAura(71880))
+						if (roll_chance_i(25))
+						m_caster->CastSpell(m_caster, 71883, true);
+				break;
+				//Item - Icecrown 25 Heroic Dagger Proc
+				if (m_spellInfo->Id == 71886 || m_spellInfo->Id == 71882)
+					if (Aura * aur = m_caster->GetAura(71892))
+						if (roll_chance_i(35))
+						m_caster->CastSpell(m_caster, 71888, true);
                 break;
             }
             case SPELLFAMILY_DEATHKNIGHT:
@@ -1419,11 +1434,19 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             {
                 if (!unitTarget)
                     return;
-                // Restorative Totems
                 if (Unit* owner = m_caster->GetOwner())
+				{
+					// Calculate bonus before apply percent changes
+					if (m_triggeredByAuraSpell)
+						damage = int32(owner->SpellHealingBonus(unitTarget, m_triggeredByAuraSpell, damage, HEAL));
+					// Restorative Totems
                     if (AuraEffect* dummy = owner->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_SHAMAN, 338, 1))
                         AddPctN(damage, dummy->GetAmount());
-
+					// Glyph of Healing Stream Totem
+					if (AuraEffect const* aurEff = owner->GetAuraEffect(55456, EFFECT_0))
+						AddPctN(damage, aurEff->GetAmount());
+				}
+				
                 m_caster->CastCustomSpell(unitTarget, 52042, &damage, 0, 0, true, 0, 0, m_originalCasterGUID);
                 return;
             }
@@ -1642,12 +1665,6 @@ void Spell::EffectTriggerSpell(SpellEffIndex effIndex)
 
                 for (uint32 j = 0; j < spell->StackAmount; ++j)
                     m_caster->CastSpell(unitTarget, spell->Id, true);
-                return;
-            }
-            // Righteous Defense
-            case 31980:
-            {
-                m_caster->CastSpell(unitTarget, 31790, true);
                 return;
             }
             // Cloak of Shadows
@@ -3236,6 +3253,8 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
     if (dispelMask & (1 << DISPEL_DISEASE) && unitTarget->HasAura(50536))
         dispelMask &= ~(1 << DISPEL_DISEASE);
 
+	int32 totalspells = 0;
+	
     Unit::AuraMap const& auras = unitTarget->GetOwnedAuras();
     for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
     {
@@ -3264,12 +3283,19 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
             bool dispel_charges = aura->GetSpellInfo()->AttributesEx7 & SPELL_ATTR7_DISPEL_CHARGES;
             uint8 charges = dispel_charges ? aura->GetCharges() : aura->GetStackAmount();
             if (charges > 0)
+			{
                 dispel_list.push_back(std::make_pair(aura, charges));
+				totalspells += charges;
+			}
         }
     }
 
     if (dispel_list.empty())
         return;
+
+	// don't allow dispeling more times than buff count
+	if (damage > totalspells)
+		damage = totalspells;
 
     // Ok if exist some buffs for dispel try dispel it
     uint32 failCount = 0;
@@ -3392,7 +3418,9 @@ void Spell::EffectDistract(SpellEffIndex /*effIndex*/)
 
     if (unitTarget->GetTypeId() == TYPEID_PLAYER)
     {
-        // For players just turn them
+        // For players just turn them & make them stand up
+		if (unitTarget->ToPlayer()->IsSitState())
+			unitTarget->ToPlayer()->SetStandState(UNIT_STAND_STATE_STAND);
         unitTarget->ToPlayer()->UpdatePosition(unitTarget->GetPositionX(), unitTarget->GetPositionY(), unitTarget->GetPositionZ(), angle, false);
         unitTarget->ToPlayer()->SendTeleportAckPacket();
     }

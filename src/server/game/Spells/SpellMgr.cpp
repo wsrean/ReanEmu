@@ -3122,6 +3122,10 @@ void SpellMgr::LoadDbcDataCorrections()
             case 44401: // Missile Barrage
                 spellInfo->procCharges = 1;
                 break;
+			case 53257: // Cobra Strikes
+				spellInfo->procCharges = 2;
+				spellInfo->StackAmount = 0;
+				break;
             case 44544: // Fingers of Frost
                 spellInfo->EffectSpellClassMask[0] = flag96(685904631, 1151048, 0);
                 break;
@@ -3439,6 +3443,12 @@ void SpellMgr::LoadDbcDataCorrections()
                 spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ANY;
                 spellInfo->Effect[1] = 0;
                 break;
+				case 68282: // Charge (ToC mount)
+					spellInfo->Effect[0] = SPELL_EFFECT_SCHOOL_DAMAGE;
+					spellInfo->Effect[1] = SPELL_EFFECT_CHARGE;
+					spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
+					spellInfo->EffectBasePoints[0] = 20*1000;
+					break;
             case 71614: // Ice Lock
                 spellInfo->Mechanic = MECHANIC_STUN;
                 break;

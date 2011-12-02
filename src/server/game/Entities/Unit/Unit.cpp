@@ -2643,8 +2643,6 @@ SpellMissInfo Unit::SpellHitResult(Unit* victim, SpellInfo const* spell, bool Ca
                 reflectchance += (*i)->GetAmount();
         if (reflectchance > 0 && roll_chance_i(reflectchance))
         {
-            // Start triggers for remove charges if need (trigger only for victim, and mark as active spell)
-            ProcDamageAndSpell(victim, PROC_FLAG_NONE, PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_NEG, PROC_EX_REFLECT, 1, BASE_ATTACK, spell);
             return SPELL_MISS_REFLECT;
         }
     }
@@ -5238,10 +5236,38 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     triggered_spell_id = 33494;
                     break;
                 }
+				//Item - Icecrown 25 Normal Tank Weapon Proc
+				case 71871:
+				{
+					triggered_spell_id = 71870;
+					target = this;
+					break;
+				}
+				//Item - Icecrown 25 Heroic Tank Weapon Proc
+				case 71873:
+				{
+					triggered_spell_id = 71872;
+					target = this;
+					break;
+				}
                 // Twisted Reflection (boss spell)
                 case 21063:
                     triggered_spell_id = 21064;
                     break;
+				//Item - Icecrown 25 Normal Caster Weapon Proc
+				case 71845:
+				{
+					triggered_spell_id = 71843;
+					target = this;
+					break;
+				}
+				//Item - Icecrown 25 Heroic Caster Weapon Proc
+				case 71846:
+				{
+					triggered_spell_id = 71844;
+					target = this;
+					break;
+				}
                 // Vampiric Aura (boss spell)
                 case 38196:
                 {
@@ -6100,6 +6126,16 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     triggered_spell_id = 37378;
                     break;
                 }
+			 	// Glyph of Seduction
+				case 56250:
+				{
+					if(!target)
+			  			return false;
+				target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE, 0, target->GetAura(32409)); // SW:D shall not be removed.
+				target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT);
+				target->RemoveAurasByType(SPELL_AURA_PERIODIC_LEECH);
+				return true;
+				}
             }
             break;
         }
@@ -6426,6 +6462,17 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     triggered_spell_id = 32747;
                     break;
                 }
+				case 57934: // Tricks of the Trade
+				{
+					if (Unit * unitTarget = GetMisdirectionTarget())
+					{
+						RemoveAura(dummySpell->Id, GetGUID(), 0, AURA_REMOVE_BY_DEFAULT);
+						CastSpell(this, 59628, true);
+						CastSpell(unitTarget, 57933, true);
+						return true;
+					}
+					return false;
+				}
                 // Item - Druid T10 Balance 4P Bonus
                 case 70723:
                 {
@@ -8530,6 +8577,20 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
                         target = victim;
                         break;
                     }
+					//Item - Icecrown 25 Normal Healer Weapon Proc
+					case 71865:
+					{
+						trigger_spell_id = 71864;
+						target = this;
+						break;
+					}
+					//Item - Icecrown 25 Heroic Healer Weapon Proc
+					case 71868:
+					{
+						trigger_spell_id = 71866;
+						target = this;
+						break;
+					}
                     default:
                         // Illumination
                         if (auraSpellInfo->SpellIconID == 241)
@@ -8901,6 +8962,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
         // Finish movies that add combo
         case 14189: // Seal Fate (Netherblade set)
         case 14157: // Ruthlessness
+		case 70802: // Rogue T10 4P Bonus
         {
             if (!victim || victim == this)
                 return false;

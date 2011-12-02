@@ -592,7 +592,14 @@ int32 AuraEffect::CalculateAmount(Unit* caster)
                 break;
             // Earth Shield
             if (GetSpellInfo()->SpellFamilyName == SPELLFAMILY_SHAMAN && m_spellInfo->SpellFamilyFlags[1] & 0x400)
+			{
+				// return to unmodified by spellmods value
+				amount = m_spellInfo->Effects[m_effIndex].BasePoints;
+				// apply spell healing bonus
                 amount = caster->SpellHealingBonus(GetBase()->GetUnitOwner(), GetSpellInfo(), amount, SPELL_DIRECT_DAMAGE);
+				// apply spellmods
+			 	amount = caster->ApplyEffectModifiers(GetSpellInfo(), m_effIndex, float(amount));
+			}
             break;
         case SPELL_AURA_PERIODIC_DAMAGE:
             if (!caster)
@@ -5036,6 +5043,17 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                     if (GetId() == 61777)
                         target->CastSpell(target, GetAmount(), true);
                     break;
+					case SPELLFAMILY_ROGUE:
+					{
+						switch(GetId())
+						{
+							case 59628: // Tricks of the Trade
+							caster->SetReducedThreatPercent(0, 0);
+							break;
+						default:
+							break;
+						}
+					}
                 default:
                     break;
             }
