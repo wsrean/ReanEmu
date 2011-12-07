@@ -17,6 +17,7 @@ documento con la informacion de lo que contiene dentro este emulador:
 ##################################
 24/11/2011: Commit:d2b4f331128e10748ad31d3dbc83b36eba5904ca
 * Core/DisableMgr: Fixed spells disables
+30/11/2011: Fix de un crash referente a typos en SmartAI por Zwerg
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
