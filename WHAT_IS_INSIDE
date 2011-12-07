@@ -21,8 +21,8 @@ documento con la informacion de lo que contiene dentro este emulador:
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
 #######################################################
-15/11/2011: Commit:daa5557d6eab3956fd4e7dbbc5ce20b89fa25875
-* Core/Warden: Typo
+06/12/2011: Commit:321806679d56690130d8e46bf88289d81ea16f3c
+* Merge branch 'master' of git://github.com/TrinityCore/TrinityCore into warden
 03/11/2011: Añadido mensaje central cheaters warden por Eilo
 07/11/2011: Eliminado avisos en consola spam por Eilo
 Adecuaciones por Eilo

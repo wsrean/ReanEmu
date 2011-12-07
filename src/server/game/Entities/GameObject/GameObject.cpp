@@ -702,7 +702,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
     WorldDatabase.CommitTransaction(trans);
 }
 
-bool GameObject::LoadFromDB(uint32 guid, Map* map)
+bool GameObject::LoadGameObjectFromDB(uint32 guid, Map* map, bool addToMap)
 {
     GameObjectData const* data = sObjectMgr->GetGOData(guid);
 
@@ -766,6 +766,9 @@ bool GameObject::LoadFromDB(uint32 guid, Map* map)
     }
 
     m_goData = data;
+
+    if (addToMap && !GetMap()->AddToMap(this))
+        return false;
 
     return true;
 }
