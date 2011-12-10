@@ -17,7 +17,7 @@ documento con la informacion de lo que contiene dentro este emulador:
 ##################################
 10/12/2011: Commit:a85ca687eb6c280f775cb90540fa18f87ea1a201
 * Core/Spell: Fixed compile broken in 11fb0beaf0cb877b14f24aa88f19832e0aa3dc88 and renamed _player to player.
-30/11/2011: Fix de un crash referente a typos en SmartAI por Zwerg
+10/12/2011: Fix de compilacion por Eilo
 
 #######################################################
 # Warden Anticheat branch de leak's hasta esta fecha: #
