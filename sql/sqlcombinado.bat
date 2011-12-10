@@ -19,6 +19,7 @@
 pause
 @echo off
 setlocal EnableDelayedExpansion
+set WorldTraducciones=All_World_Traducciones.sql
 set WorldUpdates=All_World_Updates.sql
 set CharactersUpdates=All_Characters_Updates.sql
 set AuthUpdates=All_Auth_Updates.sql
@@ -26,6 +27,17 @@ set AuthUpdates=All_Auth_Updates.sql
 if exist %CharactersUpdates% del %CharactersUpdates%
 if exist %AuthUpdates% del %AuthUpdates%
 if exist %WorldUpdates% del %WorldUpdates%
+if exist %WorldTraducciones% del %WorldTraducciones%
+
+
+for %%a in (updates\world\traducciones\*.sql) do (
+echo /* >>%WorldTraducciones%
+echo * %%a >>%WorldTraducciones%
+echo */ >>%WorldTraducciones%
+copy/b %WorldTraducciones%+"%%a" %WorldTraducciones%
+echo. >>%WorldTraducciones%
+echo. >>%WorldTraducciones%)
+
 
 for %%a in (updates\world\*.sql) do (
 echo /* >>%WorldUpdates%
@@ -52,6 +64,7 @@ echo */ >>%AuthUpdates%
 copy/b %AuthUpdates%+"%%a" %AuthUpdates%
 echo. >>%AuthUpdates%
 echo. >>%AuthUpdates%)  
+
 
 @echo ReanEmu
 pause
