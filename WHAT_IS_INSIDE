@@ -15,8 +15,8 @@ documento con la informacion de lo que contiene dentro este emulador:
 ##################################
 # Trintitycore hasta esta fecha: #
 ##################################
-24/11/2011: Commit:d2b4f331128e10748ad31d3dbc83b36eba5904ca
-* Core/DisableMgr: Fixed spells disables
+10/12/2011: Commit:a85ca687eb6c280f775cb90540fa18f87ea1a201
+* Core/Spell: Fixed compile broken in 11fb0beaf0cb877b14f24aa88f19832e0aa3dc88 and renamed _player to player.
 30/11/2011: Fix de un crash referente a typos en SmartAI por Zwerg
 
 #######################################################
