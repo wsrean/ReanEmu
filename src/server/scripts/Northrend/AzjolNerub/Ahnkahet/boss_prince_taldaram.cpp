@@ -226,6 +226,7 @@ public:
                             {
                                 DoScriptText(RAND(SAY_VANISH_1, SAY_VANISH_2), me);
                                 DoCast(me, SPELL_VANISH);
+                                me->SetInCombatWithZone();
                                 Phase = JUST_VANISHED;
                                 uiPhaseTimer = 500;
                                 if (Unit* pEmbraceTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
