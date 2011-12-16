@@ -19,6 +19,9 @@ UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200934;
 -- Ajuste de velocidades para babosas de putricidio, amenorada la velocidad
 -- Originalmente speed_walk=2
 UPDATE `creature_template` SET `speed_walk`=0.68 WHERE `entry` IN (37697,38604,38758,38759);
+-- Inmunidades de las babosas de putricidio
+-- Babosas de putricidio Volatile Ooze(37697)
+UPDATE `creature_template` SET `mechanic_immune_mask` = `mechanic_immune_mask`|1|2|8|16|32|64|128|256|512|1024|2048|4096|8192|65536|131072|524288|4194304|8388608|33554432|536870912 WHERE `entry` IN (37697,38604,38758,38759,37562,38602,38760,38761);
 
 -- Icc triggers de Rotface
 -- Eliminado algunos Puddle Stalker(37013) que hacen que salga en el aire los charcos
