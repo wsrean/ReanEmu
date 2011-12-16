@@ -486,6 +486,20 @@ void BossAI::_Reset()
     summons.DespawnAll();
     if (instance)
         instance->SetBossState(_bossId, NOT_STARTED);
+
+    inFightAggroCheck_Timer = MAX_AGGRO_PULSE_TIMER;
+}
+
+void BossAI::_DoAggroPulse(const uint32 diff)
+{
+    if (inFightAggroCheck_Timer < diff)
+    {
+        if (me->getVictim() && me->getVictim()->ToPlayer())
+            DoAttackerGroupInCombat(me->getVictim()->ToPlayer());
+        inFightAggroCheck_Timer = MAX_AGGRO_PULSE_TIMER;
+    }
+    else
+        inFightAggroCheck_Timer -= diff;
 }
 
 void BossAI::_JustDied()
