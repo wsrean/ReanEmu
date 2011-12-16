@@ -1146,7 +1146,22 @@ class instance_icecrown_citadel : public InstanceMapScript
 
             void Update(uint32 diff)
             {
-                if (BloodQuickeningState != IN_PROGRESS && GetBossState(DATA_THE_LICH_KING) != IN_PROGRESS)
+		if (GetBossState(DATA_DEATHBRINGER_SAURFANG) == DONE)
+		{
+		    if (GameObject* go = instance->GetGameObject(DeathbringersCacheGUID))
+		    {
+			if (go->isSpawned())
+			{
+			    Map::PlayerList const &players = instance->GetPlayers();
+			    for (Map::PlayerList::const_iterator it = players.begin(); it != players.end(); ++it)
+				if (Player* player = it->getSource())
+				    if(!player->GetGroup() && !player->IsBeingTeleportedFar() && player->isGameMaster())
+					player->TeleportTo(571, 6447.39f, 2060.72f, 564.027f, 2.37f);
+			}
+		    }
+		}
+
+		if (BloodQuickeningState != IN_PROGRESS && GetBossState(DATA_THE_LICH_KING) != IN_PROGRESS)
                     return;
 
                 Events.Update(diff);
