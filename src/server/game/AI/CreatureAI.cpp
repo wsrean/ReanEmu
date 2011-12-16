@@ -22,6 +22,7 @@
 #include "World.h"
 #include "SpellMgr.h"
 #include "Vehicle.h"
+#include "Group.h"
 #include "Log.h"
 #include "MapReference.h"
 #include "Player.h"
@@ -164,6 +165,27 @@ void CreatureAI::MoveInLineOfSight(Unit* who)
     //    && me->IsWithinDistInMap(who, sWorld->getIntConfig(CONFIG_CREATURE_FAMILY_ASSISTANCE_RADIUS))
     //    && me->canStartAttack(who->getVictim(), true)) // TODO: if we use true, it will not attack it when it arrives
     //    me->GetMotionMaster()->MoveChase(who->getVictim());
+}
+
+void CreatureAI::DoAttackerGroupInCombat(Player* attacker)
+{
+    if (attacker)
+    {
+        if (Group* pGroup = attacker->GetGroup() )
+        {
+            for (GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+            {
+                Player* pGroupGuy = itr->getSource();
+
+                if (pGroupGuy && pGroupGuy->isAlive() && pGroupGuy->GetMapId() == me->GetMapId())
+                {
+                    me->SetInCombatWith(pGroupGuy);
+                    pGroupGuy->SetInCombatWith(me);
+                    me->AddThreat(pGroupGuy, 0.0f);
+                }
+            }
+        }
+    }
 }
 
 void CreatureAI::EnterEvadeMode()

@@ -131,6 +131,8 @@ class CreatureAI : public UnitAI
         //virtual void SpellClick(Player* player) {}
 
         // Called at reaching home after evade
+        void DoAttackerGroupInCombat(Player* attacker);
+
         virtual void JustReachedHome() {}
 
         void DoZoneInCombat(Creature* creature = NULL, float maxRangeToNearestTarget = 50.0f);
