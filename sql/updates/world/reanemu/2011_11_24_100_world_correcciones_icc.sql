@@ -14,3 +14,8 @@ UPDATE `creature` SET `position_z` = 44.57 WHERE `guid`=200956;
 -- Las dos siguientes, llegando a marrowgar
 UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200912;
 UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200934;
+
+-- Icc adds putricidio
+-- Ajuste de velocidades para babosas de putricidio, amenorada la velocidad
+-- Originalmente speed_walk=2
+UPDATE `creature_template` SET `speed_walk`=0.68 WHERE `entry` IN (37697,38604,38758,38759);
