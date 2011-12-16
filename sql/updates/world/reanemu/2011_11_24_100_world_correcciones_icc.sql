@@ -19,3 +19,14 @@ UPDATE `creature` SET `position_z` = 42.1 WHERE `guid`=200934;
 -- Ajuste de velocidades para babosas de putricidio, amenorada la velocidad
 -- Originalmente speed_walk=2
 UPDATE `creature_template` SET `speed_walk`=0.68 WHERE `entry` IN (37697,38604,38758,38759);
+
+-- Icc triggers de Rotface
+-- Eliminado algunos Puddle Stalker(37013) que hacen que salga en el aire los charcos
+DELETE FROM `creature` WHERE `guid`=201602;
+DELETE FROM `creature` WHERE `guid`=201332;
+DELETE FROM `creature` WHERE `guid`=201651;
+DELETE FROM `creature` WHERE `guid`=201494;
+DELETE FROM `creature` WHERE `guid`=201600;
+DELETE FROM `creature` WHERE `guid`=201648;
+DELETE FROM `creature` WHERE `guid`=201441;
+DELETE FROM `creature` WHERE `guid`=200922;
