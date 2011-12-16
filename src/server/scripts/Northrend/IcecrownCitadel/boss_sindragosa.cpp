@@ -205,7 +205,6 @@ class boss_sindragosa : public CreatureScript
                 Cleanup();
                 summons.DespawnAll();
                 BossAI::Reset();
-                me->SetReactState(REACT_DEFENSIVE);
                 DoCast(me, SPELL_TANK_MARKER, true);
                 events.ScheduleEvent(EVENT_BERSERK, 600000);
                 events.ScheduleEvent(EVENT_CLEAVE, 10000, EVENT_GROUP_LAND_PHASE);
@@ -340,7 +339,7 @@ class boss_sindragosa : public CreatureScript
                     case POINT_LAND:
                         me->SetFlying(false);
                         me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-                        me->SetReactState(REACT_DEFENSIVE);
+                        me->SetReactState(REACT_AGGRESSIVE);
                         if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
                             me->GetMotionMaster()->MovementExpired();
                         DoStartMovement(me->getVictim());
