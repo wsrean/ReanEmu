@@ -917,6 +917,29 @@ class ObjectMgr
         void LoadTrainerSpell();
         void AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel);
 
+        // Loads the jail conf out of the database, ajustes por Eilo
+        void LoadJailConf(void);
+
+        // Jail Config...
+        std::string m_jail_obt;
+        uint32 m_jailconf_max_jails;    // Maximo de veces para ser borrado
+        uint32 m_jailconf_max_duration; // Tiempo maximo en minutos
+        uint32 m_jailconf_min_reason;   // Caracteres minimos para escribir la razon
+        uint32 m_jailconf_warn_player;  // Aviso de 1 encarcelamiento mas antes de ser eliminado
+        uint32 m_jailconf_amnestie;     // Salida de la carcel
+        float m_jailconf_ally_x;        // Coordenadas de la carcel ALIANZA
+        float m_jailconf_ally_y;
+        float m_jailconf_ally_z;
+        float m_jailconf_ally_o;
+        uint32 m_jailconf_ally_m;
+        float m_jailconf_horde_x;       // Coordenadas de la carcel HORDA
+        float m_jailconf_horde_y;
+        float m_jailconf_horde_z;
+        float m_jailconf_horde_o;
+        uint32 m_jailconf_horde_m;
+        uint32 m_jailconf_ban;          // Banear la cuenta si se ha llegado al limite
+        uint32 m_jailconf_radius;       // Radio maximo donde se puede caminar en la carcel
+
         std::string GeneratePetName(uint32 entry);
         uint32 GetBaseXP(uint8 level);
         uint32 GetXPForLevel(uint8 level);

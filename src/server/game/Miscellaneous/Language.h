@@ -21,6 +21,42 @@
 
 enum TrinityStrings
 {
+	// Added by WarHead for the Jail edited by spgm, textos editados a español y ajustes por Eilo 
+	LANG_JAIL_YOURE_JAILED              = 950,  // "Has sido encarcelado por %s durante %u minuto(s)!"
+	LANG_JAIL_REASON                    = 951,  // "%s escribio como razon: %s"
+	LANG_JAIL_WAS_JAILED                = 952,  // "%s encarcelado por %u minuto(s)."
+	LANG_JAIL_YOURE_UNJAILED            = 953,  // "Has sido liberado de la carcel por %s."
+	LANG_JAIL_WAS_UNJAILED              = 954,  // "Has liberado a %s de la carcel."
+	LANG_JAIL_NOREASON                  = 955,  // "Razon no ingresada o %u caracteres escritos!"
+	LANG_JAIL_NONAME                    = 956,  // "Nombre no ingresado!"
+	LANG_JAIL_NOTIME                    = 957,  // "Tiempo no ingresado!"
+	LANG_JAIL_VALUE                     = 958,  // "El tiempo en carcel debe estar entre 1 y %u minutos!"
+	LANG_JAIL_CHAR_NOTJAILED            = 959,  // "Pj %s no encarcelado!"
+	LANG_JAIL_DENIED                    = 960,  // "Comando prohibido para pjs encarcelados!"
+	LANG_JAIL_JAILED_H_INFO             = 961,  // "Te queda %u minuto(s) restantes en la carcel."
+	LANG_JAIL_JAILED_M_INFO             = 962,  // "Te queda %u segundo(s) restantes en la carcel."
+	LANG_JAIL_NOTJAILED_INFO            = 963,  // "Eres libre! Evita ser encarcelado otra vez! ;-)"
+	LANG_JAIL_GM_INFO                   = 964,  // "%s ha sido %u veces encarcelado y tiene %u minuto(s) restantes. Ultima vez encarcelado el %s. Razon: %s"
+	LANG_JAIL_GM_NOINFO                 = 965,  // "%s nunca ha sido encarcelado."
+	LANG_JAIL_NO_JAIL                   = 966,  // "No puedes encarcelarte a ti mismo!"
+	LANG_JAIL_NO_UNJAIL                 = 967,  // "No puedes liberarte a ti mismo!"
+	LANG_JAIL_WARNING                   = 968,  // "Una mas y el pj sera borrado!"
+	LANG_JAIL_ANNOUNCE1                 = 969,  // "El pj "
+	LANG_JAIL_ANNOUNCE2                 = 970,  // " ha sido encarcelado por "
+	LANG_JAIL_ANNOUNCE3                 = 971,  // " minuto(s) por "
+	LANG_JAIL_ANNOUNCE4                 = 972,  // ". Razon: "
+	LANG_JAIL_RELOAD                    = 973,  // "Configuracion del sistema Jail actualizada."
+	LANG_JAIL_CONF_LOADED               = 974,  // ">> Trinity Jail configuracion cargada."
+	LANG_JAIL_CONF_ERR1                 = 975,  // "No se puede cargar la config! Tabla vacia o no existente! Usar characters_jail.sql!"
+	LANG_JAIL_CONF_ERR2                 = 976,  // "Configurado sistema Jail con valores por defecto..."
+	LANG_JAIL_CHAR_TELE                 = 977,  // "El pj \'%s\'  es encarcelado y teleportado a la carcel."
+	LANG_JAIL_CHAR_FREE                 = 978,  // "El pj \'%s\'  ha sido liberado de la carcel."
+	LANG_JAIL_WRONG_NAME                = 979,  // "No existe un pj con ese nombre!"
+	LANG_JAIL_WARNING_BAN               = 980,  // "Una mas encarcelado y te baneara"
+	LANG_JAIL_BAN_REASON                = 981,  // "Maximo de veces en carcel alcanzado!"
+	LANG_JAIL_BAN_BY                    = 982,  // "Sistema Jail"
+	LANG_JAIL_AMNESTII					= 983,  // "Estado de Jail reseteado a 0"
+
     // for chat commands
     LANG_SELECT_CHAR_OR_CREATURE        = 1,
     LANG_SELECT_CREATURE                = 2,

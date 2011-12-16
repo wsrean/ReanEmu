@@ -33,6 +33,8 @@
 #include "PoolMgr.h"
 #include "AccountMgr.h"
 #include "WaypointManager.h"
+#include "WaypointMovementGenerator.h"
+#include "math.h"
 #include "Util.h"
 #include <cctype>
 #include <iostream>
@@ -265,7 +267,18 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     uint32 mapId;
     uint32 areaId;
     uint32 phase = 0;
-
+    bool p_jail_isjailed;
+    uint32 p_jail_guid;
+    std::string p_jail_char;
+    uint32 p_jail_release;
+    bool p_jail_amnestietime;
+    std::string p_jail_reason;
+    uint32 p_jail_times;
+    uint32 p_jail_gmacc;
+    std::string p_jail_gmchar;
+    std::string p_jail_lasttime;
+    uint32 p_jail_duration;
+    std::string gmname;
 
     // get additional information from Player object
     if (target)
@@ -285,6 +298,18 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         mapId = target->GetMapId();
         areaId = target->GetAreaId();
         phase = target->GetPhaseMask();
+        p_jail_isjailed = target->m_jail_isjailed;
+        p_jail_guid = target->m_jail_guid;
+        p_jail_char = target->m_jail_char;
+        p_jail_release = target->m_jail_release;
+        p_jail_amnestietime = target->m_jail_amnestietime;
+        p_jail_reason = target->m_jail_reason;
+        p_jail_times =  target->m_jail_times;
+        p_jail_gmacc =  target->m_jail_gmacc;
+        p_jail_gmchar = target->m_jail_gmchar;
+        p_jail_lasttime = target->m_jail_lasttime;
+        p_jail_duration = target->m_jail_duration;
+        gmname = target->GetName();
     }
     // get additional information from DB
     else
@@ -297,8 +322,11 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         QueryResult result = CharacterDatabase.PQuery("SELECT totaltime, level, money, account, race, class, map, zone FROM characters "
                                                       "WHERE guid = '%u'", GUID_LOPART(target_guid));
         if (!result)
+        {
             return false;
-
+        }
+        else
+        {
         Field* fields = result->Fetch();
         total_player_time = fields[0].GetUInt32();
         level = fields[1].GetUInt32();
@@ -308,6 +336,31 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         Class = fields[5].GetUInt8();
         mapId = fields[6].GetUInt16();
         areaId = fields[7].GetUInt16();
+        }
+
+        QueryResult row = CharacterDatabase.PQuery("SELECT * FROM `jail` WHERE `guid`='%u' LIMIT 1", GUID_LOPART(target_guid));
+	    
+        if (!row)
+        {
+             p_jail_isjailed = false;
+        }
+        else
+        {
+
+            Field *data = row->Fetch();
+            p_jail_isjailed = true;
+            p_jail_guid = data[0].GetUInt32();
+            p_jail_char = data[1].GetString();
+            p_jail_release = data[2].GetUInt32();
+            p_jail_amnestietime = data[3].GetUInt32();
+            p_jail_reason = data[4].GetString();
+            p_jail_times = data[5].GetUInt32();
+            p_jail_gmacc = data[6].GetUInt32();
+            p_jail_gmchar = data[7].GetString();
+            p_jail_lasttime = data[8].GetString();
+            p_jail_duration = data[9].GetUInt32();
+            gmname = "";
+        }
     }
 
     std::string username = GetTrinityString(LANG_ERROR);
@@ -435,6 +488,39 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     else
         PSendSysMessage(LANG_PINFO_MAP_OFFLINE, map->name[locale], areaName.c_str());
 
+    if (p_jail_times > 0)
+        {
+            if (p_jail_release > 0)
+            {
+                time_t localtime;
+                localtime = time(NULL);
+                uint32 min_left = (uint32)floor(float(p_jail_release - localtime) / 60);
+
+                if (min_left <= 0)
+                {
+                    p_jail_release = 0;
+                    CharacterDatabase.PExecute("UPDATE `jail` SET `release`='%u' WHERE `guid`='%u' LIMIT 1", p_jail_release, p_jail_guid);
+                    PSendSysMessage(LANG_JAIL_GM_INFO, p_jail_char.c_str(), p_jail_times, 0, p_jail_gmchar.c_str(), p_jail_reason.c_str());
+                    return true;
+                }
+                else
+                {
+                    PSendSysMessage(LANG_JAIL_GM_INFO, p_jail_char.c_str(), p_jail_times, min_left, p_jail_gmchar.c_str(), p_jail_reason.c_str());
+                    return true;
+                }
+            }
+            else
+            {
+                PSendSysMessage(LANG_JAIL_GM_INFO, p_jail_char.c_str(), p_jail_times, 0, p_jail_gmchar.c_str(), p_jail_reason.c_str());
+                return true;
+            }
+        }
+        else
+        {
+            PSendSysMessage(LANG_JAIL_GM_NOINFO, gmname.c_str());
+            return true;
+        }
+        
     return true;
 }
 

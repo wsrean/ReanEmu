@@ -2319,6 +2319,26 @@ class Player : public Unit, public GridObject<Player>
         bool IsImmuneToEnvironmentalDamage();
         uint32 EnvironmentalDamage(EnviromentalDamage type, uint32 damage);
 
+        // Jail by WarHead edited by spgm ajustado por Eilo
+        // ---------------
+        // Char datas...
+		bool m_jail_warning;
+		bool m_jail_amnestie;
+		bool m_jail_isjailed;           // Flag para saber si esta encarcelado
+		std::string m_jail_char;        // Nombre del pj
+		uint32 m_jail_guid;             // Guid del pj
+		uint32 m_jail_release;          // Flag para saber si es liberado
+		std::string m_jail_reason;      // Razon por el encarcelamiento
+		uint32 m_jail_times;			// Con que frecuencia es encarcelado el pj
+		uint32 m_jail_amnestietime;
+		uint32 m_jail_gmacc;            // Cuanta gm usada
+		std::string m_jail_gmchar;      // Pj gm usado
+		std::string m_jail_lasttime;    // La ultima vez en la carcel
+		uint32 m_jail_duration;         // Duracion
+		// Load / save functions...
+		void _LoadJail(void);           // Carga datos de la carcel
+		void _SaveJail(void);           // Guarda datos de la carcel
+
         /*********************************************************/
         /***               FLOOD FILTER SYSTEM                 ***/
         /*********************************************************/
