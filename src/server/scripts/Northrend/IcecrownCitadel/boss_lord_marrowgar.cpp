@@ -324,7 +324,7 @@ class npc_coldflame : public CreatureScript
                     }
 
                     me->SetOrientation(owner->GetAngle(target));
-                    owner->GetNearPosition(pos, owner->GetObjectSize() / 2.0f, 0.0f);
+                    owner->GetNearPosition(pos, owner->GetObjectSize() / 20.0f, 0.0f);
                 }
 
                 me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), me->GetPositionZ(), me->GetOrientation());
