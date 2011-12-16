@@ -356,7 +356,7 @@ public:
             DoCast(me, SPELL_FLAME_SPHERE_VISUAL);
             DoCast(me, SPELL_FLAME_SPHERE_SPAWN_EFFECT);
             DoCast(me, SPELL_FLAME_SPHERE_PERIODIC);
-            uiDespawnTimer = 10*IN_MILLISECONDS;
+            uiDespawnTimer = 1*IN_MILLISECONDS;
         }
 
         void EnterCombat(Unit* /*who*/) {}
