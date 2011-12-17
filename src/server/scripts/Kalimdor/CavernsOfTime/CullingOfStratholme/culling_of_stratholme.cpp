@@ -1054,7 +1054,7 @@ public:
                                 if (uiStep == 76) DoScriptText(SAY_PHASE310, me);
                                 SetHoldState(false);
                                 bStepping = false;
-                                SetRun(true);
+                                SetRun(false);
                                 JumpToNextStep(2000);
                             }
                             break;
