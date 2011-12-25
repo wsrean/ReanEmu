@@ -1824,6 +1824,7 @@ AuraStateType SpellInfo::GetAuraState() const
 
     switch (Id)
     {
+        case 50241: // Evasive Charges
         case 71465: // Divine Surge
             return AURA_STATE_UNKNOWN22;
         default:

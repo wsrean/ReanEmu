@@ -1794,6 +1794,10 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
     if (dungeon->difficulty == DUNGEON_DIFFICULTY_HEROIC)
         player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_USE_LFD_TO_GROUP_WITH_PLAYERS, 1);
 
+    // Oculus, Cache of the Ley-Guardian (workaround)
+    if (dungeon->difficulty == DUNGEON_DIFFICULTY_HEROIC && player->GetMapId() == 578)
+        player->AddItem(52676, 1);
+
     LfgReward const* reward = GetRandomDungeonReward(rDungeonId, player->getLevel());
     if (!reward)
         return;

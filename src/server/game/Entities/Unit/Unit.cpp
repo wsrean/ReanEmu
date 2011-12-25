@@ -7943,6 +7943,13 @@ bool Unit::HandleAuraProc(Unit* victim, uint32 damage, Aura* triggeredByAura, Sp
         case SPELLFAMILY_GENERIC:
             switch (dummySpell->Id)
             {
+                // Evasive Maneuvers
+                case 50240:
+                {
+                    RemoveAuraFromStack(50241);
+                    *handled = true;
+                    return !HasAura(50241); // drop in case of non-existing 50241
+                }
                 // Nevermelting Ice Crystal
                 case 71564:
                     RemoveAuraFromStack(71564);
@@ -8713,6 +8720,13 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
         case 38164:
         {
             if (!victim || victim->GetEntry() != 19457)  // Proc only if your target is Grillok
+                return false;
+            break;
+        }
+        // Evasive Aura
+        case 50248:
+        {
+            if (HasAura(50240))
                 return false;
             break;
         }
@@ -10076,7 +10090,7 @@ Unit* Unit::SelectMagnetTarget(Unit* victim, SpellInfo const* spellInfo)
 
         Unit::AuraEffectList const& magnetAuras = victim->GetAuraEffectsByType(SPELL_AURA_SPELL_MAGNET);
         for (Unit::AuraEffectList::const_iterator itr = magnetAuras.begin(); itr != magnetAuras.end(); ++itr)
-            if (Unit* magnet = (*itr)->GetBase()->GetUnitOwner())
+            if (Unit* magnet = (*itr)->GetBase()->GetCaster())
                 if (magnet->isAlive() && IsWithinLOSInMap(magnet))
                 {
                     (*itr)->GetBase()->DropCharge(AURA_REMOVE_BY_EXPIRE);

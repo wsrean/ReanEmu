@@ -6103,6 +6103,11 @@ void AuraEffect::HandlePeriodicTriggerSpellAuraTick(Unit* target, Unit* caster) 
             // Poison (Grobbulus)
             case 28158:
             case 54362:
+            // Soar
+            case 50325:
+                if (caster && caster->isInCombat())
+                    return;
+                break;
             // Slime Pool (Dreadscale & Acidmaw)
             case 66882:
                 target->CastCustomSpell(triggerSpellId, SPELLVALUE_RADIUS_MOD, (int32)((((float)m_tickNumber / 60) * 0.9f + 0.1f) * 10000 * 2 / 3), NULL, true, NULL, this);
