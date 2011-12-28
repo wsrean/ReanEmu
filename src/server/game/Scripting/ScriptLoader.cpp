@@ -1237,6 +1237,7 @@ void AddBattlegroundScripts()
 #ifdef SCRIPTS
 /* This is where custom scripts' loading functions should be declared. */
 void AddSC_icc_rep_rings();
+void AddSC_npc_broma();
 #endif
 
 void AddCustomScripts()
@@ -1244,5 +1245,6 @@ void AddCustomScripts()
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
 AddSC_icc_rep_rings();
+AddSC_npc_broma();
 #endif
 }

@@ -11,6 +11,7 @@
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
   Custom/icc_rings_recovery.cpp
+  Custom/npc_broma.cpp
   
 )
 
