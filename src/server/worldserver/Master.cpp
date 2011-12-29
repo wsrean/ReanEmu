@@ -124,17 +124,21 @@ int Master::Run()
     seed1.SetRand(16 * 8);
 
     sLog->outString("%s (worldserver-daemon)", _FULLVERSION);
-    sLog->outString("<Ctrl-C> to stop.\n");
+    sLog->outString("Presione <Ctrl-C> para detenerlo.\n");
 
-    sLog->outString(" ______                       __");
-    sLog->outString("/\\__  _\\       __          __/\\ \\__");
-    sLog->outString("\\/_/\\ \\/ _ __ /\\_\\    ___ /\\_\\ \\, _\\  __  __");
-    sLog->outString("   \\ \\ \\/\\`'__\\/\\ \\ /' _ `\\/\\ \\ \\ \\/ /\\ \\/\\ \\");
-    sLog->outString("    \\ \\ \\ \\ \\/ \\ \\ \\/\\ \\/\\ \\ \\ \\ \\ \\_\\ \\ \\_\\ \\");
-    sLog->outString("     \\ \\_\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\__\\\\/`____ \\");
-    sLog->outString("      \\/_/\\/_/   \\/_/\\/_/\\/_/\\/_/\\/__/ `/___/> \\");
-    sLog->outString("                                 C O R E  /\\___/");
-    sLog->outString("http://TrinityCore.org                    \\/__/\n");
+    sLog->outString( "   _______       __ " );
+    sLog->outString( "  /\\  ____\\   __/\\ \\      ________" );
+    sLog->outString( "  \\ \\ \\___/  /\\_\\ \\ \\    /\\  ____ \\" );
+    sLog->outString( "   \\ \\ \\____ \\/_/_ \\ \\   \\ \\ \\__/\\ \\" );
+    sLog->outString( "    \\ \\  ___\\  /\\ \\ \\ \\   \\ \\ \\ \\ \\ \\" );
+    sLog->outString( "     \\ \\ \\__/  \\ \\ \\ \\ \\   \\ \\ \\___\\ \\" );
+    sLog->outString( "      \\ \\ \\_____\\ \\ \\ \\ \\___\\ \\_______\\" );
+    sLog->outString( "       \\ \\_______\\/_/\\ \\_____\\/_______/" );
+    sLog->outString( "        \\/_______/    \\/_____/       World" );
+    sLog->outString( "" );
+    sLog->outString( "   * Basado en TrinityCore *" );
+    sLog->outString( "      Por: Eilo-Jesus-Ws         " );
+
 
 #ifdef USE_SFMT_FOR_RNG
     sLog->outString("\n");
@@ -221,7 +225,7 @@ int Master::Run()
                 else
                 {
                     if (SetProcessAffinityMask(hProcess, curAff))
-                        sLog->outString("Using processors (bitmask, hex): %x", curAff);
+                        sLog->outString("Usando mascara de procesadores (bitmask, hex): %x", curAff);
                     else
                         sLog->outError("Can't set used processors (hex): %x", curAff);
                 }
@@ -235,7 +239,7 @@ int Master::Run()
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog->outString("worldserver process priority class set to HIGH");
+                sLog->outString("Servidor de Mundo ha sido habilitada con prioridad ALTA");
             else
                 sLog->outError("Can't set worldserver process priority class.");
             sLog->outString("");
@@ -275,7 +279,7 @@ int Master::Run()
     // set server online (allow connecting now)
     LoginDatabase.DirectPExecute("UPDATE realmlist SET color = color & ~%u, population = 0 WHERE id = '%u'", REALM_FLAG_INVALID, realmID);
 
-    sLog->outString("%s (worldserver-daemon) ready...", _FULLVERSION);
+    sLog->outString("%s (worldserver-daemon) listo...", _FULLVERSION);
     sWorldSocketMgr->Wait();
 
     if (soap_thread)
@@ -298,7 +302,7 @@ int Master::Run()
 
     _StopDB();
 
-    sLog->outString("Halting process...");
+    sLog->outString("Deteniendo proceso...");
 
     if (cliThread)
     {
@@ -446,7 +450,7 @@ bool Master::_StartDB()
         sLog->outError("Realm ID not defined in configuration file");
         return false;
     }
-    sLog->outString("Realm running as realm ID %d", realmID);
+    sLog->outString("Reino ID actualmente corriendo: %d", realmID);
 
     ///- Initialize the DB logging system
     sLog->SetLogDBLater(ConfigMgr::GetBoolDefault("EnableLogDB", false)); // set var to enable DB logging once startup finished.
@@ -461,7 +465,7 @@ bool Master::_StartDB()
 
     sWorld->LoadDBVersion();
 
-    sLog->outString("Using World DB: %s", sWorld->GetDBVersion());
+    sLog->outString("DB usada para Mundo: %s", sWorld->GetDBVersion());
     return true;
 }
 
