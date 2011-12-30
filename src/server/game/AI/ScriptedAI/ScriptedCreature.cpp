@@ -474,6 +474,7 @@ BossAI::BossAI(Creature* creature, uint32 bossId) : ScriptedAI(creature),
     _boundary(instance ? instance->GetBossBoundary(bossId) : NULL),
     _bossId(bossId)
 {
+    SetImmuneToPushPullEffects(true);
 }
 
 void BossAI::_Reset()
