@@ -3544,6 +3544,12 @@ void SpellMgr::LoadDbcDataCorrections()
 
         switch (spellInfo->SpellFamilyName)
         {
+            case SPELLFAMILY_HUNTER: // Monstrous Bite Error target spell 
+                if (spellInfo->SpellIconID == 599)
+                    spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
+                else
+                    break;
+                break;
             case SPELLFAMILY_DRUID:
                 // Starfall Target Selection
                 if (spellInfo->SpellFamilyFlags[2] & 0x100)
