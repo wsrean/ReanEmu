@@ -3550,6 +3550,19 @@ void SpellMgr::LoadDbcDataCorrections()
                 else
                     break;
                 break;
+            	case SPELLFAMILY_PRIEST:
+                // Twin Disciplines ahora es afectado a Prayer of Mending
+                if (spellInfo->SpellIconID == 2292)
+                    spellInfo->EffectSpellClassMask[0][1] |= 0x20;
+                // Spiritual Healing ahora es afectado a Prayer of Mending
+                else if (spellInfo->SpellIconID == 46)
+                    spellInfo->EffectSpellClassMask[0][1] |= 0x20;
+                // Divine Providence ahora es afectado a Prayer of Mending
+                else if (spellInfo->SpellIconID == 2845 && spellInfo->Id != 64844)
+                    spellInfo->EffectSpellClassMask[0][1] |= 0x20;
+                else
+                    break;
+                break;
             case SPELLFAMILY_DRUID:
                 // Starfall Target Selection
                 if (spellInfo->SpellFamilyFlags[2] & 0x100)
