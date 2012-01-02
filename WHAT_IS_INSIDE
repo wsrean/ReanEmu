@@ -9,6 +9,11 @@ parches y/o código que contiene dentro este emulador de manera resumida:
 #########
 #ReanEmu#
 #########
+Milestone0.0: Reiniciando el repo y readaptando cosas varias, inclusion de nuevos
+              developers en git y la inclusion de texto de planeacion para union 
+              eficiente de codigo reestructurando modo de trabajo y organizando 
+              carpetas, branches, etc, adicion de codigo utilitario en general 
+              para complemento del nucleo y funciones de soporte.
 
 
 ##################################
@@ -19,6 +24,31 @@ parches y/o código que contiene dentro este emulador de manera resumida:
 ###############
 # Adicionales #
 ###############
+0.1  - 28/10/2011: Archivo sqlcombinado.BAT para unificar sqls de actualizacion por Eilo
+0.2  - 24/11/2011: Añadido sql TDB11.44
+0.3  - 06/12/2011: Warden Anticheat por Leak
+0.4  - 20/10/2011: Wowarmory con chart de arenas y modelos 3d por Shadez
+0.5  - 28/10/2011: Pvp Ranks de Spgm por Snajil adecuaciones varias por Eilo
+0.6  - 13/10/2011: AHBot añadido para subastas por Lockness
+0.7  - 17/11/2011: ResetCD Duelos por Mouse, actualizaciones por Eilo
+0.8  - 09/11/2011: AC1 Anticheat por Aokrommes, adecuaciones por Eilo
+0.9  - 18/10/2011: Wintergrasp por Lockness
+0.10 - 18/10/2011: Inmunidades de vehiculos por Karlos
+0.11 - 14/10/2011: Cuentas VIP por Locknes
+0.12 - 29/11/2011: TrinityJail original de Warhead, añadido por Hispano, ajustes por Eilo
+0.13 - 02/12/2011: Lista de who maximo 50 pj por Eilo
+0.14 - 09/10/2011: Desactivado avisos Join/Leave en canales por Odyssey
+0.15 - 05/10/2011: Permitiendo unirse al canal LFG sin estar en ciudad principal por Opcode187
+0.16 - 07/10/2011: DynamicLoS en GameObjects por Odyssey
+0.17 - 01/11/2011: DoCompleteAchievement reañadida al nucleo como funcion activa por Eilo
+0.18 - 04/11/2011: DoAttackerAreaInCombat reañadida al nucleo para soporte por Eilo
+0.19 - 17/11/2011: DoAttackerGroupInCombat reañadida al nucleo para soporte por Eilo
+0.20 - 17/11/2011: _DoAggroPulse funcion y inFightAggroCheck_Timer reañadida para soporte por Eilo
+0.21 - 21/11/2011: UnsummonSpecificCreaturesNearby funcion de soporte añadida por Eilo
+0.22 - 30/12/2011: HasAchieved funcion de soporte reañadida por Eilo
+0.23 - 30/12/2011: FindNearestPlayer y GetNearestPlayersList reañadidas por Eilo
+0.24 - 30/12/2011: setRegeneratingHealth funcion de soporte reañadida por Eilo
+0.25 - 30/12/2011: SetImmuneToPushPullEffects funcion de soporte reañadida por Eilo
 
 
 ###############
