@@ -4611,6 +4611,68 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                 case 26465:
                     unitTarget->RemoveAuraFromStack(26464);
                     return;
+                // Shield-Breaker - Argent Tournament
+                case 64595:
+                    if(m_caster->GetOwner())
+                        m_caster->GetOwner()->CastSpell(unitTarget, 64590, true);
+                    else
+                        m_caster->CastSpell(unitTarget, 64590, true);
+                        return;
+                case 62575:
+                {
+                    if(m_caster->GetOwner())
+                        m_caster->GetOwner()->CastSpell(unitTarget, 62626, true);
+                    else
+                        m_caster->CastSpell(unitTarget, 62626, true);
+                        return;
+                }
+                // Charge - Argent Tournament
+                case 62960:
+                {
+                    if (!unitTarget)
+                        return;
+                    m_caster->CastSpell(unitTarget, 62563, true);
+                    m_caster->CastSpell(unitTarget, 68321, true);
+                    return;
+                }
+                // Charge - Argent Tournament
+                case 68282:
+                {
+                    if (!unitTarget)
+                        return;
+                    m_caster->CastSpell(unitTarget, 68284, true);
+                }
+                // Necrocution - Argent Tournament
+                case 63233:
+                // Sundering Thrust - Argent Tournament
+                case 63825:
+                // Counter attack - Argent Tournament
+                case 62709:
+                // Shield-Breaker - Argent Tournament
+                case 64590:
+                case 65147:
+                case 62626:
+                    if(!unitTarget)
+                        return;
+                    if (unitTarget->GetAura(64100))
+                        unitTarget->RemoveAuraFromStack(64100);
+                // Charge - Argent Tournament
+                case 63010:
+                case 63003:
+                case 68321:
+                {
+                    if(!unitTarget)
+                        return;
+                    if (unitTarget->GetAura(62719))
+                        unitTarget->RemoveAuraFromStack(62719);
+
+                    if (unitTarget->GetAura(62552))
+                        unitTarget->RemoveAuraFromStack(62552);
+
+                    if(Aura* defend = unitTarget->GetAura(66482))
+                        defend->ModStackAmount(-1);
+                    return;
+                }
                 // Shadow Flame (All script effects, not just end ones to prevent player from dodging the last triggered spell)
                 case 22539:
                 case 22972:

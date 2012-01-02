@@ -178,6 +178,10 @@ uint32 CreatureTextMgr::SendChat(Creature* source, uint8 textGroup, uint64 whisp
     Language finalLang = (language == LANG_ADDON) ? (*iter).lang : language;
     uint32 finalSound = sound ? sound : (*iter).sound;
 
+    if (Map* map = source->GetMap())
+        if (map->IsDungeon())
+            range = TEXT_RANGE_ZONE;
+
     if (finalSound)
         SendSound(source, finalSound, finalType, whisperGuid, range, team, gmOnly);
 
