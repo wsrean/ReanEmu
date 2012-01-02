@@ -4820,6 +4820,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                     }
                     break;
                 }
+                case 63624:                             // Learn a Second Talent Specialization
+                    // Teach Learn Talent Specialization Switches, required for client triggered casts, allow after 30 sec delay
+                    if (target->GetTypeId() == TYPEID_PLAYER)
+                        ((Player*)target)->learnSpell(63680, false);
+                    break;
+                case 63651:                             // Revert to One Talent Specialization
+                    // Teach Learn Talent Specialization Switches, remove
+                    if (target->GetTypeId() == TYPEID_PLAYER)
+                        ((Player*)target)->removeSpell(63680);
+                    break;
                 case 71563:
                     if (Aura* newAura = target->AddAura(71564, target))
                         newAura->SetStackAmount(newAura->GetSpellInfo()->StackAmount);
