@@ -25,6 +25,7 @@ Milestone4.0  Arreglos en quests, y cadenas de mision, esto incluye scripts
               en c++ y SmartAI.
 Milestone5.0  Traducciones, e inclusion de varios dentro de tablas y strings
               del emulador, ya sea en c++ o en sqls.
+Milestone6.0  Customs y varios
 
 
 ##################################
@@ -226,3 +227,8 @@ Milestone5.0  Traducciones, e inclusion de varios dentro de tablas y strings
 ##########
 # Custom #
 ##########
+6.1  - 08/10/2011: NPC recupera anillos de icc por Karlos
+6.2  - 08/12/2011: NPC subastador en dalaran por Hispano
+6.3  - 28/12/2011: NPC broma dia de inocentes por Eilo
+6.4  - 31/12/2011: NPC boss wachiturros y comandos fin de año por Eilo
+6.5  - 03/01/2011: NPCs bosses evento Asirius por Ws
