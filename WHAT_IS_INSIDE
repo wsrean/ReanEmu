@@ -21,6 +21,8 @@ Milestone2.0: Mejoras en Instances y dungeons, escencialmente para darles funcio
 			  a blizzlike, solucion de bugs varios.
 Milestone3.0  Arreglos a Spells, sobre todo para estabilidad del pve y del
               pvp dentro de los reinos.
+Milestone4.0  Arreglos en quests, y cadenas de mision, esto incluye scripts
+              en c++ y SmartAI.
 
 
 ##################################
