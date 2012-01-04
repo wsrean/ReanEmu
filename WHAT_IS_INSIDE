@@ -23,6 +23,8 @@ Milestone3.0  Arreglos a Spells, sobre todo para estabilidad del pve y del
               pvp dentro de los reinos.
 Milestone4.0  Arreglos en quests, y cadenas de mision, esto incluye scripts
               en c++ y SmartAI.
+Milestone5.0  Traducciones, e inclusion de varios dentro de tablas y strings
+              del emulador, ya sea en c++ o en sqls.
 
 
 ##################################
@@ -217,6 +219,8 @@ Milestone4.0  Arreglos en quests, y cadenas de mision, esto incluye scripts
 #################
 # Traducciones: #
 #################
+5.1  - 29/12/2011: Traducciones de eswow2 de varias tablas de world, actualizadas por Eilo
+5.2  - 08/12/2011: Adecuaciones de nombres de 2 game_tele por Eilo
 
 
 ##########
