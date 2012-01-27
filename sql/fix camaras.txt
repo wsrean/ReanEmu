@@ -1,0 +1,1 @@
+INSERT INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `autocast`) VALUES (59073, 668, 24561, 1, 24561, 70013, 1);
