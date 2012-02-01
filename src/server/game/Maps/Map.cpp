@@ -407,6 +407,33 @@ bool Map::AddPlayerToMap(Player* player)
     return true;
 }
 
+void Map::SendInitTransportsInInstance(Player* player)
+{
+    // Hack to send out transports
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByInstanceIdMap;
+ 
+    // no transports at map
+    if (tmap.find(player->GetInstanceId()) == tmap.end())
+        return;
+ 
+    UpdateData transData;
+ 
+    MapManager::TransportSet& tset = tmap[player->GetInstanceId()];
+ 
+    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
+    {
+        // send data for current transport in other place
+        if ((*i) != player->GetTransport() && (*i)->GetInstanceId() == GetInstanceId())
+        {
+            (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
+        }
+    }
+ 
+    WorldPacket packet;
+    transData.BuildPacket(&packet);
+    player->GetSession()->SendPacket(&packet);
+}
+
 template<class T>
 void Map::InitializeObject(T* /*obj*/)
 {
