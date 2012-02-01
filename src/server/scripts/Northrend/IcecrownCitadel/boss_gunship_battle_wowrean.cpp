@@ -369,7 +369,7 @@ void StartFlyShip(Transport* t)
     t->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
     t->SetGoState(GO_STATE_ACTIVE);
     t->SetUInt32Value(GAMEOBJECT_DYNAMIC, 0x10830010); // Seen in sniffs
-    t->SetFloatValue(GAMEOBJECT_PARENTROTATION, 3, 1.0f);
+    t->SetFloatValue(GAMEOBJECT_PARENTROTATION + 3, 1.0f);
 
     Map* map = t->GetMap();
     std::set<uint32> mapsUsed;
@@ -529,7 +529,7 @@ void DoCheckFallingPlayer(Creature* me)
                 if (Player* pPlayer = itr->getSource())
                 {
                     if (pPlayer->GetPositionZ() < 420.0f && pPlayer->IsWithinDistInMap(me, 300.0f))
-                        pPlayer->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ()  5.0f, me->GetOrientation());
+                        pPlayer->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 5.0f, me->GetOrientation());
                 }
             }
         }
@@ -794,7 +794,7 @@ class npc_muradin_gunship : public CreatureScript
             {
                 if ((!player->GetGroup() || !player->GetGroup()->IsLeader(player->GetGUID())) && !player->isGameMaster())
                 {
-                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I'm not the raid leader...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF2);
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I'm not the raid leader...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
                     return true;
                 }
@@ -812,7 +812,7 @@ class npc_muradin_gunship : public CreatureScript
             player->PlayerTalkClass->ClearMenus();
             player->CLOSE_GOSSIP_MENU();
 
-            if (action == GOSSIP_ACTION_INFO_DEF2)
+            if (action == GOSSIP_ACTION_INFO_DEF+2)
                 pCreature->MonsterSay("I'll wait for the raid leader.", LANG_UNIVERSAL, player->GetGUID());
 
             if (action == 1001)
@@ -1997,7 +1997,7 @@ class npc_saurfang_gunship : public CreatureScript
             {
                 if ((!player->GetGroup() || !player->GetGroup()->IsLeader(player->GetGUID())) && !player->isGameMaster())
                 {
-                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I'm not the raid leader...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF2);
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I'm not the raid leader...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
                     return true;
                 }
@@ -2015,7 +2015,7 @@ class npc_saurfang_gunship : public CreatureScript
             player->PlayerTalkClass->ClearMenus();
             player->CLOSE_GOSSIP_MENU();
 
-            if (action == GOSSIP_ACTION_INFO_DEF2)
+            if (action == GOSSIP_ACTION_INFO_DEF+2)
                 pCreature->MonsterSay("I'll wait for the raid leader.", LANG_UNIVERSAL, player->GetGUID());
 
             if (action == 1001)
@@ -3235,7 +3235,7 @@ class spell_gb_incinerating_blast : public SpellScriptLoader
                 if (!caster || !caster->GetPower(POWER_ENERGY))
                     return;
 
-                SetHitDamage(int32(GetHitDamage()  (caster->GetPower(POWER_ENERGY) * 100.0f))); // TODO: How much should be?
+                SetHitDamage(int32(GetHitDamage() + (caster->GetPower(POWER_ENERGY) * 100.0f))); // TODO: How much should be?
                 caster->SetPower(POWER_ENERGY, 0);
             }
 
