@@ -1544,6 +1544,7 @@ class instance_icecrown_citadel : public InstanceMapScript
             // Aqui hay que unir los estados del first squad y estas cosas con ls eventos reales
             uint32 FirstSquadState;
             uint32 SecondSquadState;
+            uint32 SpireSquadState;
             uint64 SkybreakerBossGUID;
             uint64 OrgrimmarBossGUID;
             uint64 DeathbringerSaurfangGbGUID;
