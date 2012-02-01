@@ -400,6 +400,10 @@ bool Map::AddPlayerToMap(Player* player)
     SendInitSelf(player);
     SendInitTransports(player);
 
+    // And send init transport in instance
+    if (Instanceable())
+        SendInitTransportsInInstance(player);
+
     player->m_clientGUIDs.clear();
     player->UpdateObjectVisibility(false);
 
