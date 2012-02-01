@@ -150,6 +150,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                 ColdflameJetsState = NOT_STARTED;
                 BloodQuickeningState = NOT_STARTED;
                 BloodQuickeningMinutes = 0;
+// ******* OJO ******* Aqui hay que ver que se hace con estos
                 // Gunship: Holders para el script
                 FirstSquadState = 0;
                 SecondSquadState = 0;
@@ -176,8 +177,9 @@ class instance_icecrown_citadel : public InstanceMapScript
             {
                 if (!TeamInInstance)
                     TeamInInstance = player->GetTeam();
+/* ---------------- Esta linea es la peor de todas -------------- */
                 // Gunship: Precargar el spawn
-                PrepareGunshipEvent(); 
+                PrepareGunshipEvent(); // <-- ojala halle una manera para esto
             }
 
             void OnCreatureCreate(Creature* creature)
@@ -393,7 +395,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                         break;
                 }
             }
-
+// DENTRO DE ESTA CREATE FALTAN GOS PARA GUNSHIP, DEPENDIENDO LO Q SE QUIERA HACER
             void OnGameObjectCreate(GameObject* go)
             {
                 switch (go->GetEntry())
@@ -651,6 +653,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                         return ArthasPlatformGUID;
                     case DATA_TERENAS_MENETHIL:
                         return TerenasMenethilGUID;
+// * OJO * Aqui faltan DATAS, como el de los frostwyrm el de firstsquad que no hay
                     //Gunship: Para unir todo
                     case DATA_SKYBREAKER_BOSS:
                         return SkybreakerBossGUID;
@@ -691,6 +694,9 @@ class instance_icecrown_citadel : public InstanceMapScript
                             }
                         }
                         break;
+// ******* OJO ********* AQUI FALTA EL CASE DE GUNSHIP 
+// a saber que se hace luego que se acaba, si se spamea algo, se les da un logro
+// les aparecemos algun npc o alguna cosa estilo wowrean.
                     case DATA_DEATHBRINGER_SAURFANG:
                         switch (state)
                         {
@@ -1288,7 +1294,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                         break;
                 }
             }
-
+/* -------------------------- ARREGLAR ESTO DIOS ----------------------- */
             // Gunship: esto es una mierda, hay que hacerlo de otra forma
             void PrepareGunshipEvent()
             {
@@ -1533,7 +1539,9 @@ class instance_icecrown_citadel : public InstanceMapScript
             bool IsOozeDanceEligible;
             bool IsNauseaEligible;
             bool IsOrbWhispererEligible;
+/* ----------------------------------------- AQUI OJO CON ESTAS VARIABLES PARA USAR LUEGO ----------------------- */
             // Gunship: Variables
+            // Aqui hay que unir los estados del first squad y estas cosas con ls eventos reales
             uint32 FirstSquadState;
             uint32 SecondSquadState;
             uint64 SkybreakerBossGUID;

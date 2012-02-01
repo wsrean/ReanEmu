@@ -402,6 +402,7 @@ enum GameObjectsIds
     GO_LAVAMAN_PILLARS_CHAINED              = 202437,
     GO_LAVAMAN_PILLARS_UNCHAINED            = 202438,
 
+// ATENTO CON ESTOS GOS, A VER QUE SE HACE EN EL .CPP
     //Gunship: Ids de los Gameobjects
     GO_ORGRIM_S_HAMMER_HORDE_ICC            = 201812,
     GO_ORGRIM_S_HAMMER_ALLIANCE_ICC         = 201581,
