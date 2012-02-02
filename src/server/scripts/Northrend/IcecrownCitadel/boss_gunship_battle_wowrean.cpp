@@ -487,12 +487,28 @@ void TeleportPlayers(Map* map, uint64 TeamInInstance)
 }
 
 // Mover los players a un punto para que funcione el evento bien
-void TeleportPlayersToCenter(Transport* t, uint64 TeamInInstance)
+void TeleportPlayersToCenter(Map* map, uint64 TeamInInstance)
 {
-    if(TeamInInstance == ALLIANCE)
-        t->UpdatePlayerPositionTo(-15.51547f, -0.160213f, 28.87252f, 0.56211f); // en el portal solo que al otro lado
-    else
-        t->UpdatePlayerPositionTo(15.03016f, -7.00016f, 37.70952f, 0.55138f); // en el otro portal solo que al otro lado
+    if(map)
+    {
+        Map::PlayerList const &lPlayers = map->GetPlayers();
+        if (!lPlayers.isEmpty())
+        {
+            for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+            {
+                if (Player* pPlayer = itr->getSource())
+                {
+                    if (pPlayer->isDead() && !pPlayer->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))
+                        pPlayer->ResurrectPlayer(1.0f);
+
+                    if(TeamInInstance == ALLIANCE)
+                        pPlayer->TeleportTo(map->GetId(), -377.184021f, 2073.548584f, 445.753387f, 0); // en el portal solo que al otro lado
+                    else
+                        pPlayer->TeleportTo(map->GetId(), -438.142365f, 2395.725830f, 436.781647f, 0); // en el otro portal solo que al otro lado
+                }
+            }
+        }
+    }
 }
 
 //Ship explosion
@@ -1069,7 +1085,7 @@ class npc_muradin_gunship : public CreatureScript
                             Talk(SAY_INTRO_ALLIANCE_7);
                             break;
                         case EVENT_SUMMON_PLAYERS:
-                            TeleportPlayersToCenter(skybreaker, ALLIANCE);
+                            TeleportPlayersToCenter(map, ALLIANCE);
                             events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000); // Esperando que todos ya esten donde queremos
                             break;
                         case EVENT_SUMMON_PORTAL:
@@ -2268,7 +2284,7 @@ class npc_saurfang_gunship : public CreatureScript
                             Talk(SAY_INTRO_HORDE_4);
                             break;
                         case EVENT_SUMMON_PLAYERS:
-                            TeleportPlayersToCenter(orgrimmar, HORDE);
+                            TeleportPlayersToCenter(map, HORDE);
                             events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000); // Esperando que todos ya esten donde queremos
                             break;
                         case EVENT_SUMMON_PORTAL:
