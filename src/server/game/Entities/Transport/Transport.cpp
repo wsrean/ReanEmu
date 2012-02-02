@@ -841,3 +841,16 @@ void Transport::UpdateNPCPositions()
         plr->SendDirectMessage(&packet);
     }
 }
+
+void Transport::UpdatePlayerPositionTo(float x, float y, float z, float o)
+{
+    for (PlayerSet::iterator itr = m_passengers.begin(); itr != m_passengers.end(); ++itr)
+    {
+        Player* plr = *itr;
+        plr->Relocate(x, y, z, o);
+        UpdateData transData;
+        WorldPacket packet;
+        transData.BuildPacket(&packet);
+        plr->SendDirectMessage(&packet);
+    }
+}
