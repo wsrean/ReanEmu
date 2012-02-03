@@ -69,6 +69,8 @@ Transport* MapManager::LoadTransportInMap(Map* instance, uint32 goEntry, uint32 
     // Make transport realy stoppped at server-side. Movement will be handled by scripts
     t->m_WayPoints.clear();
 
+    sLog->outDetail("Creando el transporte <---");
+
     return t;
 }
 
@@ -101,6 +103,8 @@ void MapManager::UnLoadTransportFromMap(Transport* t)
     m_Transports.erase(t);
     t->m_WayPoints.clear();
     t->RemoveFromWorld();
+
+    sLog->outDetail("Quitando el transporte --->");
 }
 
 void MapManager::LoadTransports()
