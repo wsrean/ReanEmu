@@ -162,6 +162,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                 DeathbringerSaurfangNotVisualGUID = 0;
                 MuradinBronzebeardNotVisualGUID = 0;
                 GbBattleMageGUID = 0;
+                isPrepared = false;
             }
 
             void FillInitialWorldStates(WorldPacket& data)
@@ -179,7 +180,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                     TeamInInstance = player->GetTeam();
 /* ---------------- Esta linea es la peor de todas -------------- */
                 // Gunship: Precargar el spawn
-                PrepareGunshipEvent(); // <-- ojala halle una manera para esto
+                PrepareGunshipEvent(player); // <-- ojala halle una manera para esto
             }
 
             void OnCreatureCreate(Creature* creature)
@@ -1296,15 +1297,16 @@ class instance_icecrown_citadel : public InstanceMapScript
             }
 /* -------------------------- ARREGLAR ESTO DIOS ----------------------- */
             // Gunship: esto es una mierda, hay que hacerlo de otra forma
-            void PrepareGunshipEvent()
+            void PrepareGunshipEvent(Player* player)
             {
                 Transport* th;
                 Transport* t;
 
                 if (GetBossState(DATA_GUNSHIP_EVENT) == DONE)
                     return;
-				if(!isPrepared)
-				{
+
+                if(!isPrepared)
+                {
                 sLog->outDetail("isPrepared = false ----");
                 if(TeamInInstance == ALLIANCE)
                 {
@@ -1489,13 +1491,12 @@ class instance_icecrown_citadel : public InstanceMapScript
                     }
                 }
                 isPrepared = true;
-				}
-				else
-				{
+                }
+                else
+                {
                     sLog->outDetail("isPrepared =true ----");
-					sMapMgr->UpdateTransportForPlayers(t);
-					sMapMgr->UpdateTransportForPlayers(th);
-				}
+                    sMapMgr->UpdateTransportForPlayers(player, instance);
+                }
             }
 
         protected:
