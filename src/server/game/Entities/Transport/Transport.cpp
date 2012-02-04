@@ -80,6 +80,8 @@ void MapManager::UpdateTransportForPlayers(Transport* t)
     // En estas dos lineas se pretende que actualice el mapa y los npcs apenas carga el GO(nave)
     t->UpdateForMap(instance);
     t->UpdateNPCPositions();
+
+    sLog->outDetail("Actualizando el transporte <--->");
 }
 
 void MapManager::UnLoadTransportFromMap(Transport* t)

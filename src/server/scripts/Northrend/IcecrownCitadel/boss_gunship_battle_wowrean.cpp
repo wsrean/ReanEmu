@@ -493,6 +493,8 @@ void TeleportPlayersToCenter(Transport* t, uint64 TeamInInstance)
         t->UpdatePlayerPositionTo(-15.51547f, -0.160213f, 28.87252f, 0.56211f); // en el portal solo que al otro lado
     else
         t->UpdatePlayerPositionTo(15.03016f, -7.00016f, 37.70952f, 0.55138f); // en el otro portal solo que al otro lado
+		
+    sLog->outDetail("Teleportando players ----");
 }
 
 //Ship explosion
