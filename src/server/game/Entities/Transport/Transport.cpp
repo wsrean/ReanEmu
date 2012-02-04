@@ -74,12 +74,26 @@ Transport* MapManager::LoadTransportInMap(Map* instance, uint32 goEntry, uint32 
     return t;
 }
 
-void MapManager::UpdateTransportForPlayers(Transport* t)
+void MapManager::UpdateTransportForPlayers(Player* player, Map* instance)
 {
-    Map* instance = t->GetMap();
-    // En estas dos lineas se pretende que actualice el mapa y los npcs apenas carga el GO(nave)
-    t->UpdateForMap(instance);
-    t->UpdateNPCPositions();
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByInstanceIdMap;
+    
+    UpdateData transData;
+
+    MapManager::TransportSet& tset = tmap[instance->GetInstanceId()];
+
+    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
+    {
+        (*i)->BuildStartMovePacket(instance);
+        (*i)->BuildStopMovePacket(instance);
+        // Make transport realy stoppped at server-side. Movement will be handled by scripts
+        (*i)->m_WayPoints.clear();
+        sLog->outDetail("Actualizando el transporte <---> Aqui hasta el mapmanager");
+    }
+
+    WorldPacket packet;
+    transData.BuildPacket(&packet);
+    player->GetSession()->SendPacket(&packet);
 
     sLog->outDetail("Actualizando el transporte <--->");
 }
