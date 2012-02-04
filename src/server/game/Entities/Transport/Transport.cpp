@@ -64,9 +64,9 @@ Transport* MapManager::LoadTransportInMap(Map* instance, uint32 goEntry, uint32 
     m_TransportsByInstanceIdMap[instance->GetInstanceId()].insert(t);
     t->SetMap(instance);
     t->AddToWorld();
-    t->BuildStartPacket(instance);
     // Make transport realy stoppped at server-side. Movement will be handled by scripts
     t->m_WayPoints.clear();
+    t->BuildStartPacket(instance);
 
     sLog->outDetail("Creando el transporte <---");
 
@@ -83,9 +83,8 @@ void MapManager::UpdateTransportForPlayers(Player* player, Map* instance)
 
     for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
     {
-        (*i)->BuildStartPacket(instance);
-        // Make transport realy stoppped at server-side. Movement will be handled by scripts
         (*i)->m_WayPoints.clear();
+        (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
         sLog->outDetail("Actualizando el transporte <---> Aqui hasta el mapmanager");
     }
 
