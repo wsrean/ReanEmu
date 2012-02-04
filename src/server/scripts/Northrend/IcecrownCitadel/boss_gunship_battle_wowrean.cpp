@@ -1041,7 +1041,7 @@ class npc_muradin_gunship : public CreatureScript
                     switch (eventId)
                     {
                         case EVENT_WIPE_CHECK:
-                            DoCheckFallingPlayer(me);
+                            //DoCheckFallingPlayer(me);
                             if (DoWipeCheck(skybreaker))
                                 events.ScheduleEvent(EVENT_WIPE_CHECK, 3000);
                             else
