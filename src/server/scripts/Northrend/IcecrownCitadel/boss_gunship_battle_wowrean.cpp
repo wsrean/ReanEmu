@@ -179,7 +179,6 @@ enum Events
 
    //Misc battle
     EVENT_WALK_MOBS,
-    EVENT_SUMMON_PLAYERS,
     EVENT_SUMMON_PORTAL,
     EVENT_FREEZE_CANNON,
     EVENT_SHADOW_CHANNELING,
@@ -484,17 +483,6 @@ void TeleportPlayers(Map* map, uint64 TeamInInstance)
             }
         }
     }
-}
-
-// Mover los players a un punto para que funcione el evento bien
-void TeleportPlayersToCenter(Transport* t, uint64 TeamInInstance)
-{
-    if(TeamInInstance == ALLIANCE)
-        t->UpdatePlayerPositionTo(-15.51547f, -0.160213f, 28.87252f, 0.56211f); // en el portal solo que al otro lado
-    else
-        t->UpdatePlayerPositionTo(15.03016f, -7.00016f, 37.70952f, 0.55138f); // en el otro portal solo que al otro lado
-		
-    sLog->outDetail("Teleportando players ----");
 }
 
 //Ship explosion
@@ -918,7 +906,7 @@ class npc_muradin_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
-                             events.ScheduleEvent(EVENT_SUMMON_PLAYERS, 1000);
+                             events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
                         }
@@ -1069,10 +1057,6 @@ class npc_muradin_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_ALLIANCE_8:
                             Talk(SAY_INTRO_ALLIANCE_7);
-                            break;
-                        case EVENT_SUMMON_PLAYERS:
-                            TeleportPlayersToCenter(skybreaker, ALLIANCE);
-                            events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000); // Esperando que todos ya esten donde queremos
                             break;
                         case EVENT_SUMMON_PORTAL:
                             if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
@@ -2120,7 +2104,7 @@ class npc_saurfang_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
-                             events.ScheduleEvent(EVENT_SUMMON_PLAYERS, 1000);
+                             events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
                          }
@@ -2268,10 +2252,6 @@ class npc_saurfang_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_HORDE_5:
                             Talk(SAY_INTRO_HORDE_4);
-                            break;
-                        case EVENT_SUMMON_PLAYERS:
-                            TeleportPlayersToCenter(orgrimmar, HORDE);
-                            events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000); // Esperando que todos ya esten donde queremos
                             break;
                         case EVENT_SUMMON_PORTAL:
                             orgrimmar->AddNPCPassengerInInstance(NPC_GB_PORTAL, 15.03016f, -7.00016f, 37.70952f, 1.55138f);
