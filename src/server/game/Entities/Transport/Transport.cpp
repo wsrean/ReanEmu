@@ -74,6 +74,14 @@ Transport* MapManager::LoadTransportInMap(Map* instance, uint32 goEntry, uint32 
     return t;
 }
 
+void MapManager::UpdateTransportForPlayers(Transport* t)
+{
+    Map* instance = t->GetMap();
+    // En estas dos lineas se pretende que actualice el mapa y los npcs apenas carga el GO(nave)
+    t->UpdateForMap(instance);
+    t->UpdateNPCPositions();
+}
+
 void MapManager::UnLoadTransportFromMap(Transport* t)
 {
     Map* map = t->GetMap();
