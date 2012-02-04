@@ -49,6 +49,7 @@ class Transport : public GameObject
         void UpdatePosition(MovementInfo* mi);
         void UpdateNPCPositions();
         void BuildStartMovePacket(Map const* targetMap);
+        void BuildStartPacket(Map const* targetMap);
         void BuildStopMovePacket(Map const* targetMap);
         uint32 GetScriptId() const { return ScriptId; }
     private:
