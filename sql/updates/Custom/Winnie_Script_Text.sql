@@ -15,7 +15,7 @@ INSERT INTO `script_texts` (`npc_entry`, `entry`, `content_default`, `content_lo
 (2120204, -1100009, 'Gracias guapo :)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando la besan'),
 (2120204, -1100010, 'Yo a ti tambien te quiero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando la besan'),
 (2120204, -1100011, 'Muak', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando la besan'),
-(2120204, -1100012, 'Que rico papi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando la besan'),
+(2120204, -1100012, 'Que rico guapo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando la besan'),
 
 (2120204, -1100013, 'tirate que? tirate un paso, tirate un ro tirate un paso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando le cantan'),
 (2120204, -1100014, 'levanten los brazos, los wachiturros tiren pasos', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 1, 'Frase Cuando le canta'),
