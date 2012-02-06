@@ -633,6 +633,7 @@ bool Transport::RemovePassenger(Player* passenger)
 
 void Transport::Update(uint32 p_diff)
 {
+    UpdatePlayerPositions();
     if (!AI())
     {
         if (!AIM_Initialize())
@@ -727,9 +728,10 @@ void Transport::BuildStartMovePacket(Map const* targetMap)
     UpdateForMap(targetMap);
 }
 
-void Transport::BuildStartPacket(Map const* targetMap)
+void Transport::BuildWaitMovePacket(Map const* targetMap)
 {
-    SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
+    m_WayPoints.clear();
+    RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
     SetGoState(GO_STATE_READY);
     UpdateForMap(targetMap);
 }
@@ -840,6 +842,7 @@ void Transport::UpdatePosition(MovementInfo* mi)
 
     Relocate(transport_x, transport_y, transport_z, transport_o);
     UpdateNPCPositions();
+	UpdatePlayerPositions();
 }
 
 void Transport::UpdateNPCPositions()
@@ -856,7 +859,10 @@ void Transport::UpdateNPCPositions()
         npc->SetHomePosition(x, y, z, o);
         GetMap()->CreatureRelocation(npc, x, y, z, o, false);
     }
+}
 
+void Transport::UpdatePlayerPositions()
+{
     for (PlayerSet::iterator itr = m_passengers.begin(); itr != m_passengers.end(); ++itr)
     {
         Player* plr = *itr;
@@ -873,4 +879,3 @@ void Transport::UpdateNPCPositions()
         plr->SendDirectMessage(&packet);
     }
 }
-
