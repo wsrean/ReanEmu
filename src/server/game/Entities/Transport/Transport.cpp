@@ -89,7 +89,7 @@ void MapManager::UpdateTransportForPlayers(Player* player, Map* instance)
 
     WorldPacket packet;
     transData.BuildPacket(&packet);
-    player->GetSession()->SendPacket(&packet);
+    player->SendDirectMessage(&packet);
 
     sLog->outDetail("Actualizando el transporte <--->");
 }
