@@ -1237,6 +1237,10 @@ void AddBattlegroundScripts()
 #ifdef SCRIPTS
 /* This is where custom scripts' loading functions should be declared. */
 void AddSC_icc_rep_rings();
+void AddSC_boss_asirius();
+void AddSC_boss_brutallus2();
+void AddSC_boss_sicarius();
+void AddSC_event_asirius();
 #endif
 
 void AddCustomScripts()
@@ -1244,5 +1248,9 @@ void AddCustomScripts()
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
 AddSC_icc_rep_rings();
+AddSC_boss_asirius();
+AddSC_boss_brutallus2();
+AddSC_boss_sicarius();
+AddSC_event_asirius();
 #endif
 }
