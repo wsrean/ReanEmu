@@ -75,18 +75,43 @@ INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
 ('71335', 'spell_gb_burning_pitch'),
 ('71339', 'spell_gb_burning_pitch');
 
--- Evitando posibles cosillas :)
+-- Añadiendo informacion complementaria de cañones (Por 2010phenix - https://github.com/2010phenix)
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry` IN (69400, 70173, 69402, 70175, 70374, 70383, 72959);
 SET @ENTRYA := 37540;
 SET @ENTRYH := 37215;
+SET @ENTRYA10H := 38128;
+SET @ENTRYH10H := 38129;
+SET @ENTRYA25 := 38699;
+SET @ENTRYH25 := 38701;
+SET @ENTRYA25H := 38700;
+SET @ENTRYH25H := 38702;
 INSERT INTO `conditions` (`SourceTypeOrReferenceId`, `SourceEntry`, `ConditionTypeOrReference`, `ConditionValue1`, `ConditionValue2`) VALUES
-('13', '69400', '18', '1', @ENTRYA),
-('13', '70173', '18', '1', @ENTRYH),
-('13', '69402', '18', '1', @ENTRYA),
-('13', '70175', '18', '1', @ENTRYH),
-('13', '70374', '18', '1', @ENTRYA),
-('13', '70383', '18', '1', @ENTRYH),
-('13', '72959', '18', '1', 0);
+('13', '69400', '18', '1', @ENTRYA), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker (effect 2)
+('13', '70173', '18', '1', @ENTRYH), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer (effect 2)
+('13', '69402', '18', '1', @ENTRYA), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker (effect 2)
+('13', '70175', '18', '1', @ENTRYH), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer (effect 2)
+('13', '70374', '18', '1', @ENTRYA), -- Burning Pitch
+('13', '70383', '18', '1', @ENTRYH), -- Burning Pitch
+('13', '69400', '18', '1', @ENTRYA10H), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 10H (effect 2)
+('13', '70173', '18', '1', @ENTRYH10H), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer 10H (effect 2)
+('13', '69402', '18', '1', @ENTRYA10H), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker 10H(effect 2)
+('13', '70175', '18', '1', @ENTRYH10H), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer 10H (effect 2)
+('13', '70374', '18', '1', @ENTRYA10H), -- Burning Pitch
+('13', '70383', '18', '1', @ENTRYH10H), -- Burning Pitch
+('13', '69400', '18', '1', @ENTRYA25), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 25Normal (effect 2)
+('13', '70173', '18', '1', @ENTRYH25), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 25Normal (effect 2)
+('13', '69402', '18', '1', @ENTRYA25), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 25Normal (effect 2)
+('13', '70175', '18', '1', @ENTRYH25), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 25Normal (effect 2)
+('13', '70374', '18', '1', @ENTRYA25),  -- Burning Pitch
+('13', '70383', '18', '1', @ENTRYH25),  -- Burning Pitch
+('13', '69400', '18', '1', @ENTRYA25H), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker -- 25H (effect 2)
+('13', '70173', '18', '1', @ENTRYH25H), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer -- 25H (effect 2)
+('13', '69402', '18', '1', @ENTRYA25H), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker -- 25H (effect 2)
+('13', '70175', '18', '1', @ENTRYH25H), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer -- 25H (effect 2)
+('13', '70374', '18', '1', @ENTRYA25H), -- Burning Pitch
+('13', '70383', '18', '1', @ENTRYH25H), -- Burning Pitch
+('13', '72959', '18', '1', 0); -- Achievement (Radius: 50000 yards)
+
 
 -- Hacky, hay que darle nuevos parametros a los transportes de aqui
 DELETE FROM transports WHERE entry IN (201580, 201581, 201811, 201812);
@@ -109,7 +134,7 @@ UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35, `minlevel` = 
 -- Arreglando los cañones en 25man
 UPDATE `creature_template` SET `difficulty_entry_1`=0 WHERE `entry`=36839 LIMIT 1;
 -- Evitando que se muevan duh
-UPDATE `creature_template` SET `speed_walk`=0 AND `speed_run`=0 WHERE `entry`=36839 AND `entry`=36838;
+UPDATE `creature_template` SET `speed_walk`=0 ,`speed_run`=0 WHERE `entry` IN (36839,36838);
 
 -- Mas condiciones
 -- Add spell conditions for 69705 (Below Zero)
