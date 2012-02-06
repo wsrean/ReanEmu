@@ -1401,13 +1401,17 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
     }
 }
 
-SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, const uint32 effectMask, bool scaleAura)
+SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, uint32 effectMask, bool scaleAura)
 {
     if (!unit || !effectMask)
         return SPELL_MISS_EVADE;
 
-    // Recheck immune (only for delayed spells)
-    if (m_spellInfo->Speed && (unit->IsImmunedToDamage(m_spellInfo) || unit->IsImmunedToSpell(m_spellInfo)))
+    // For delayed spells immunity may be applied between missile launch and hit - check immunity for that case
+    // disable effects to which unit is immune
+    for (uint32 effectNumber = 0; effectNumber < MAX_SPELL_EFFECTS; ++effectNumber)
+        if (effectMask & (1 << effectNumber) && unit->IsImmunedToSpellEffect(m_spellInfo, effectNumber))
+            effectMask &= ~(1 << effectNumber);
+    if (!effectMask || (m_spellInfo->Speed && (unit->IsImmunedToDamage(m_spellInfo) || unit->IsImmunedToSpell(m_spellInfo))))
         return SPELL_MISS_IMMUNE;
 
     PrepareScriptHitHandlers();
@@ -1447,7 +1451,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, const uint32 effectMask, bool 
                 return SPELL_MISS_EVADE;
 
             // assisting case, healing and resurrection
-            if (unit->HasUnitState(UNIT_STAT_ATTACK_PLAYER))
+            if (unit->HasUnitState(UNIT_STATE_ATTACK_PLAYER))
             {
                 m_caster->SetContestedPvP();
                 if (m_caster->GetTypeId() == TYPEID_PLAYER)
@@ -1562,7 +1566,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, const uint32 effectMask, bool 
     }
 
     for (uint32 effectNumber = 0; effectNumber < MAX_SPELL_EFFECTS; ++effectNumber)
-        if (effectMask & (1 << effectNumber) && !unit->IsImmunedToSpellEffect(m_spellInfo, effectNumber)) //Handle effect only if the target isn't immune.
+        if (effectMask & (1 << effectNumber))
             HandleEffects(unit, NULL, NULL, effectNumber, SPELL_EFFECT_HANDLE_HIT_TARGET);
 
     return SPELL_MISS_NONE;
@@ -3214,8 +3218,8 @@ void Spell::cast(bool skipCheck)
         m_spellState = SPELL_STATE_DELAYED;
         SetDelayStart(0);
 
-        if (m_caster->HasUnitState(UNIT_STAT_CASTING) && !m_caster->IsNonMeleeSpellCasted(false, false, true))
-            m_caster->ClearUnitState(UNIT_STAT_CASTING);
+        if (m_caster->HasUnitState(UNIT_STATE_CASTING) && !m_caster->IsNonMeleeSpellCasted(false, false, true))
+            m_caster->ClearUnitState(UNIT_STATE_CASTING);
     }
     else
     {
@@ -3581,8 +3585,8 @@ void Spell::finish(bool ok)
     if (m_spellInfo->IsChanneled())
         m_caster->UpdateInterruptMask();
 
-    if (m_caster->HasUnitState(UNIT_STAT_CASTING) && !m_caster->IsNonMeleeSpellCasted(false, false, true))
-        m_caster->ClearUnitState(UNIT_STAT_CASTING);
+    if (m_caster->HasUnitState(UNIT_STATE_CASTING) && !m_caster->IsNonMeleeSpellCasted(false, false, true))
+        m_caster->ClearUnitState(UNIT_STATE_CASTING);
 
     // Unsummon summon as possessed creatures on spell cancel
     if (m_spellInfo->IsChanneled() && m_caster->GetTypeId() == TYPEID_PLAYER)
@@ -5000,7 +5004,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     if (strict && m_caster->IsScriptOverriden(m_spellInfo, 6953))
                         m_caster->RemoveMovementImpairingAuras();
                 }
-                if (m_caster->HasUnitState(UNIT_STAT_ROOT))
+                if (m_caster->HasUnitState(UNIT_STATE_ROOT))
                     return SPELL_FAILED_ROOTED;
                 break;
             }
@@ -5228,7 +5232,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
 
                 Unit* target = m_targets.GetUnitTarget();
-                if (m_caster == target && m_caster->HasUnitState(UNIT_STAT_ROOT))
+                if (m_caster == target && m_caster->HasUnitState(UNIT_STATE_ROOT))
                 {
                     if (m_caster->GetTypeId() == TYPEID_PLAYER)
                         return SPELL_FAILED_ROOTED;
@@ -5401,7 +5405,7 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
             case SPELL_AURA_PERIODIC_MANA_LEECH:
             {
-                if (m_spellInfo->Effects[i].IsArea())
+                if (m_spellInfo->Effects[i].IsTargetingArea())
                     break;
 
                 if (!m_targets.GetUnitTarget())
@@ -5455,7 +5459,7 @@ SpellCastResult Spell::CheckCast(bool strict)
 
 SpellCastResult Spell::CheckPetCast(Unit* target)
 {
-    if (m_caster->HasUnitState(UNIT_STAT_CASTING) && !(_triggeredCastFlags & TRIGGERED_IGNORE_CAST_IN_PROGRESS))              //prevent spellcast interruption by another spellcast
+    if (m_caster->HasUnitState(UNIT_STATE_CASTING) && !(_triggeredCastFlags & TRIGGERED_IGNORE_CAST_IN_PROGRESS))              //prevent spellcast interruption by another spellcast
         return SPELL_FAILED_SPELL_IN_PROGRESS;
 
     // dead owner (pets still alive when owners ressed?)
@@ -6630,7 +6634,7 @@ void Spell::HandleLaunchPhase()
             continue;
 
         // do not consume ammo anymore for Hunter's volley spell
-        if (IsTriggered() && m_spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && m_spellInfo->IsAOE())
+        if (IsTriggered() && m_spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && m_spellInfo->IsTargetingArea())
             usesAmmo = false;
 
         if (usesAmmo)
@@ -6681,7 +6685,7 @@ void Spell::DoAllEffectOnLaunchTarget(TargetInfo& targetInfo, float* multiplier)
 
             if (m_damage > 0)
             {
-                if (m_spellInfo->Effects[i].IsArea())
+                if (m_spellInfo->Effects[i].IsTargetingArea())
                 {
                     m_damage = int32(float(m_damage) * unit->GetTotalAuraMultiplierByMiscMask(SPELL_AURA_MOD_AOE_DAMAGE_AVOIDANCE, m_spellInfo->SchoolMask));
                     if (m_caster->GetTypeId() == TYPEID_UNIT)
