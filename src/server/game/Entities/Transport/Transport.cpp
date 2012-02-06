@@ -308,11 +308,8 @@ Transport::~Transport()
 {
     for (CreatureSet::iterator itr = m_NPCPassengerSet.begin(); itr != m_NPCPassengerSet.end(); ++itr)
     {
-        Creature* passenger = *itr;
-        Map* map = passenger->GetMap();
-        passenger->SetTransport(NULL);
-        passenger->CleanupsBeforeDelete();
-        map->RemoveFromMap(passenger, true);
+        (*itr)->SetTransport(NULL);
+        GetMap()->AddObjectToRemoveList(*itr);
     }
 
     m_NPCPassengerSet.clear();
@@ -688,10 +685,13 @@ void Transport::Update(uint32 p_diff)
         else
         {
             Relocate(m_curr->second.x, m_curr->second.y, m_curr->second.z, GetAngle(m_next->second.x, m_next->second.y) + float(M_PI));
-            UpdateNPCPositions(); // COME BACK MARKER
         }
 
         sScriptMgr->OnRelocate(this, m_curr->first, m_curr->second.mapid, m_curr->second.x, m_curr->second.y, m_curr->second.z);
+
+        // Esto obliga al server a actualizar posiciones en el transporte para players y npcs.
+        UpdateNPCPositions();
+        UpdatePlayerPositions();
 
         m_nextNodeTime = m_curr->first;
 
@@ -700,10 +700,6 @@ void Transport::Update(uint32 p_diff)
 
         sLog->outDebug(LOG_FILTER_TRANSPORTS, "%s moved to %d %f %f %f %d", m_name.c_str(), m_curr->second.id, m_curr->second.x, m_curr->second.y, m_curr->second.z, m_curr->second.mapid);
     }
-
-    // Esto obliga al server a actualizar posiciones en el transporte para players y npcs.
-    UpdatePlayerPositions();
-    UpdateNPCPositions();
 
     sScriptMgr->OnTransportUpdate(this, p_diff);
 }
