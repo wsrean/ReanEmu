@@ -1557,17 +1557,17 @@ float Map::GetWaterOrGroundLevel(float x, float y, float z, float* ground /*= NU
     return VMAP_INVALID_HEIGHT_VALUE;
 }
 
-float Map::GetHeight(float x, float y, float z, bool pUseVmaps, float maxSearchDist) const
+float Map::GetHeight(float x, float y, float z, bool checkVMap /*= true*/, float maxSearchDist /*= DEFAULT_HEIGHT_SEARCH*/) const
 {
     // find raw .map surface under Z coordinates
     float mapHeight;
     if (GridMap* gmap = const_cast<Map*>(this)->GetGrid(x, y))
     {
-        float _mapheight = gmap->getHeight(x, y);
+        float gridHeight = gmap->getHeight(x, y);
 
         // look from a bit higher pos to find the floor, ignore under surface case
-        if (z + 2.0f > _mapheight)
-            mapHeight = _mapheight;
+        if (z + 2.0f > gridHeight)
+            mapHeight = gridHeight;
         else
             mapHeight = VMAP_INVALID_HEIGHT_VALUE;
     }
@@ -1575,7 +1575,7 @@ float Map::GetHeight(float x, float y, float z, bool pUseVmaps, float maxSearchD
         mapHeight = VMAP_INVALID_HEIGHT_VALUE;
 
     float vmapHeight;
-    if (pUseVmaps)
+    if (checkVmap)
     {
         VMAP::IVMapManager* vmgr = VMAP::VMapFactory::createOrGetVMapManager();
         if (vmgr->isHeightCalcEnabled())
@@ -1610,7 +1610,7 @@ float Map::GetHeight(float x, float y, float z, bool pUseVmaps, float maxSearchD
     }
     else
     {
-        if (!pUseVmaps)
+        if (!checkVmap)
             return mapHeight;                               // explicitly use map data (if have)
         else if (mapHeight > INVALID_HEIGHT && (z < mapHeight + 2 || z == MAX_HEIGHT))
             return mapHeight;                               // explicitly use map data if original z < mapHeight but map found (z+2 > mapHeight)
