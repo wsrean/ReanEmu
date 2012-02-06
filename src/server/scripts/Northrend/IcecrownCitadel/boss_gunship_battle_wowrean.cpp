@@ -364,6 +364,24 @@ Player* SelectRandomPlayerInTheMaps(Map* pMap)
     return SelectRandomPlayerFromLists(players);
 }
 
+// Funcion para Aplicar el movimiento en el cliente
+void UpdateTransportMotionInMap(Transport* t)
+{
+    Map* map = t->GetMap();
+
+    for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
+    {
+        if (Player* pPlayer = itr->getSource())
+        {
+            UpdateData transData;
+            t->BuildCreateUpdateBlockForPlayer(&transData, pPlayer);
+            WorldPacket packet;
+            transData.BuildPacket(&packet);
+            pPlayer->SendDirectMessage(&packet);
+        }
+    }
+}
+
 //Function start motion of the ship
 void StartFlyShip(Transport* t)
 {
@@ -371,19 +389,12 @@ void StartFlyShip(Transport* t)
     t->SetUInt32Value(GAMEOBJECT_DYNAMIC, 0x10830010); // Seen in sniffs
     t->SetFloatValue(GAMEOBJECT_PARENTROTATION + 3, 1.0f);
 
-    Map* map = t->GetMap();
     std::set<uint32> mapsUsed;
     GameObjectTemplate const* goinfo = t->GetGOInfo();
 
     t->GenerateWaypoints(goinfo->moTransport.taxiPathId, mapsUsed);
 
-    for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
-    {
-        if (Player* player = itr->getSource())
-        {
-            sMapMgr->UpdateTransportForPlayers(player, map);
-        }
-    }
+    UpdateTransportMotionInMap(t);
 }
 
 // A este Relocate hay que ponerle atencion para despues
@@ -423,22 +434,14 @@ void RelocateTransport(Transport* t)
     t->Update(100);
 }
 
-
 //Function stop motion of the ship
 void StopFlyShip(Transport* t)
 {
-    Map* map = t->GetMap();
     t->m_WayPoints.clear();
     RelocateTransport(t);
-    t->BuildStopMovePacket(map);
+    t->BuildStopMovePacket(t->GetMap());
 
-    for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
-    {
-        if (Player* player = itr->getSource())
-        {
-            sMapMgr->UpdateTransportForPlayers(player, map);
-        }
-    }
+    UpdateTransportMotionInMap(t);
     // Actualizando sus estados antes de bajarse.
     t->UpdatePlayerPositions();
 }

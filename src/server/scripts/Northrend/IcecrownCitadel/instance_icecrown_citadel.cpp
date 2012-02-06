@@ -1495,7 +1495,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                 else
                 {
                     sLog->outDetail("isPrepared =true ----");
-                    sMapMgr->UpdateTransportForPlayers(player, instance);
+                    sMapMgr->LoadTransportForPlayers(player);
                 }
             }
 

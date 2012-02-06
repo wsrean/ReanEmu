@@ -73,27 +73,6 @@ Transport* MapManager::LoadTransportInMap(Map* instance, uint32 goEntry, uint32 
     return t;
 }
 
-void MapManager::UpdateTransportForPlayers(Player* player, Map* instance)
-{
-    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByInstanceIdMap;
-    
-    UpdateData transData;
-
-    MapManager::TransportSet& tset = tmap[instance->GetInstanceId()];
-
-    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
-    {
-        (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
-        sLog->outDetail("Actualizando el transporte <---> Aqui hasta el mapmanager");
-    }
-
-    WorldPacket packet;
-    transData.BuildPacket(&packet);
-    player->SendDirectMessage(&packet);
-
-    sLog->outDetail("Actualizando el transporte <--->");
-}
-
 void MapManager::UnLoadTransportFromMap(Transport* t)
 {
     Map* map = t->GetMap();
@@ -125,6 +104,55 @@ void MapManager::UnLoadTransportFromMap(Transport* t)
     t->RemoveFromWorld();
 
     sLog->outDetail("Quitando el transporte --->");
+}
+
+void MapManager::LoadTransportForPlayers(Player* player)
+{
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByInstanceIdMap;
+    
+    UpdateData transData;
+
+    MapManager::TransportSet& tset = tmap[player->GetInstanceId()];
+
+    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
+    {
+        (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
+        sLog->outDetail("Cargando el transporte <---> Aqui hasta el de TransportSet");
+    }
+
+    WorldPacket packet;
+    transData.BuildPacket(&packet);
+    player->SendDirectMessage(&packet);
+}
+
+void MapManager::UnLoadTransportForPlayers(Player* player)
+{
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByInstanceIdMap;
+    
+    UpdateData transData;
+
+    MapManager::TransportSet& tset = tmap[player->GetInstanceId()];
+
+    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
+    {
+        for (Transport::CreatureSet::iterator itr = (*i)->m_NPCPassengerSet.begin(); itr != (*i)->m_NPCPassengerSet.end();)
+        {
+            if (Creature* npc = *itr)
+            {
+                npc->SetTransport(NULL);
+                npc->setActive(false);
+                npc->RemoveFromWorld();
+            }
+            ++itr;
+        }
+
+        (*i)->BuildOutOfRangeUpdateBlock(&transData);
+        sLog->outDetail("Descargando el transporte >---< Aqui desde el de TransportSet");
+    }
+
+    WorldPacket packet;
+    transData.BuildPacket(&packet);
+    player->SendDirectMessage(&packet);
 }
 
 void MapManager::LoadTransports()
