@@ -330,11 +330,12 @@ struct mortarMarksLoc
 
 // Aqui hay que ponerle mucho ojo a las funciones porque algunas hacen uso del mapa
 // sin tener en cuenta la grilla o las criaturas con caracteristicas especiales
-// que aun no sabemos de que van, sin embargo lo primero es entender que es lo que
-// se quiere hacer con ellas, para luego implementar un par de ajustes en ellas ya que
-// la cosa desde el 2010 aca ha cambiado algo.
-
-//Function find player special for Gunship battle
+// ahora ya sabemos de que van, y lo primero es verificar el AI de los npcs, si no
+// se comportan como deben, entonces habra que retocar estas 3 funciones para localizar
+// sus respectivos targets y demas.
+//                 |
+//                 |
+//                 V
 typedef std::list<Player*> TPlayerLists;
 
 TPlayerLists GetPlayersInTheMaps(Map *pMap)
@@ -399,7 +400,7 @@ void RelocateTransport(Transport* t)
     {
         case GO_THE_SKYBREAKER_ALLIANCE_ICC:
             if (instance->GetBossState(DATA_GUNSHIP_EVENT) != DONE)
-                t->Relocate(-377.184021f, 2073.548584f, 445.753387f);   // <-------- Esto tiene que verse smooth
+                t->Relocate(-377.184021f, 2073.548584f, 445.753387f);
             else if (instance->GetBossState(DATA_GUNSHIP_EVENT) == DONE)
                 t->Relocate(-583.942627f, 2212.364990f, 534.673889f);
             break;
@@ -418,10 +419,8 @@ void RelocateTransport(Transport* t)
                 t->Relocate(-435.854156f, 2475.328125f, 449.364105f);
             break;
     }
-
-    t->Update(0);
-    t->UpdateNPCPositions();
-    t->UpdatePlayerPositions();
+    // Chequear cada 100ms la AI de la nave y su actualizacion.
+    t->Update(100);
 }
 
 
@@ -440,7 +439,7 @@ void StopFlyShip(Transport* t)
             UpdateTransportForPlayers(player, map);
         }
     }
-
+    // Actualizando sus estados antes de bajarse.
     t->UpdatePlayerPositions();
 }
 
@@ -453,7 +452,7 @@ Transport* CheckUnfriendlyShip(Creature* me, InstanceScript* instance, uint32 da
         return NULL;
 }
 
-//Teleport players  <----------------- Esto no me gusta
+//Teleport players  <----------------- Esto es para cuando se reinicia el evento, al mapa de icc
 void TeleportPlayers(Map* map, uint64 TeamInInstance)
 {
     if(map)
@@ -469,7 +468,7 @@ void TeleportPlayers(Map* map, uint64 TeamInInstance)
                         pPlayer->ResurrectPlayer(1.0f);
 
                     if(TeamInInstance == ALLIANCE)
-                        pPlayer->TeleportTo(631, -437.498505f, 2425.954f, 192.997f, 2.247f); // <---------- por eso tambien no me gusta
+                        pPlayer->TeleportTo(631, -437.498505f, 2425.954f, 192.997f, 2.247f);
                     else
                         pPlayer->TeleportTo(631, -437.498505f, 1997.954f, 192.997f, 2.247f);
                 }
@@ -478,7 +477,7 @@ void TeleportPlayers(Map* map, uint64 TeamInInstance)
     }
 }
 
-//Ship explosion
+//Ship explosion <-- Aqui cuando se termina o cuando wipeas :S
 void DoShipExplosion(Transport* t)
 {
     for (Transport::CreatureSet::iterator itr = t->m_NPCPassengerSet.begin(); itr != t->m_NPCPassengerSet.end();)
@@ -506,7 +505,7 @@ bool DoWipeCheck(Transport* t)
     return false;
 }
 
-// ****OJO**** Aqui se puede hacer cosillas adicionales
+// ****OJO**** Aqui se puede hacer cosillas adicionales para npcs en algun caso
 //Check falling players
 void DoCheckFallingPlayer(Creature* me)
 {
@@ -726,7 +725,7 @@ void RestartEvent(Transport* t1, Transport* t2, Map* instance, uint64 TeamInInst
 
 }
 
-//Stop Fight
+//Stop Fight <-- Aqui es donde mueren los npcs luego que esta explotando la nave y te saca del barco antes de reiniciar
 void StopFight(Transport* t1, Transport* t2)
 {
     Map* map = t1->GetMap();
