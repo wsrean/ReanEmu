@@ -430,7 +430,7 @@ void StopFlyShip(Transport* t)
     Map* map = t->GetMap();
     t->m_WayPoints.clear();
     RelocateTransport(t);
-    t->BuildWaitMovePacket(map);
+    t->BuildStopMovePacket(map);
 
     for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
     {

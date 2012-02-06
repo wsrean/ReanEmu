@@ -733,7 +733,6 @@ void Transport::BuildStartMovePacket(Map const* targetMap)
 void Transport::BuildWaitMovePacket(Map const* targetMap)
 {
     m_WayPoints.clear();
-    RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
     SetGoState(GO_STATE_READY);
     UpdateForMap(targetMap);
 }
