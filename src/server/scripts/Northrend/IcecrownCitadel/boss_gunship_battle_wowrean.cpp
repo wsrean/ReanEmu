@@ -366,8 +366,7 @@ Player* SelectRandomPlayerInTheMaps(Map* pMap)
 //Function start motion of the ship
 void StartFlyShip(Transport* t)
 {
-    t->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
-    t->SetGoState(GO_STATE_ACTIVE);
+    t->BuildStartMovePacket(t->GetMap());
     t->SetUInt32Value(GAMEOBJECT_DYNAMIC, 0x10830010); // Seen in sniffs
     t->SetFloatValue(GAMEOBJECT_PARENTROTATION + 3, 1.0f);
 
@@ -379,13 +378,9 @@ void StartFlyShip(Transport* t)
 
     for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
     {
-        if (Player* pPlayer = itr->getSource())
+        if (Player* player = itr->getSource())
         {
-            UpdateData transData;
-            t->BuildCreateUpdateBlockForPlayer(&transData, pPlayer);
-            WorldPacket packet;
-            transData.BuildPacket(&packet);
-            pPlayer->SendDirectMessage(&packet);
+            UpdateTransportForPlayers(player, map);
         }
     }
 }
@@ -426,6 +421,7 @@ void RelocateTransport(Transport* t)
 
     t->Update(0);
     t->UpdateNPCPositions();
+    t->UpdatePlayerPositions();
 }
 
 
@@ -435,20 +431,17 @@ void StopFlyShip(Transport* t)
     Map* map = t->GetMap();
     t->m_WayPoints.clear();
     RelocateTransport(t);
-    t->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
-    t->SetGoState(GO_STATE_READY);
+    t->BuildWaitMovePacket(map);
 
     for (Map::PlayerList::const_iterator itr = map->GetPlayers().begin(); itr != map->GetPlayers().end(); ++itr)
     {
-        if (Player* pPlayer = itr->getSource())
+        if (Player* player = itr->getSource())
         {
-            UpdateData transData;
-            t->BuildCreateUpdateBlockForPlayer(&transData, pPlayer);
-            WorldPacket packet;
-            transData.BuildPacket(&packet);
-            pPlayer->SendDirectMessage(&packet);
+            UpdateTransportForPlayers(player, map);
         }
     }
+
+    t->UpdatePlayerPositions();
 }
 
 //Find Unfriendy transport
