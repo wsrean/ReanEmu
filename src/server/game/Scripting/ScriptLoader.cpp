@@ -1239,7 +1239,7 @@ void AddBattlegroundScripts()
 void AddSC_icc_rep_rings();
 void AddSC_npc_broma();
 void AddSC_custom_boss_wachiturros();
-void AddSC_Winnie();
+void AddSC_boss_winnie();
 #endif
 
 void AddCustomScripts()
@@ -1249,6 +1249,6 @@ void AddCustomScripts()
 AddSC_icc_rep_rings();
 AddSC_npc_broma();
 AddSC_custom_boss_wachiturros();
-AddSC_Winnie();
+AddSC_boss_winnie();
 #endif
 }

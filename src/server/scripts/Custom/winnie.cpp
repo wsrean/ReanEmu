@@ -77,18 +77,18 @@ enum eEnums
 {
     // any other constants
     WINNIE										= 2120204,
-	DISPLAY_DRAGONA								= 11380
+	DISPLAY_DRAGONA								= 11380,
 };
 
 
-class Winnie : public CreatureScript
+class boss_winnie : public CreatureScript
 {
 public:
-        Winnie() : CreatureScript("Winnie") {  }
+        boss_winnie() : CreatureScript("boss_winnie") { }
 
-        struct WinnieAI : public ScriptedAI
+        struct boss_winnieAI : public ScriptedAI
         {
-			WinnieAI(Creature* c) : ScriptedAI(c) {}
+			boss_winnieAI(Creature* c) : ScriptedAI(c) { }
 			
 			uint32 m_uiSayTimer;                                    // Tiempo para decir algo aleatoriamente
             uint32 m_uiSpell1Timer;                                 // tiempo para la spell 1 en el combate
@@ -110,6 +110,7 @@ public:
 
 			void Reset()
             {
+                sLog->outDetail("------> Reset del boss <-----");
                 m_uiPhase = 1;                                      // Empieza en fase 1
                 m_uiSpell1Timer = 5000;                             // 5 segundos
                 m_uiSpell2Timer = 8000;								// 8 segundos
@@ -118,7 +119,7 @@ public:
 				m_uiSpell5Timer = urand(3000,10000);                // entre 3 y 10 segundos
 				m_uiSpell6Timer = urand(5000,12000);                // entre 5 y 12 segundos
 				m_uiSpell7Timer = urand(1000,5000);                 // entre 1 y 5 segundos
-										
+									
             }
 
 			//Para recibir Emotes de Players
@@ -149,9 +150,11 @@ public:
 			// Aca todo lo del bos en batalla
 			void UpdateAI(const uint32 uiDiff)
             {
+               sLog->outDetail("Actualizando el AI <--->");
                 //Timer para fuera de combate
                 if (!me->getVictim())
                 {
+                    sLog->outDetail("No hay target <------------------");
                     //Random Say timer
                     if (m_uiSayTimer <= uiDiff)
                     {
@@ -165,6 +168,7 @@ public:
                 }
 				if (m_uiPhase != 2)
                 {
+                    sLog->outDetail("-----------------   FASE -- DIFERENTE de 2 ¿?¿? --------------");
 					if (m_uiSayTimer <= uiDiff)
                     {
                         //Random entre 5 valores diferentes
@@ -264,8 +268,12 @@ public:
     
             }
         };
+        CreatureAI *GetAI(Creature *creature) const
+        {
+            return new boss_winnieAI(creature);
+        }
 };
-void AddSC_Winnie()
+void AddSC_boss_winnie()
 {
-    new Winnie();
+    new boss_winnie();
 }
