@@ -872,18 +872,18 @@ class npc_muradin_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f, true);
-                    me->Attack(NPC_GB_KORKRON_SERGANTE);
+                    me->Attack(me, NPC_GB_KORKRON_SERGANTE);
                     return true;
                 }
                 else if(target->GetEntry() == NPC_GB_KORKRON_REAVERS)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_REAVERS, 100.0f, true);
-                    me->Attack(NPC_GB_KORKRON_REAVERS);
+                    me->Attack(me, NPC_GB_KORKRON_REAVERS);
                     return true;
                 }
                 else if(target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->Attack(target);
+                    me->Attack(me, target);
                     return true;
                 }
                 return false;
@@ -1311,18 +1311,18 @@ class npc_saurfang_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true);
-                    me->Attack(NPC_GB_SKYBREAKER_SERGANTE);
+                    me->Attack(me, NPC_GB_SKYBREAKER_SERGANTE);
                     return true;
                 }
                 else if (target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true);
-                    me->Attack(NPC_GB_SKYBREAKER_MARINE);
+                    me->Attack(me, NPC_GB_SKYBREAKER_MARINE);
                     return true;
                 }
                 else if (target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->Attack(target);
+                    me->Attack(me, target);
                     return true;
                 }
                 return false;
