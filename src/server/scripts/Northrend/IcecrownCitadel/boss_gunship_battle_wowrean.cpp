@@ -866,26 +866,11 @@ class npc_muradin_gunship : public CreatureScript
                             player->GetSession()->SendPacket(data);
             }
 
-            // Aqui se retocó para que no solo "pueda" atacar, sino tambien para que ataque como tal
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE)
-                {
-                    me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f, true);
-                    me->Attack(NPC_GB_KORKRON_SERGANTE, true);
+                if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE || target->GetEntry() == NPC_GB_KORKRON_REAVERS || target->GetTypeId() == TYPEID_PLAYER)
                     return true;
-                }
-                else if(target->GetEntry() == NPC_GB_KORKRON_REAVERS)
-                {
-                    me->FindNearestCreature(NPC_GB_KORKRON_REAVERS, 100.0f, true);
-                    me->Attack(NPC_GB_KORKRON_REAVERS. true);
-                    return true;
-                }
-                else if(target->GetTypeId() == TYPEID_PLAYER)
-                {
-                    me->Attack(target, true);
-                    return true;
-                }
+
                 return false;
             }
 
@@ -928,6 +913,16 @@ class npc_muradin_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
+
+                            // Bloque especial para que ataque a los npcs o players cercanos
+                            Unit* target;
+                            if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f))
+                                me->Attack(target, true);
+                            else if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f))
+                                me->Attack(target, true);
+                            else if (target = me->FindNearestPlayer(100.0f, true))
+                                me->Attack(target, true);
+
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
@@ -1308,23 +1303,9 @@ class npc_saurfang_gunship : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
-                {
-                    me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true);
-                    me->Attack(NPC_GB_SKYBREAKER_SERGANTE, true);
+                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE || target->GetTypeId() == TYPEID_PLAYER)
                     return true;
-                }
-                else if (target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
-                {
-                    me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true);
-                    me->Attack(NPC_GB_SKYBREAKER_MARINE, true);
-                    return true;
-                }
-                else if (target->GetTypeId() == TYPEID_PLAYER)
-                {
-                    me->Attack(target, true);
-                    return true;
-                }
+
                 return false;
             }
 
@@ -1363,6 +1344,16 @@ class npc_saurfang_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
+
+                            // Bloque especial para que ataque a los npcs o players cercanos
+                            Unit* target;
+                            if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f))
+                                me->Attack(target, true);
+                            else if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f))
+                                me->Attack(target, true);
+                            else if (target = me->FindNearestPlayer(100.0f, true))
+                                me->Attack(target, true);
+
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
