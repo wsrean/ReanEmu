@@ -920,8 +920,8 @@ class npc_muradin_gunship : public CreatureScript
                                 me->Attack(target, true);
                             else if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f))
                                 me->Attack(target, true);
-                            else if (Player* nearest = me->FindNearestPlayer(100.0f, true))
-                                me->AI()->AttackStart(nearest);
+                            else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK)))
+                                me->Attack(target, true);
 
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
@@ -1351,8 +1351,8 @@ class npc_saurfang_gunship : public CreatureScript
                                 me->Attack(target, true);
                             else if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f))
                                 me->Attack(target, true);
-                            else if (Player* nearest = me->FindNearestPlayer(100.0f, true))
-                                me->AI()->AttackStart(nearest);
+                            else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK)))
+                                me->Attack(target, true);
 
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
