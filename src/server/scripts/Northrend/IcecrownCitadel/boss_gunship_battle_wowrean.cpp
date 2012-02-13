@@ -872,18 +872,18 @@ class npc_muradin_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f, true);
-                    me->Attack(me, NPC_GB_KORKRON_SERGANTE);
+                    me->Attack(NPC_GB_KORKRON_SERGANTE, true);
                     return true;
                 }
                 else if(target->GetEntry() == NPC_GB_KORKRON_REAVERS)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_REAVERS, 100.0f, true);
-                    me->Attack(me, NPC_GB_KORKRON_REAVERS);
+                    me->Attack(NPC_GB_KORKRON_REAVERS. true);
                     return true;
                 }
                 else if(target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->Attack(me, target);
+                    me->Attack(target, true);
                     return true;
                 }
                 return false;
@@ -1311,18 +1311,18 @@ class npc_saurfang_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true);
-                    me->Attack(me, NPC_GB_SKYBREAKER_SERGANTE);
+                    me->Attack(NPC_GB_SKYBREAKER_SERGANTE, true);
                     return true;
                 }
                 else if (target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true);
-                    me->Attack(me, NPC_GB_SKYBREAKER_MARINE);
+                    me->Attack(NPC_GB_SKYBREAKER_MARINE, true);
                     return true;
                 }
                 else if (target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->Attack(me, target);
+                    me->Attack(target, true);
                     return true;
                 }
                 return false;
@@ -1957,15 +1957,17 @@ class npc_sergeant : public CreatureScript
                                 case NPC_GB_KORKRON_SERGANTE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->GetMotionMaster()->MoveChase(target);
-                                        me->AI()->AttackStart(target);
+                                        me->FindNearestPlayer(100.0f, true);
+                                        me->Attack(target, true);
+                                        sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_SERGANTE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
-                                        me->GetMotionMaster()->MoveChase(target);
-                                        me->AI()->AttackStart(target);
+                                        me->FindNearestPlayer(100.0f, true);
+                                        me->Attack(target, true);
+                                        sLog->outDetail("----> El sergeante ALI esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                             }
@@ -2092,15 +2094,17 @@ class npc_marine_or_reaver : public CreatureScript
                                 case NPC_GB_KORKRON_REAVERS:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->GetMotionMaster()->MoveChase(target);
-                                        me->AI()->AttackStart(target);
+                                        me->FindNearestPlayer(100.0f, true);
+                                        me->Attack(target, true);
+                                        sLog->outDetail("----> El reaver HORDA esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_MARINE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
-                                        me->GetMotionMaster()->MoveChase(target);
-                                        me->AI()->AttackStart(target);
+                                        me->FindNearestPlayer(100.0f, true);
+                                        me->Attack(target, true);
+                                        sLog->outDetail("----> El marine ALI esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                             }
