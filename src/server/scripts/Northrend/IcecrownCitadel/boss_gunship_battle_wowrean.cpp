@@ -1916,10 +1916,10 @@ class npc_sergeant : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_GUNSHIP_HULL)
-                    return false;
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                    return true;
 
-                return true;
+                return false;
             }
 
             void UpdateAI(const uint32 diff)
@@ -1944,7 +1944,6 @@ class npc_sergeant : public CreatureScript
                                 case NPC_GB_KORKRON_SERGANTE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->FindNearestPlayer(100.0f, true);
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",target->GetName());
                                     }
@@ -1952,7 +1951,6 @@ class npc_sergeant : public CreatureScript
                                 case NPC_GB_SKYBREAKER_SERGANTE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
-                                        me->FindNearestPlayer(100.0f, true);
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El sergeante ALI esta atacando a %s <----",target->GetName());
                                     }
@@ -2053,10 +2051,10 @@ class npc_marine_or_reaver : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_GUNSHIP_HULL)
-                    return false;
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                    return true;
 
-                return true;
+                return false;
             }
 
             void UpdateAI(const uint32 diff)
@@ -2081,7 +2079,6 @@ class npc_marine_or_reaver : public CreatureScript
                                 case NPC_GB_KORKRON_REAVERS:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->FindNearestPlayer(100.0f, true);
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El reaver HORDA esta atacando a %s <----",target->GetName());
                                     }
@@ -2089,7 +2086,6 @@ class npc_marine_or_reaver : public CreatureScript
                                 case NPC_GB_SKYBREAKER_MARINE:
                                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
-                                        me->FindNearestPlayer(100.0f, true);
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El marine ALI esta atacando a %s <----",target->GetName());
                                     }
