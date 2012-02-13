@@ -884,16 +884,10 @@ class npc_muradin_gunship : public CreatureScript
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_2, 7000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_3, 28000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_4, 35000);
-                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_4 ----");
-                        RelocateTransport(skybreaker);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_5, 40000);
-                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_5 ----");
-                        RelocateTransport(skybreaker);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_6, 47000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_7, 53000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_8, 58900);
-                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_8 ----");
-                        RelocateTransport(skybreaker);
                         break;
                     case ACTION_BATTLE_EVENT:
                     {
@@ -922,6 +916,9 @@ class npc_muradin_gunship : public CreatureScript
                                 me->Attack(target, true);
                             else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK)))
                                 me->Attack(target, true);
+
+                            // Debug de target con el bloque
+                            sLog->outDetail("ATACANDO A %s <----",target->GetName());
 
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
@@ -1319,12 +1316,8 @@ class npc_saurfang_gunship : public CreatureScript
                          events.ScheduleEvent(EVENT_START_FLY, 5000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_2, 32000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_3, 51000);
-                         sLog->outDetail("Relocate HORDA ---- EVENT_INTRO_3 ----");
-                         RelocateTransport(orgrimmar);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_4, 57000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_5, 62000);
-                         sLog->outDetail("Relocate HORDA ---- EVENT_INTRO_5 ----");
-                         RelocateTransport(orgrimmar);
                          break;
                      case ACTION_BATTLE_EVENT:
                      {
@@ -1353,6 +1346,9 @@ class npc_saurfang_gunship : public CreatureScript
                                 me->Attack(target, true);
                             else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK)))
                                 me->Attack(target, true);
+
+                            // Debug de target con el bloque
+                            sLog->outDetail("ATACANDO A %s <----",target->GetName());
 
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
