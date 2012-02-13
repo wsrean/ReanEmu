@@ -872,18 +872,18 @@ class npc_muradin_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f, true);
-                    me->AttackStart(NPC_GB_KORKRON_SERGANTE);
+                    me->Attack(NPC_GB_KORKRON_SERGANTE);
                     return true;
                 }
                 else if(target->GetEntry() == NPC_GB_KORKRON_REAVERS)
                 {
                     me->FindNearestCreature(NPC_GB_KORKRON_REAVERS, 100.0f, true);
-                    me->AttackStart(NPC_GB_KORKRON_REAVERS);
+                    me->Attack(NPC_GB_KORKRON_REAVERS);
                     return true;
                 }
                 else if(target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->AttackStart(target)
+                    me->Attack(target);
                     return true;
                 }
                 return false;
@@ -899,10 +899,16 @@ class npc_muradin_gunship : public CreatureScript
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_2, 7000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_3, 28000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_4, 35000);
+                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_4 ----");
+                        RelocateTransport(skybreaker);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_5, 40000);
+                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_5 ----");
+                        RelocateTransport(skybreaker);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_6, 47000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_7, 53000);
                         events.ScheduleEvent(EVENT_INTRO_ALLIANCE_8, 58900);
+                        sLog->outDetail("Relocate ALI ---- EVENT_INTRO_8 ----");
+                        RelocateTransport(skybreaker);
                         break;
                     case ACTION_BATTLE_EVENT:
                     {
@@ -1305,18 +1311,18 @@ class npc_saurfang_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true);
-                    me->AttackStart(NPC_GB_SKYBREAKER_SERGANTE);
+                    me->Attack(NPC_GB_SKYBREAKER_SERGANTE);
                     return true;
                 }
                 else if (target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
                 {
                     me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true);
-                    me->AttackStart(NPC_GB_SKYBREAKER_MARINE);
+                    me->Attack(NPC_GB_SKYBREAKER_MARINE);
                     return true;
                 }
                 else if (target->GetTypeId() == TYPEID_PLAYER)
                 {
-                    me->AttackStart(target);
+                    me->Attack(target);
                     return true;
                 }
                 return false;
@@ -1332,8 +1338,12 @@ class npc_saurfang_gunship : public CreatureScript
                          events.ScheduleEvent(EVENT_START_FLY, 5000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_2, 32000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_3, 51000);
+                         sLog->outDetail("Relocate HORDA ---- EVENT_INTRO_3 ----");
+                         RelocateTransport(orgrimmar);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_4, 57000);
                          events.ScheduleEvent(EVENT_INTRO_HORDE_5, 62000);
+                         sLog->outDetail("Relocate HORDA ---- EVENT_INTRO_5 ----");
+                         RelocateTransport(orgrimmar);
                          break;
                      case ACTION_BATTLE_EVENT:
                      {
