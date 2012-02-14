@@ -869,26 +869,7 @@ class npc_muradin_gunship : public CreatureScript
             bool CanAIAttack(Unit const* target) const
             {
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE || target->GetEntry() == NPC_GB_KORKRON_REAVERS || target->GetTypeId() == TYPEID_PLAYER)
-                {
-                    // Bloque especial para que ataque a los npcs o players cercanos
-                    me->Attack(target, true);
-
-                    // Debug de target con el bloque
-                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
-
                     return true;
-                }
-                else if (target->GetTypeId() == TYPEID_PLAYER)
-                {
-                    // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
-                        me->Attack(target, true);
-
-                    // Debug de target con el bloque
-                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
-
-                    return true;
-                }
 
                 return false;
             }
@@ -919,8 +900,6 @@ class npc_muradin_gunship : public CreatureScript
                         if (pHordeBoss && pAllianceBoss)
                         {
                              me->SetReactState(REACT_AGGRESSIVE);
-                             // Quitando las flags que deshabilitan movimiento del boss, esto es cuando inicia la batalla propiamente, gracias Ws
-                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                              pHordeBoss->SetInCombatWith(pAllianceBoss);
                              pAllianceBoss->SetInCombatWith(pHordeBoss);
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
@@ -929,6 +908,35 @@ class npc_muradin_gunship : public CreatureScript
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
+
+                            // Apaño para lo de los targets y las naves <--------------------------
+                            Unit* target;
+                            Creature* creature;
+                            if (creature = target->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f, true))
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                me->AI()->AttackStart(target);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO A %u sergante <----",target->GetGUID());
+                            }
+                            else if (creature = target->FindNearestCreature(NPC_GB_KORKRON_REAVERS, 100.0f, true))
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                me->AI()->AttackStart(creature);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO A %u reaver <----",target->GetGUID());
+                            }
+                            else if (Player* player = target->FindNearestPlayer(100.0f, true)
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                if (player->HasAura(SPELL_ON_SKYBREAKERS_DECK))
+                                    me->AI()->AttackStart(player);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO al player %s<----",target->GetName());
+                            }
                         }
                         else
                             me->AI()->DoAction(ACTION_FAIL);
@@ -1071,8 +1079,8 @@ class npc_muradin_gunship : public CreatureScript
                             if (Creature* pSaurfang = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_HIGH_OVERLORD_SAURFANG_NOT_VISUAL)))
                             {
                                 pSaurfang->AI()->Talk(SAY_HIGH_OVERLORD_SAURFANG_NOT_VISUAL);
-                                pSaurfang->SetReactState(REACT_PASSIVE);
-                                pSaurfang->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                                pSaurfang->SetReactState(REACT_AGGRESSIVE);
+                                pSaurfang->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             }
                             break;
                         case EVENT_INTRO_ALLIANCE_8:
@@ -1306,27 +1314,8 @@ class npc_saurfang_gunship : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
-                {
-                    // Bloque especial para que ataque a los npcs o players cercanos
-                    me->Attack(target, true);
-
-                    // Debug de target con el bloque
-                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
-
+                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE || target->GetTypeId() == TYPEID_PLAYER)
                     return true;
-                }
-                else if (target->GetTypeId() == TYPEID_PLAYER)
-                {
-                    // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
-                        me->Attack(target, true);
-
-                    // Debug de target con el bloque
-                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
-
-                    return true;
-                }
 
                 return false;
             }
@@ -1355,8 +1344,6 @@ class npc_saurfang_gunship : public CreatureScript
                          if (pHordeBoss && pAllianceBoss)
                          {
                              me->SetReactState(REACT_AGGRESSIVE);
-                             // Quitando las flags que deshabilitan el movimiento, esto es cuando inicia la batalla propiamente
-                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                              pHordeBoss->SetInCombatWith(pAllianceBoss);
                              pAllianceBoss->SetInCombatWith(pHordeBoss);
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
@@ -1365,6 +1352,35 @@ class npc_saurfang_gunship : public CreatureScript
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
+
+                            // Apaño para lo de los targets y las naves <--------------------------
+                            Unit* target;
+                            Creature* creature;
+                            if (creature = target->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true))
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                me->AI()->AttackStart(target);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO A %u sergante <----",target->GetGUID());
+                            }
+                            else if (creature = target->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true))
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                me->AI()->AttackStart(creature);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO A %u marine <----",target->GetGUID());
+                            }
+                            else if (Player* player = target->FindNearestPlayer(100.0f, true)
+                            {
+                                // Bloque especial para que ataque a los npcs o players cercanos
+                                if (player->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                                    me->AI()->AttackStart(player);
+
+                                // Debug de target con el bloque
+                                sLog->outDetail("ATACANDO al player %s<----",target->GetName());
+                            }
                          }
                          else
                              me->AI()->DoAction(ACTION_FAIL);
@@ -1504,8 +1520,8 @@ class npc_saurfang_gunship : public CreatureScript
                             if (Creature* pMuradin = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_MURADIN_BRONZEBEARD_NOT_VISUAL)))
                             {
                                 pMuradin->AI()->Talk(SAY_MURADIN_BRONZEBEARD_NOT_VISUAL);
-                                pMuradin->SetReactState(REACT_PASSIVE);
-                                pMuradin->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                                pMuradin->SetReactState(REACT_AGGRESSIVE);
+                                pMuradin->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             }
                             break;
                         case EVENT_INTRO_HORDE_5:
@@ -1901,8 +1917,8 @@ class npc_sergeant : public CreatureScript
             void Reset()
             {
                 ScriptedAI::Reset();
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
-                me->SetReactState(REACT_PASSIVE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                me->SetReactState(REACT_AGGRESSIVE);
                 // Asignandole las armas por script para que no se caigan visualmente
                 SetEquipmentSlots(false, 49689, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
                 events.ScheduleEvent(EVENT_WALK_MOBS, 1500);
@@ -2042,7 +2058,8 @@ class npc_marine_or_reaver : public CreatureScript
             {
                 ScriptedAI::Reset();
                 desperated = false;
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                me->SetReactState(REACT_AGGRESSIVE);
                 // Asignandole las armas por script para que no se caigan visualmente
                 SetEquipmentSlots(false, 49708, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
                 me->SetReactState(REACT_PASSIVE);
@@ -2270,6 +2287,12 @@ class npc_gunship_cannon : public CreatureScript
                 me->SetReactState(REACT_PASSIVE);
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 DoCast(me, SPELL_HEAT_DRAIN, true);
+            }
+
+            void EnterCombat(Unit* /*who*/)
+            {
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                SetCombatMovement(false);
             }
 
             void SpellHit(Unit* /*caster*/, SpellInfo const* spellEntry)
