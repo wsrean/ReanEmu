@@ -434,6 +434,9 @@ void RelocateTransport(Transport* t)
     }
     // Chequear cada 100ms la AI de la nave y su actualizacion.
     t->Update(100);
+    UpdateTransportMotionInMap(t);
+    t->UpdateNPCPositions();
+    t->UpdatePlayerPositions();
 }
 
 //Function stop motion of the ship
@@ -445,6 +448,7 @@ void StopFlyShip(Transport* t)
 
     UpdateTransportMotionInMap(t);
     // Actualizando sus estados antes de bajarse.
+    t->UpdateNPCPositions();
     t->UpdatePlayerPositions();
 }
 
@@ -1041,7 +1045,9 @@ class npc_muradin_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_ALLIANCE_5:
                             StopFlyShip(skybreaker);
+                            RelocateTransport(skybreaker);
                             StopFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
+                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
                             Talk(SAY_INTRO_ALLIANCE_4);
                             break;
                         case EVENT_INTRO_ALLIANCE_6:
@@ -1053,8 +1059,8 @@ class npc_muradin_gunship : public CreatureScript
                             if (Creature* saurfang = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_HIGH_OVERLORD_SAURFANG_NOT_VISUAL)))
                             {
                                 saurfang->AI()->Talk(SAY_HIGH_OVERLORD_SAURFANG_NOT_VISUAL);
-                                saurfang->SetReactState(REACT_AGGRESSIVE);
-                                saurfang->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                                saurfang->SetReactState(REACT_PASSIVE);
+                                saurfang->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             }
                             break;
                         case EVENT_INTRO_ALLIANCE_8:
@@ -1090,9 +1096,9 @@ class npc_muradin_gunship : public CreatureScript
                             {
                                 saurfang->AI()->Talk(SAY_BOARDING_SKYBREAKER_SAURFANG);
                             }
-                            if(Creature* Sergante = skybreaker->AddNPCPassengerInInstance(NPC_GB_KORKRON_SERGANTE, -15.51547f, -0.160213f, 20.87252f, 1.56211f))
+                            if(Creature* sergante = skybreaker->AddNPCPassengerInInstance(NPC_GB_KORKRON_SERGANTE, -15.51547f, -0.160213f, 20.87252f, 1.56211f))
                             {
-                                Sergante->CastSpell(Sergante, SPELL_TELEPORT_VISUAL, true);
+                                sergante->CastSpell(sergante, SPELL_TELEPORT_VISUAL, true);
                             }
                             events.ScheduleEvent(EVENT_SUMMON_PORTAL, 90000);
                             events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 3000);
@@ -1101,9 +1107,9 @@ class npc_muradin_gunship : public CreatureScript
                         case EVENT_BOARDING_REAVERS_MARINE:
                             if(count <= SummonCount)
                             {
-                                if(Creature* Reavers = skybreaker->AddNPCPassengerInInstance(NPC_GB_KORKRON_REAVERS, -15.51547f, -0.160213f, 20.87252f, 1.56211f))
+                                if(Creature* reavers = skybreaker->AddNPCPassengerInInstance(NPC_GB_KORKRON_REAVERS, -15.51547f, -0.160213f, 20.87252f, 1.56211f))
                                 {
-                                    Reavers->CastSpell(Reavers, SPELL_TELEPORT_VISUAL, true);
+                                    reavers->CastSpell(reavers, SPELL_TELEPORT_VISUAL, true);
                                     events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 21000 / SummonCount);
                                     ++count;
                                 }
@@ -1114,9 +1120,11 @@ class npc_muradin_gunship : public CreatureScript
                             _instance->DoCastSpellOnPlayers(SPELL_ACHIEVEMENT_CHECK);
                             StartFlyShip(skybreaker);
                             StopFlyShip(CheckUnfriendlyShip(me,_instance,DATA_GB_HIGH_OVERLORD_SAURFANG));
+                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
                             break;
                         case EVENT_OUTRO_ALLIANCE_2:
                             StopFlyShip(skybreaker);
+                            RelocateTransport(skybreaker);
                             me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_A_10N, GO_CAPITAN_CHEST_A_25N, GO_CAPITAN_CHEST_A_10H, GO_CAPITAN_CHEST_A_25H), -590.200022f, 2241.193115f, 538.588269f, 0, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
@@ -1455,11 +1463,13 @@ class npc_saurfang_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
+                            RelocateTransport(orgrimmar);
                             StartFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_MURADIN_BRONZEBEARD));
                             Talk(SAY_INTRO_HORDE_1);
                             break;
                         case EVENT_INTRO_HORDE_3:
                             StopFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_MURADIN_BRONZEBEARD));
+                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
                             Talk(SAY_INTRO_HORDE_2);
                             break;
                         case EVENT_INTRO_HORDE_4:
@@ -1490,9 +1500,9 @@ class npc_saurfang_gunship : public CreatureScript
                              {
                                  saurfang->AI()->Talk(SAY_BOARDING_SKYBREAKER_MURADIN);
                              }
-                             if (Creature* Sergante = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_SERGANTE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
+                             if (Creature* sergante = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_SERGANTE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
                              {
-                                 Sergante->CastSpell(Sergante, SPELL_TELEPORT_VISUAL, true);
+                                 sergante->CastSpell(sergante, SPELL_TELEPORT_VISUAL, true);
                              }
                              events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 3000);
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 90000);
@@ -1500,9 +1510,9 @@ class npc_saurfang_gunship : public CreatureScript
                         case EVENT_BOARDING_REAVERS_MARINE:
                             if(count <= SummonCount)
                             {
-                                if(Creature* Marine = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MARINE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
+                                if(Creature* marine = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MARINE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
                                 {
-                                    Marine->CastSpell(Marine, SPELL_TELEPORT_VISUAL, true);
+                                    marine->CastSpell(marine, SPELL_TELEPORT_VISUAL, true);
                                     count++;
                                     events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 2500);
                                 }
@@ -1513,9 +1523,11 @@ class npc_saurfang_gunship : public CreatureScript
                             _instance->DoCastSpellOnPlayers(SPELL_ACHIEVEMENT_CHECK);
                             StartFlyShip(orgrimmar);
                             StopFlyShip(CheckUnfriendlyShip(me,_instance,DATA_GB_MURADIN_BRONZEBEARD));
+                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
                             break;
                         case EVENT_OUTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
+                            RelocateTransport(orgrimmar);
                             me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -590.200022f, 2241.193115f, 539.588269f, 0, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
