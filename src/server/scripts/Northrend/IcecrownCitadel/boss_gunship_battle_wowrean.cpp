@@ -869,7 +869,29 @@ class npc_muradin_gunship : public CreatureScript
             bool CanAIAttack(Unit const* target) const
             {
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE || target->GetEntry() == NPC_GB_KORKRON_REAVERS || target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    // Bloque especial para que ataque a los npcs o players cercanos
+                    if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f. true))
+                        me->Attack(target, true);
+                    else if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f. true))
+                        me->Attack(target, true);
+
+                    // Debug de target con el bloque
+                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
+
                     return true;
+                }
+                else if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    // Bloque especial para que ataque a los npcs o players cercanos
+                    if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                        me->Attack(target, true);
+
+                    // Debug de target con el bloque
+                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
+
+                    return true;
+                }
 
                 return false;
             }
@@ -907,19 +929,6 @@ class npc_muradin_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
-
-                            // Bloque especial para que ataque a los npcs o players cercanos
-                            Unit* target;
-                            if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f))
-                                me->Attack(target, true);
-                            else if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f))
-                                me->Attack(target, true);
-                            else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK)))
-                                me->Attack(target, true);
-
-                            // Debug de target con el bloque
-                            sLog->outDetail("ATACANDO A %s <----",target->GetName());
-
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(skybreaker);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
@@ -1300,8 +1309,30 @@ class npc_saurfang_gunship : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE || target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
+                {
+                    // Bloque especial para que ataque a los npcs o players cercanos
+                    if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true))
+                        me->Attack(target, true);
+                    else if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true))
+                        me->Attack(target, true);
+
+                    // Debug de target con el bloque
+                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
+
                     return true;
+                }
+                else if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    // Bloque especial para que ataque a los npcs o players cercanos
+                    if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                        me->Attack(target, true);
+
+                    // Debug de target con el bloque
+                    sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
+
+                    return true;
+                }
 
                 return false;
             }
@@ -1337,19 +1368,6 @@ class npc_saurfang_gunship : public CreatureScript
                              pAllianceBoss->AddThreat(pHordeBoss, 0.0f);
                              pHordeBoss->AddThreat(pAllianceBoss, 0.0f);
                              _instance->SetBossState(DATA_GUNSHIP_EVENT, IN_PROGRESS);
-
-                            // Bloque especial para que ataque a los npcs o players cercanos
-                            Unit* target;
-                            if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f))
-                                me->Attack(target, true);
-                            else if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f))
-                                me->Attack(target, true);
-                            else if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK)))
-                                me->Attack(target, true);
-
-                            // Debug de target con el bloque
-                            sLog->outDetail("ATACANDO A %s <----",target->GetName());
-
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 30000);
                              RelocateTransport(orgrimmar);
                              RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
@@ -1942,14 +1960,14 @@ class npc_sergeant : public CreatureScript
                             switch (me->GetEntry())
                             {
                                 case NPC_GB_KORKRON_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El sergeante ALI esta atacando a %s <----",target->GetName());
@@ -2077,14 +2095,14 @@ class npc_marine_or_reaver : public CreatureScript
                             switch (me->GetEntry())
                             {
                                 case NPC_GB_KORKRON_REAVERS:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El reaver HORDA esta atacando a %s <----",target->GetName());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_MARINE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
                                     {
                                         me->Attack(target, true);
                                         sLog->outDetail("----> El marine ALI esta atacando a %s <----",target->GetName());
@@ -3157,11 +3175,6 @@ class transport_gunship : public TransportScript
     public:
         transport_gunship() : TransportScript("transport_gunship") { }
 
-        void OnRelocate(Transport* transport, uint32 waypointId, uint32 mapId, float x, float y, float z)
-        {
-            sLog->outDetail("ICC::Batalla Naval: El transporte %s llego al waypoint %u/%u. Gps -> X:%u, Y:%u, Z:%u.", GetName(), waypointId, transport->m_WayPoints.size(), x, y, z);
-        }
-
         void OnAddPassenger(Transport* transport, Player* player)
         {
             if (!transport || !player)
@@ -3171,9 +3184,11 @@ class transport_gunship : public TransportScript
             {
                 case GO_THE_SKYBREAKER_ALLIANCE_ICC:
                     player->AddAura(SPELL_ON_SKYBREAKERS_DECK, player);
+                    sLog->outDetail("Nave ALI aplico el aura SKYBREAKERS_DECK al player %s <---", player->GetName());
                     break;
                 case GO_ORGRIM_S_HAMMER_HORDE_ICC:
                     player->AddAura(SPELL_ON_ORGRIMS_HAMMERS_DECK, player);
+                    sLog->outDetail("Nave HORDA aplico el aura ORGRIMS_HAMMERS_DECK al player %s <---", player->GetName());
                     break;
                 default:
                     break;
