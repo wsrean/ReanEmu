@@ -871,10 +871,7 @@ class npc_muradin_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE || target->GetEntry() == NPC_GB_KORKRON_REAVERS || target->GetTypeId() == TYPEID_PLAYER)
                 {
                     // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f. true))
-                        me->Attack(target, true);
-                    else if (target = me->FindNearestCreature(NPC_GB_KORKRON_SERGANTE, 100.0f. true))
-                        me->Attack(target, true);
+                    me->Attack(target, true);
 
                     // Debug de target con el bloque
                     sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
@@ -884,7 +881,7 @@ class npc_muradin_gunship : public CreatureScript
                 else if (target->GetTypeId() == TYPEID_PLAYER)
                 {
                     // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                    if (target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
                         me->Attack(target, true);
 
                     // Debug de target con el bloque
@@ -1312,10 +1309,7 @@ class npc_saurfang_gunship : public CreatureScript
                 if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
                 {
                     // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_SERGANTE, 100.0f, true))
-                        me->Attack(target, true);
-                    else if (target = me->FindNearestCreature(NPC_GB_SKYBREAKER_MARINE, 100.0f, true))
-                        me->Attack(target, true);
+                    me->Attack(target, true);
 
                     // Debug de target con el bloque
                     sLog->outDetail("ATACANDO A %u <----",target->GetGUID());
@@ -1325,7 +1319,7 @@ class npc_saurfang_gunship : public CreatureScript
                 else if (target->GetTypeId() == TYPEID_PLAYER)
                 {
                     // Bloque especial para que ataque a los npcs o players cercanos
-                    if (target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                    if (target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
                         me->Attack(target, true);
 
                     // Debug de target con el bloque
@@ -1935,7 +1929,27 @@ class npc_sergeant : public CreatureScript
             bool CanAIAttack(Unit const* target) const
             {
                 if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    switch (me->GetEntry())
+                    {
+                        case NPC_GB_KORKRON_SERGANTE:
+                            if (target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
+                            {
+                                me->Attack(target, true);
+                                sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",target->GetName());
+                            }
+                        break;
+                        case NPC_GB_SKYBREAKER_SERGANTE:
+                            if (target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                            {
+                                me->Attack(target, true);
+                                sLog->outDetail("----> El sergeante ALI esta atacando a %s <----",target->GetName());
+                            }
+                        break;
+                    }
+
                     return true;
+                }
 
                 return false;
             }
@@ -1957,23 +1971,6 @@ class npc_sergeant : public CreatureScript
                         case EVENT_WALK_MOBS:
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             me->SetReactState(REACT_AGGRESSIVE);
-                            switch (me->GetEntry())
-                            {
-                                case NPC_GB_KORKRON_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
-                                    {
-                                        me->Attack(target, true);
-                                        sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",target->GetName());
-                                    }
-                                break;
-                                case NPC_GB_SKYBREAKER_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
-                                    {
-                                        me->Attack(target, true);
-                                        sLog->outDetail("----> El sergeante ALI esta atacando a %s <----",target->GetName());
-                                    }
-                                break;
-                            }
                             events.ScheduleEvent(EVENT_WOUNDING_STRIKE, 5000);
                             events.ScheduleEvent(EVENT_BLADE_STORM, 3000);
                             break;
@@ -2070,7 +2067,26 @@ class npc_marine_or_reaver : public CreatureScript
             bool CanAIAttack(Unit const* target) const
             {
                 if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    switch (me->GetEntry())
+                    {
+                        case NPC_GB_KORKRON_REAVERS:
+                            if (target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
+                            {
+                                me->Attack(target, true);
+                                sLog->outDetail("----> El reaver HORDA esta atacando a %s <----",target->GetName());
+                            }
+                        break;
+                        case NPC_GB_SKYBREAKER_MARINE:
+                            if (target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                            {
+                                me->Attack(target, true);
+                                sLog->outDetail("----> El marine ALI esta atacando a %s <----",target->GetName());
+                            }
+                        break;
+                    }
                     return true;
+                }
 
                 return false;
             }
@@ -2092,23 +2108,6 @@ class npc_marine_or_reaver : public CreatureScript
                         case EVENT_WALK_MOBS:
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             me->SetReactState(REACT_AGGRESSIVE);
-                            switch (me->GetEntry())
-                            {
-                                case NPC_GB_KORKRON_REAVERS:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_SKYBREAKERS_DECK))
-                                    {
-                                        me->Attack(target, true);
-                                        sLog->outDetail("----> El reaver HORDA esta atacando a %s <----",target->GetName());
-                                    }
-                                break;
-                                case NPC_GB_SKYBREAKER_MARINE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 100.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
-                                    {
-                                        me->Attack(target, true);
-                                        sLog->outDetail("----> El marine ALI esta atacando a %s <----",target->GetName());
-                                    }
-                                break;
-                            }
                             break;
                         case EVENT_BURNING_PITCH:
                             if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
