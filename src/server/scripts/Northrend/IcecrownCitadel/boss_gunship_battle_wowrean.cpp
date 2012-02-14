@@ -1966,7 +1966,7 @@ class npc_sergeant : public CreatureScript
                                 case NPC_GB_KORKRON_SERGANTE:
                                     if (Player* player = me->SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->Attack(target, true);
+                                        me->Attack(player, true);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",player->GetName());
                                     }
                                 break;
@@ -2102,7 +2102,7 @@ class npc_marine_or_reaver : public CreatureScript
                                 case NPC_GB_KORKRON_REAVERS:
                                     if (Player* player = me->SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
                                     {
-                                        me->Attack(target, true);
+                                        me->Attack(player, true);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %s <----",player->GetName());
                                     }
                                 break;
@@ -3194,10 +3194,12 @@ class transport_gunship : public TransportScript
             switch (transport->GetEntry())
             {
                 case GO_THE_SKYBREAKER_ALLIANCE_ICC:
+                    player->RemoveAura(SPELL_ON_ORGRIMS_HAMMERS_DECK);
                     player->AddAura(SPELL_ON_SKYBREAKERS_DECK, player);
                     sLog->outDetail("Nave ALI aplico el aura SKYBREAKERS_DECK al player %s <---", player->GetName());
                     break;
                 case GO_ORGRIM_S_HAMMER_HORDE_ICC:
+                    player->RemoveAura(SPELL_ON_SKYBREAKERS_DECK);
                     player->AddAura(SPELL_ON_ORGRIMS_HAMMERS_DECK, player);
                     sLog->outDetail("Nave HORDA aplico el aura ORGRIMS_HAMMERS_DECK al player %s <---", player->GetName());
                     break;
