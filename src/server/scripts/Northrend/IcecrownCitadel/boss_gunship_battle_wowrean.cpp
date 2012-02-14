@@ -380,6 +380,8 @@ void UpdateTransportMotionInMap(Transport* t)
             WorldPacket packet;
             transData.BuildPacket(&packet);
             pPlayer->SendDirectMessage(&packet);
+            t->UpdateNPCPositions();
+            t->UpdatePlayerPositions();
         }
     }
 }
@@ -395,6 +397,9 @@ void StartFlyShip(Transport* t)
     GameObjectTemplate const* goinfo = t->GetGOInfo();
 
     t->GenerateWaypoints(goinfo->moTransport.taxiPathId, mapsUsed);
+
+    t->UpdateNPCPositions();
+    t->UpdatePlayerPositions();
 
     UpdateTransportMotionInMap(t);
 }
@@ -434,7 +439,6 @@ void RelocateTransport(Transport* t)
     }
     // Chequear cada 100ms la AI de la nave y su actualizacion.
     t->Update(100);
-    UpdateTransportMotionInMap(t);
     t->UpdateNPCPositions();
     t->UpdatePlayerPositions();
 }
@@ -1045,9 +1049,7 @@ class npc_muradin_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_ALLIANCE_5:
                             StopFlyShip(skybreaker);
-                            RelocateTransport(skybreaker);
                             StopFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
-                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
                             Talk(SAY_INTRO_ALLIANCE_4);
                             break;
                         case EVENT_INTRO_ALLIANCE_6:
@@ -1120,11 +1122,9 @@ class npc_muradin_gunship : public CreatureScript
                             _instance->DoCastSpellOnPlayers(SPELL_ACHIEVEMENT_CHECK);
                             StartFlyShip(skybreaker);
                             StopFlyShip(CheckUnfriendlyShip(me,_instance,DATA_GB_HIGH_OVERLORD_SAURFANG));
-                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_HIGH_OVERLORD_SAURFANG));
                             break;
                         case EVENT_OUTRO_ALLIANCE_2:
                             StopFlyShip(skybreaker);
-                            RelocateTransport(skybreaker);
                             me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_A_10N, GO_CAPITAN_CHEST_A_25N, GO_CAPITAN_CHEST_A_10H, GO_CAPITAN_CHEST_A_25H), -590.200022f, 2241.193115f, 538.588269f, 0, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
@@ -1463,13 +1463,11 @@ class npc_saurfang_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
-                            RelocateTransport(orgrimmar);
                             StartFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_MURADIN_BRONZEBEARD));
                             Talk(SAY_INTRO_HORDE_1);
                             break;
                         case EVENT_INTRO_HORDE_3:
                             StopFlyShip(CheckUnfriendlyShip(me, _instance, DATA_GB_MURADIN_BRONZEBEARD));
-                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
                             Talk(SAY_INTRO_HORDE_2);
                             break;
                         case EVENT_INTRO_HORDE_4:
@@ -1523,11 +1521,9 @@ class npc_saurfang_gunship : public CreatureScript
                             _instance->DoCastSpellOnPlayers(SPELL_ACHIEVEMENT_CHECK);
                             StartFlyShip(orgrimmar);
                             StopFlyShip(CheckUnfriendlyShip(me,_instance,DATA_GB_MURADIN_BRONZEBEARD));
-                            RelocateTransport(CheckUnfriendlyShip(me,_instance, DATA_GB_MURADIN_BRONZEBEARD));
                             break;
                         case EVENT_OUTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
-                            RelocateTransport(orgrimmar);
                             me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -590.200022f, 2241.193115f, 539.588269f, 0, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
