@@ -685,13 +685,12 @@ void Transport::Update(uint32 p_diff)
         else
         {
             Relocate(m_curr->second.x, m_curr->second.y, m_curr->second.z, GetAngle(m_next->second.x, m_next->second.y) + float(M_PI));
+            UpdateNPCPositions(); // COME BACK MARKER
+            // Esto obliga al server a actualizar posiciones en el transporte para players
+            UpdatePlayerPositions();
         }
 
         sScriptMgr->OnRelocate(this, m_curr->first, m_curr->second.mapid, m_curr->second.x, m_curr->second.y, m_curr->second.z);
-
-        // Esto obliga al server a actualizar posiciones en el transporte para players y npcs.
-        UpdateNPCPositions();
-        UpdatePlayerPositions();
 
         m_nextNodeTime = m_curr->first;
 

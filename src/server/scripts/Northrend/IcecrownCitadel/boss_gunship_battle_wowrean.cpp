@@ -380,8 +380,6 @@ void UpdateTransportMotionInMap(Transport* t)
             WorldPacket packet;
             transData.BuildPacket(&packet);
             pPlayer->SendDirectMessage(&packet);
-            t->UpdateNPCPositions();
-            t->UpdatePlayerPositions();
         }
     }
 }
@@ -397,9 +395,6 @@ void StartFlyShip(Transport* t)
     GameObjectTemplate const* goinfo = t->GetGOInfo();
 
     t->GenerateWaypoints(goinfo->moTransport.taxiPathId, mapsUsed);
-
-    t->UpdateNPCPositions();
-    t->UpdatePlayerPositions();
 
     UpdateTransportMotionInMap(t);
 }
@@ -439,8 +434,6 @@ void RelocateTransport(Transport* t)
     }
     // Chequear cada 100ms la AI de la nave y su actualizacion.
     t->Update(100);
-    t->UpdateNPCPositions();
-    t->UpdatePlayerPositions();
 }
 
 //Function stop motion of the ship
