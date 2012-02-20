@@ -871,11 +871,9 @@ class npc_muradin_gunship : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_KORKRON_SERGANTE && target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
+                if ((target->GetEntry() == NPC_GB_KORKRON_SERGANTE || target->GetEntry() == NPC_GB_KORKRON_REAVERS) && target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
                     return true;
-				else if (target->GetEntry() == NPC_GB_KORKRON_REAVERS && target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
-                    return true;
-				else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
+                else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_SKYBREAKERS_DECK))
                     return true;
                 return false;
             }
@@ -1294,11 +1292,9 @@ class npc_saurfang_gunship : public CreatureScript
 
             bool CanAIAttack(Unit const* target) const
             {
-                if (target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                if ((target->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE || target->GetEntry() == NPC_GB_SKYBREAKER_MARINE) && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
                     return true;
-				else if (target->GetEntry() == NPC_GB_SKYBREAKER_MARINE && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
-                    return true;
-				else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK))
                     return true;
                 return false;
             }
@@ -1932,7 +1928,7 @@ class npc_sergeant : public CreatureScript
             {
                 if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_SKYBREAKERS_DECK) && me->GetEntry() == NPC_GB_KORKRON_SERGANTE)
                     return true;
-				else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK) && me->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
+                if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK) && me->GetEntry() == NPC_GB_SKYBREAKER_SERGANTE)
                     return true;
                 return false;
             }
@@ -2073,7 +2069,7 @@ class npc_marine_or_reaver : public CreatureScript
             {
                 if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_SKYBREAKERS_DECK) && me->GetEntry() == NPC_GB_KORKRON_REAVERS)
                     return true;
-				else if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK) && me->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
+                if (target->GetTypeId() == TYPEID_PLAYER && target->HasAura(SPELL_ON_ORGRIMS_HAMMERS_DECK) && me->GetEntry() == NPC_GB_SKYBREAKER_MARINE)
                     return true;
                 return false;
             }
