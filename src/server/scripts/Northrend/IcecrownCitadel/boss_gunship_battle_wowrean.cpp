@@ -1612,10 +1612,9 @@ class npc_saurfang_gunship : public CreatureScript
 };
 
 /* --------------------------------------------------------------------------------------------------------------------- */
-/* -------------------------------------      ADDS DE CADA FACCION        ---------------------------------------------- */
+/* -----------------------------------------------      NPCS NAVES        ---------------------------------------------- */
 /* --------------------------------------------------------------------------------------------------------------------- */
-// De aqui para abajo he puesto nombres y las IDs de los mobs que son parte de la pelea de gunship
-// en lo que corresponde a las naves en si, todo add que sale entre fases y asi
+// Estos son npcs que simulan las ubicaciones y sirven para ayudar a reestablecer los puntos de update del transport
 
 /* --------------- The Skybreaker 37540 --------------- */
 class npc_gunship_skybreaker : public CreatureScript
@@ -1732,6 +1731,38 @@ class npc_gunship_orgrimmar : public CreatureScript
             return new npc_gunship_orgrimmarAI(pCreature);
         }
 };
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* -----------------------------------------      FUNCIONES ESPECIALES        ---------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+// Aqui las funciones especiales para hacer funcionar a los adds de la batalla
+
+class StartMovementEvent : public BasicEvent
+{
+    public:
+        StartMovementEvent(Creature* summoner, Creature* owner)
+            : _summoner(summoner), _owner(owner)
+        {
+        }
+
+        bool Execute(uint64 /*time*/, uint32 /*diff*/)
+        {
+            _owner->SetReactState(REACT_AGGRESSIVE);
+            if (Unit* target = _summoner->AI()->SelectTarget(SELECT_TARGET_RANDOM, 0, NonTankTargetSelector(_summoner)))
+                _owner->AI()->AttackStart(target);
+            return true;
+        }
+
+    private:
+        Creature* _summoner;
+        Creature* _owner;
+};
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* -----------------------------------------      ADDS DE CADA FACCION        ---------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+// De aqui para abajo he puesto nombres y las IDs de los mobs que son parte de la pelea de gunship
+// en lo que corresponde a las naves en si, todo add que sale entre fases y asi
 
 /* --------------- Skybreaker Rifleman 36969 --------------- */
 /* --------------- Kor'kron Axethrower 36968 --------------- */
@@ -1919,18 +1950,20 @@ class npc_sergeant : public CreatureScript
                             switch (me->GetEntry())
                             {
                                 case NPC_GB_KORKRON_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
                                     {
-                                        me->Attack(target, true);
+                                        me->GetMotionMaster()->MoveFollow(target, 0.0f, 0.0f);
+                                        me->AI()->AttackStart(target);
                                         events.ScheduleEvent(EVENT_WOUNDING_STRIKE, 5000);
                                         events.ScheduleEvent(EVENT_BLADE_STORM, 3000);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %u <----",target->GetGUID());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_SERGANTE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
                                     {
-                                        me->Attack(target, true);
+                                        me->GetMotionMaster()->MoveFollow(target, 0.0f, 0.0f);
+                                        me->AI()->AttackStart(target);
                                         events.ScheduleEvent(EVENT_WOUNDING_STRIKE, 5000);
                                         events.ScheduleEvent(EVENT_BLADE_STORM, 3000);
                                         sLog->outDetail("----> El sergeante ALI esta atacando a %u <----",target->GetGUID());
@@ -2057,16 +2090,18 @@ class npc_marine_or_reaver : public CreatureScript
                             switch (me->GetEntry())
                             {
                                 case NPC_GB_KORKRON_REAVERS:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_SKYBREAKERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
                                     {
-                                        me->Attack(target, true);
+                                        me->GetMotionMaster()->MoveFollow(target, 0.0f, 0.0f);
+                                        me->AI()->AttackStart(target);
                                         sLog->outDetail("----> El sergeante HORDA esta atacando a %u <----",target->GetGUID());
                                     }
                                 break;
                                 case NPC_GB_SKYBREAKER_MARINE:
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, SPELL_ON_ORGRIMS_HAMMERS_DECK))
+                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
                                     {
-                                        me->Attack(target, true);
+                                        me->GetMotionMaster()->MoveFollow(target, 0.0f, 0.0f);
+                                        me->AI()->AttackStart(target);
                                         sLog->outDetail("----> El sergeante ALI esta atacando a %u <----",target->GetGUID());
                                     }
                                 break;
